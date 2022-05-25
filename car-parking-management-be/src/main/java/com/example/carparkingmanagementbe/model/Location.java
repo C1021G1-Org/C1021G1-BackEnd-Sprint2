@@ -26,7 +26,7 @@ public class Location {
     private Double height;
     private Boolean delFlag;
     private Boolean isEmpty;
-
+    private String description;
     @OneToOne(mappedBy = "location")
     @JsonBackReference
     private Ticket ticket;
