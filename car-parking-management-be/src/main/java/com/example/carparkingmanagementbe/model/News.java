@@ -18,6 +18,7 @@ public class News {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
+    private String author;
     private String title;
     @Column(columnDefinition = "DATETIME")
     private String date;

@@ -28,7 +28,7 @@ public class Ticket {
     private String timeOut;
     private Boolean delFlag;
     private Boolean isDoing;
-    private Double price;
+    private Double sumPrice;
     @ManyToOne
     @JoinColumn(name = "id_ticket_type", referencedColumnName = "id")
     private TicketType ticketType;
