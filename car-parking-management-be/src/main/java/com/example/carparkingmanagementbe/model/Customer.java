@@ -9,6 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Set;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -40,3 +41,4 @@ public class Customer {
     @JoinColumn(name = "id_ward", referencedColumnName = "id")
     private Ward ward;
 }
+
