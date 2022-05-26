@@ -22,7 +22,7 @@ public class LocationService implements ILocationService {
 //    public Page<Location> search(String code, Long name, Pageable pageable) {
 //        return null;
 //    }
-
+// TinhHD code list
     @Override
     public Page<LocationList> findAll(String code,String id,int page) {
         List<LocationList> locationLists = locationRepository.findByList(code,id);
@@ -31,5 +31,20 @@ public class LocationService implements ILocationService {
         int endPage = Math.min((startPage + pageableContent.getPageSize()), locationLists.size());
         Page<LocationList> locationListPage = new PageImpl<>(locationLists.subList(startPage, endPage), pageableContent, locationLists.size());
         return locationListPage;
+    }
+    //dat code
+    @Override
+    public Page<Location> getAllLocation(Pageable pageable) {
+        return locationRepository.getAllLocation(pageable);
+    }
+
+    @Override
+    public Location findLocationById(Long id) {
+        return locationRepository.findLocationById(id);
+    }
+
+    @Override
+    public void updateColorLocation(Long id) {
+        locationRepository.updateIsEmpty(id);
     }
 }
