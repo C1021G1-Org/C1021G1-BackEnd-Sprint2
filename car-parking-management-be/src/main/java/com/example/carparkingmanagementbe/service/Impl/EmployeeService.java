@@ -5,6 +5,8 @@ import com.example.carparkingmanagementbe.model.Employee;
 import com.example.carparkingmanagementbe.repository.EmployeeRepository;
 import com.example.carparkingmanagementbe.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +16,20 @@ import java.util.Optional;
 public class EmployeeService implements IEmployeeService {
     @Autowired
     EmployeeRepository employeeRepository;
+  
+    @Override
+    public Page<Employee> getAllEmployee(Pageable pageable) {
+        return employeeRepository.getAllEmployee(pageable);
+    }
+
+    @Override
+    public Optional<Employee> findByEmployeeId(Long id) {
+        return employeeRepository.findByEmployeeId(id);
+    }
+
+    @Override
+    public void deleteEmployee(Long id) {
+        employeeRepository.deleteEmployee(id);
 
     @Override
     public void createEmployee(EmployeeDto employeeDto) {
@@ -44,7 +60,4 @@ public class EmployeeService implements IEmployeeService {
         return employeeRepository.findByPhoneNot(id, phone);
     }
 
-    public List<Employee> findAll() {
-        return employeeRepository.findAll();
-    }
 }
