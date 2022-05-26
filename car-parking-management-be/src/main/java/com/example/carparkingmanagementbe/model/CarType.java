@@ -14,18 +14,14 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "province")
-public class Province {
+@Table(name = "car_type")
+public class CarType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String prefix;
+    private Double price;
     @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "province")
-    private Set<District> districtSet;
-
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "province")
-    private Set<Ward> wardSet;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "carType")
+    private Set<Car> carSet;
 }
