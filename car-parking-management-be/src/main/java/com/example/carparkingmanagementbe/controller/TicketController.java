@@ -15,8 +15,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -51,20 +55,40 @@ public class TicketController {
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<?> deleteTicket(@PathVariable Long id) {
+
         Ticket ticket = ticketService.getTicketById(id);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String endDate = ticket.getTimeOut();
-        LocalDate changeDate = LocalDate.parse(endDate, formatter);
-        LocalDate.of(changeDate.getYear(), changeDate.getMonth(), changeDate.getDayOfMonth());
+        String endDate = ticket.getEndDate();
         LocalDate current = LocalDate.now();
-        Long between = ChronoUnit.DAYS.between(changeDate, current);
-        System.out.println(between);
-        if (between < 0) {
-            return new ResponseEntity<>("thời gian vẩn con sử dụng", HttpStatus.BAD_REQUEST);
+        LocalDate changeEndDay = LocalDate.parse(endDate, formatter);
+        Long betweenDay = ChronoUnit.DAYS.between(changeEndDay,current);
+        if (betweenDay >= 0) {
+            if (ticket.getTimeOut() == null) {
+                Map<String, String> map = new HashMap<>();
+                map.put("messageEros", "xe vẩn còn bên trong nên không thể xóa");
+                return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+            } else {
+                DateTimeFormatter formatterInOut = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                String timeIn = ticket.getTimeIn();
+                String timeOut = ticket.getTimeOut();
+                String changeTimeIn = String.format(timeIn, formatterInOut);
+                String changeTimeOut = String.format(timeOut, formatterInOut);
+                int check = changeTimeIn.compareTo(changeTimeOut);
+                if (check < 0) {
+                    ticketService.deleteTicketByDel(ticket.getId());
+                    return new ResponseEntity<>(check, HttpStatus.OK);
+                } else {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("messageEros", "xe vẩn còn bên trong nên không thể xóa");
+                    return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+                }
+            }
         } else {
-            ticketService.deleteTicketByDel(ticket.getId());
-            return new ResponseEntity<>(between,HttpStatus.OK);
+            Map<String, String> map = new HashMap<>();
+            map.put("messageEros", "Vẩn còn hạng");
+            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
     }
-    // tam controller end
+
+// tam controller end
 }
