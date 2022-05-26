@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
 
-    /*Phương Thức Tìm Id là của chung*/
+    /*TuanPDCoding*/
     @Query(value = "SELECT  location.id, location.code, location.description,\n" +
             "\t\tlocation.width, location.is_empty, location.number,\n" +
             "\t\tlocation.height, location.length, location.del_flag,\n" +
@@ -24,9 +24,7 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "\tJOIN customer on customer.id = car.id_customer\n" +
             "WHERE location.id = ? ", nativeQuery = true)
     Location findLocationById(Long id);
-    /*Phương Thức Tìm Id là của chung*/
 
-    /*TuanPDCoding*/
     @Modifying
     @Query(value = "UPDATE location SET\n" +
             "       location.height = ?," +
