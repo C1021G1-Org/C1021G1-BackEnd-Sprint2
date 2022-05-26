@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -30,6 +30,12 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public void deleteEmployee(Long id) {
         employeeRepository.deleteEmployee(id);
+    }
+
+    @Override
+    public Page<Employee> findEmployeeByElemetContaining(String fromDate,String toDate, String name, String code, String address, Pageable pageable) {
+        return employeeRepository.findEmployeeByElemetContaining(fromDate,toDate,name,code,address,pageable);
+    }
 
     @Override
     public void createEmployee(EmployeeDto employeeDto) {

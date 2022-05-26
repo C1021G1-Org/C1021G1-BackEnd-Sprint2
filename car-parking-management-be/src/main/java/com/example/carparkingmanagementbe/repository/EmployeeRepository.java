@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Transactional
@@ -41,6 +42,20 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
      @Modifying
      @Query(value = "UPDATE employee SET del_flag = false WHERE  id =?",nativeQuery = true )
      void deleteEmployee(Long id);
+
+
+     @Query(value = "SELECT id,name,code,address,phone,gender,del_flag,birthday,id_position,account_id,id_ward \n" +
+             "FROM employee  WHERE del_flag = TRUE " +
+             "AND birthday BETWEEN ?1 AND ?2 \n" +
+             "AND name LIKE %?3% " +
+             "AND code LIKE %?4% " +
+             "AND address LIKE %?5%",countQuery = "select count(*) from employee",nativeQuery = true)
+     Page<Employee> findEmployeeByElemetContaining(String fromDate,String toDate, String name,String code,String address,Pageable pageable);
+
+
+
+
+
 
   //PhuHDQ
     @Modifying
