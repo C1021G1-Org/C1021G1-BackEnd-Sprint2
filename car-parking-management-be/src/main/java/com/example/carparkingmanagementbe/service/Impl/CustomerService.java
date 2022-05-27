@@ -16,6 +16,7 @@ public class CustomerService implements ICustomerService {
     @Autowired
    private CustomerRepository customerRepository;
 
+    //ThangDBX danh sach khach hang + xoa khach hàng
     @Override
     public Page<Customer> findAllCustomer(Pageable pageable) {
         return customerRepository.findAllCustomer(pageable);
@@ -24,6 +25,22 @@ public class CustomerService implements ICustomerService {
     @Override
     public Page<Customer> searchFullDate(String datestart, String enddate, String code, String phone, String id_card, Pageable page) {
         return customerRepository.searchfullDate(datestart, enddate, code,phone,id_card ,page);
+    }
+
+
+    @Override
+    public Page<Customer> searchEndDate(String date, String code, String phone, String id_card, Pageable page) {
+        return customerRepository.searchEndDate(date,code,phone,id_card,page);
+    }
+
+    @Override
+    public Page<Customer> searchStartDate(String date, String code, String phone, String id_card,Pageable page) {
+        return customerRepository.searchStartDate(date,code,phone, id_card,page);
+    }
+
+    @Override
+    public Page<Customer> searchCustomerNoDate(String code, String phone, String id_card, Pageable page) {
+        return customerRepository.searchCustomerNoDate(code,phone,id_card,page);
     }
 
 

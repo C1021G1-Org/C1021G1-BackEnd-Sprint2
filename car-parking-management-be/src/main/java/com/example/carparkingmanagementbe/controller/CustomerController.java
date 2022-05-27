@@ -15,7 +15,6 @@ import java.util.Optional;
 import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.Map;
 
 
 @RestController
-
 @CrossOrigin("*")
 @RequestMapping("/api/customer")
 public class CustomerController {
@@ -54,7 +52,23 @@ public class CustomerController {
                                                      @RequestParam(defaultValue = "",required = false) String id_card,
                                                         @RequestParam(defaultValue = "0") int page){
         Page<Customer> customerList = null;
+
+        if ("".equals(startDate) && "".equals(endDate)){
+            customerList = customerService.searchCustomerNoDate(code,phone,id_card, PageRequest.of(page,2));
+        }
+        if ("".equals(startDate) && !"".equals(endDate)){
+            customerList = customerService.searchEndDate(endDate,code,phone,id_card,PageRequest.of(page,2));
+        }
+        if (!"".equals(startDate) && "".equals(endDate)){
+            customerList = customerService.searchStartDate(startDate,code,phone,id_card,PageRequest.of(page,2));
+        }
+        if (!"".equals(startDate) && !"".equals(endDate)){
+            customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,2));
+        }
+
+
         customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,2));
+
 
         if (customerList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -167,4 +181,5 @@ public class CustomerController {
         }
         return new ResponseEntity<>(carList, HttpStatus.OK);
     }
+
 }
