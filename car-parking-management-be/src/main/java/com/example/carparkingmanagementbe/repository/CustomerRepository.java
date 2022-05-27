@@ -69,9 +69,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     //tronghd tạo câu lệnh query chỉnh sửa thông tin khách hàng
     @Transactional
     @Modifying
-    @Query(value = "UPDATE customer AS c SET c.code = ?1 , c.name = ?2, c.birthday = ?3, c.id_card = ?4," +
-            "c.email = ?5, c.phone = ?6, c.address = ?7, c.gender = ?8, c.del_flag = ?9, c.id_ward = ?10 WHERE id = ?11", nativeQuery = true)
-    void updateFlight(String code, String name, String birthday, String idCard,
+    @Query(value = "UPDATE customer AS c SET c.name = ?1, c.birthday = ?2, c.id_card = ?3," +
+            "c.email = ?4, c.phone = ?5, c.address = ?6, c.gender = ?7, c.del_flag = ?8, c.id_ward = ?9 WHERE id = ?10", nativeQuery = true)
+    void updateCustomer(String name, String birthday, String idCard,
                       String email, String phone, String address, Boolean gender, Boolean delFlag,Long ward, Long id);
 
 }

@@ -8,8 +8,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import com.example.carparkingmanagementbe.dto.CustomerDto;
 import com.example.carparkingmanagementbe.model.Car;
@@ -112,8 +116,19 @@ public class CustomerController {
 
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<?> updateFlight(@PathVariable Long id,@Valid @RequestBody CustomerDtoCheck customerDtoCheck) {
+    public ResponseEntity<?> updateFlight(@PathVariable Long id, @Valid @RequestBody CustomerDtoCheck customerDtoCheck,
+                                          BindingResult bindingResult) {
         customerDtoCheck.setId(id);
+        new CustomerDtoCheck().validate(customerDtoCheck, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            response.put("error", errorMap);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
         customerService.updateCustomer(customerDtoCheck);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
