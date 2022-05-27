@@ -3,5 +3,5 @@ package com.example.carparkingmanagementbe.repository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TicketTypeRepository {
+public interface TicketTypeRepository  {
 }

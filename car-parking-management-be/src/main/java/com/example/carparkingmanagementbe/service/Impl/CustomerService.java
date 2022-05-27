@@ -1,7 +1,5 @@
 package com.example.carparkingmanagementbe.service.Impl;
 import com.example.carparkingmanagementbe.dto.CustomerDto;
-
-
 import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
 import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.repository.CustomerRepository;
@@ -29,6 +27,7 @@ public class CustomerService implements ICustomerService {
         return customerRepository.searchfullDate(datestart, enddate, code,phone,id_card ,page);
     }
 
+
     @Override
     public Page<Customer> searchEndDate(String date, String code, String phone, String id_card, Pageable page) {
         return customerRepository.searchEndDate(date,code,phone,id_card,page);
@@ -55,10 +54,6 @@ public class CustomerService implements ICustomerService {
         return customerRepository.findCustomerById(id);
     }
 
-
-    // ----------------------------------------------------------------------------------------------
-
-
     //    Bảo thêm mới
     @Override
     public void createCustomer(CustomerDto customerDto) {
@@ -78,7 +73,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void updateCustomer(CustomerDtoCheck customerDtoCheck) {
-        customerRepository.updateFlight(customerDtoCheck.getCode(), customerDtoCheck.getName(), customerDtoCheck.getBirthday(),
+        customerRepository.updateCustomer(customerDtoCheck.getName(), customerDtoCheck.getBirthday(),
                 customerDtoCheck.getIdCard(),customerDtoCheck.getEmail(), customerDtoCheck.getPhone(),
                 customerDtoCheck.getAddress(), customerDtoCheck.getGender(), true, customerDtoCheck.getWard(),
                 customerDtoCheck.getId());

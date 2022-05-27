@@ -1,19 +1,15 @@
 package com.example.carparkingmanagementbe.repository;
 
-import com.example.carparkingmanagementbe.model.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.carparkingmanagementbe.model.Car;
 import org.springframework.data.jpa.repository.Modifying;
-
-
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car,Long> {
-
 
     //TrongHD thêm mới xe
     @Transactional
@@ -31,7 +27,7 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     @Query(value = "select count(car_plate) from car where car_plate = ?", nativeQuery = true)
     Integer finByCarPlate(String carPlate);
 
-    //BaoND lấy thông tin khách hàng
+    //BaoND lấy thông tin xe
     @Query(value = "select car.id," +
             "car.car_company," +
             "car.car_plate," +

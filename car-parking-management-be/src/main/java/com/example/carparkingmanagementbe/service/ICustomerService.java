@@ -21,6 +21,7 @@ public interface ICustomerService {
                                   String id_card,
                                   Pageable page);
 
+
     //ThangDBX search chi voi end Date
     Page<Customer> searchEndDate(String date,
                                  String code,
@@ -48,8 +49,7 @@ public interface ICustomerService {
     Optional<Customer> findCustomerById(Long id);
 
 
-
-
+    //BaoND tạo mới khách hàng
     void createCustomer(CustomerDto customerDto);
     void updateCustomer(CustomerDtoCheck customerDtoCheck);
 
