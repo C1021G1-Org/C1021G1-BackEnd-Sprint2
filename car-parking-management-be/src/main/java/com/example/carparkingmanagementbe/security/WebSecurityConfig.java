@@ -1,4 +1,4 @@
-//package com.example.carparkingmanagementbe.Security;
+package com.example.carparkingmanagementbe.security;//package com.example.carparkingmanagementbe.Security;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //
