@@ -21,6 +21,7 @@ public class CarType {
     private Long id;
     private String name;
     private Double price;
+
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "carType")
     private Set<Car> carSet;
