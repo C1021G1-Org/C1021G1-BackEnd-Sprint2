@@ -44,14 +44,26 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
      void deleteEmployee(Long id);
 
 
-     @Query(value = "SELECT id,name,code,address,phone,gender,del_flag,birthday,id_position,account_id,id_ward \n" +
-             "FROM employee  WHERE del_flag = TRUE " +
-             "AND birthday BETWEEN ?1 AND ?2 \n" +
-             "AND name LIKE %?3% " +
-             "AND code LIKE %?4% " +
-             "AND address LIKE %?5%",countQuery = "select count(*) from employee",nativeQuery = true)
-     Page<Employee> findEmployeeByElemetContaining(String fromDate,String toDate, String name,String code,String address,Pageable pageable);
+//     @Query(value = "SELECT id,name,code,address,phone,gender,del_flag,birthday,id_position,account_id,id_ward \n" +
+//             "FROM employee  WHERE del_flag = TRUE " +
+//             "AND birthday BETWEEN ?1 AND ?2 \n" +
+//             "AND name LIKE %?3% " +
+//             "AND code LIKE %?4% " +
+//             "AND address LIKE %?5%",countQuery = "select count(*) from employee",nativeQuery = true)
+//     Page<Employee> findEmployeeByElemetContaining(String fromDate,String toDate, String name,String code,String address,Pageable pageable);
 
+
+    @Query(value = "SELECT employee.id,employee.`name`,employee.`code`,\n" +
+            "employee.address,employee.phone,employee.gender,employee.del_flag,employee.birthday,\n" +
+            "employee.id_position,employee.account_id,employee.id_ward \n" +
+            "FROM employee \n" +
+            "INNER JOIN ward ON employee.id_ward = ward.id \n" +
+            "INNER JOIN district ON ward.id_district = district.id\n" +
+            "INNER JOIN province ON ward.id_province = province.id\n" +
+            "WHERE del_flag = TRUE AND birthday BETWEEN ?1 AND ?2\n" +
+            "AND employee.`name` LIKE %?3% AND\n" +
+            "employee.`code` LIKE %?4% AND CONCAT(employee.address,ward.name,district.name,province.name) like %?5%",countQuery = "SELECT COUNT(*) FROM employee",nativeQuery = true)
+    Page<Employee> findEmployeeByElemetContaining(String fromDate,String toDate, String name,String code,String address,Pageable pageable);
 
 
 
