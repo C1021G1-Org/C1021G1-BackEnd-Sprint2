@@ -20,6 +20,7 @@ public class TicketType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private Double price;
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ticketType")
     private Set<Ticket> ticketSet;
