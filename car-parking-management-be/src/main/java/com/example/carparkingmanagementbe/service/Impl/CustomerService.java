@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerService implements ICustomerService {
     @Autowired
@@ -19,8 +21,18 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<Customer> searchfullDate(String code,String phone,String idCard,String datestart,String enddate,
-                                         Pageable page) {
-        return customerRepository.searchfullDate(code, phone, idCard, datestart, enddate, page);
+    public Page<Customer> searchFullDate(String datestart, String enddate, String code, String phone, String id_card, Pageable page) {
+        return customerRepository.searchfullDate(datestart, enddate, code,phone,id_card ,page);
+    }
+
+
+    @Override
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteCustomer(id);
+    }
+
+    @Override
+    public Optional<Customer> findCustomerById(Long id) {
+        return customerRepository.findCustomerById(id);
     }
 }
