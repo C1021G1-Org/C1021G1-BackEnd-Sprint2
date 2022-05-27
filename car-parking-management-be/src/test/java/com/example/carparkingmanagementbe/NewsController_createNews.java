@@ -2,6 +2,7 @@ package com.example.carparkingmanagementbe;
 
 import com.example.carparkingmanagementbe.controller.NewsController;
 import com.example.carparkingmanagementbe.dto.NewsDto;
+import com.example.carparkingmanagementbe.model.NewsType;
 import com.example.carparkingmanagementbe.service.Impl.NewsService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -36,13 +37,14 @@ public class NewsController_createNews {
     public void createNews_code_13() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setId(1L);
-        newsDto.setCode(null);
+        newsDto.setCode("ne-0001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
         newsDto.setTitle("Con gà ăn cơm tấm");
         newsDto.setDate("2022-01-01 18:00:00");
         newsDto.setDescription("Tádknsadbsahdbasgdaygsdhjabsdhjbashdjavjhgdsad");
         newsDto.setImg("img");
         newsDto.setDelFlag(true);
+//        newsDto.setNewsType()
 
 
         this.mockMvc
