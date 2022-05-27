@@ -5,7 +5,6 @@ import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
 import com.example.carparkingmanagementbe.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import java.util.Optional;
 
 public interface ICustomerService {
@@ -28,7 +27,7 @@ public interface ICustomerService {
     //ThangDBX kiem tra id co ton tai hay khong
     Optional<Customer> findCustomerById(Long id);
 
-
+    //BaoND tạo mới khách hàng
     void createCustomer(CustomerDto customerDto);
     void updateCustomer(CustomerDtoCheck customerDtoCheck);
 

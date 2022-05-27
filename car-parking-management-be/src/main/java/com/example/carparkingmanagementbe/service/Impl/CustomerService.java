@@ -1,7 +1,5 @@
 package com.example.carparkingmanagementbe.service.Impl;
 import com.example.carparkingmanagementbe.dto.CustomerDto;
-
-
 import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
 import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.repository.CustomerRepository;

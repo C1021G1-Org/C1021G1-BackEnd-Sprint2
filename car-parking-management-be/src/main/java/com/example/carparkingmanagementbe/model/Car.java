@@ -24,10 +24,6 @@ public class Car {
     private String carPlate;
     private String carCompany;
 
-    @Column(columnDefinition = "DATE")
-    private String startDate;
-    @Column(columnDefinition = "DATE")
-    private String endDate;
 
 
     private Boolean delFlag;
