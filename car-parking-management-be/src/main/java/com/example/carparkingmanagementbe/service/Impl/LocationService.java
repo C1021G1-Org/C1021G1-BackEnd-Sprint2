@@ -22,7 +22,6 @@ public class LocationService implements ILocationService {
     @Autowired
     private FloorsRepository floorsRepository;
 
-
     /*Find By Id Dùng Chung*/
     @Override
     public Location findLocationById(Long id) {
@@ -32,25 +31,16 @@ public class LocationService implements ILocationService {
 
     /*TuanPDCoding*/
     @Override
-    public void createLocation(LocationDto locationDto) {
-        locationRepository.createLocation(locationDto.getCode(), locationDto.getNumber(), locationDto.getDelFlag(), locationDto.getIsEmpty(), locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getDescription(), locationDto.getId_floor());
+    public void createLocation(Location location) {
+        locationRepository.save(location);
     }
 
-    @Override
-    public void editLocation(LocationDto locationDto) {
-        locationRepository.editLocationById(locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getId());
-    }
-
-    @Override
-    public void editAllowParkingById(Location location) {
-        locationRepository.editAllowParkingById(location.getId(), location.getAllowedCarParkingSet());
-    }
-
-    @Override
-    public void createAllowParking(LocationDto locationDto, Set<AllowedCarParking> allowedCarParking) {
-        locationRepository.createAllowParking(locationDto.getId_floor(), allowedCarParking);
-    }
     /*TuanPDCoding*/
+    @Override
+    public void editLocation(Location location) {
+        locationRepository.save(location);
+    }
+
 
     /*TinhHDCoding*/
     @Override

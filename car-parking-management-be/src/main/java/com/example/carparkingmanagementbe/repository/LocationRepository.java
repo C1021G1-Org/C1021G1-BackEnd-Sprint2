@@ -22,40 +22,9 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     @Query(value = "SELECT location.id, location.code, location.del_flag, location.description, location.height, " +
             "location.is_empty, location.length, location.number, location.width, location.id_floor " +
             "FROM location WHERE location.id = ? " +
-            "AND location.is_empty = 0 AND del_flag = 1 ", nativeQuery = true)
+            "AND del_flag = 1 ", nativeQuery = true)
     Location findLocationById(Long id);
     /*Find By Id Dùng Chung*/
-
-    /*TuanPDCoding*/
-    @Modifying
-    @Query(value = "UPDATE location SET\n" +
-            "       location.height = ?," +
-            "       location.length = ?,\n" +
-            "       location.width = ?\n" +
-            "       WHERE location.id  = ?", nativeQuery = true)
-    void editLocationById(Double height, Double length, Double width, Long id);
-
-    @Modifying
-    @Query(value = "INSERT INTO location" +
-            "(location.code, location.number, location.del_flag, location.is_empty, location.height, location.length," +
-            " location.width, location.description, location.id_floor) " +
-            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9)", nativeQuery = true)
-    void createLocation(String code, Long number, Boolean del_flag, Boolean is_empty,
-                        Double height, Double length, Double width, String description, Long id_floor);
-
-    @Modifying
-    @Query(value = "UPDATE location_allowed_car_parking SET \n" +
-            " location.id = ?" +
-            " allow_car_parking_id\n" +
-            "WHERE location.id = ?", nativeQuery = true)
-    void editAllowParkingById(Long id, Set<AllowedCarParking> allowCarParking);
-
-    @Modifying
-    @Query(value = "INSERT INTO location_allowed_car_parking \n" +
-            "(location_id, allowed_car_parking_id) \n" +
-            "VALUES (LAST_INSERT_ID(), ?1)", nativeQuery = true)
-    void createAllowParking(Long id_floor, Set<AllowedCarParking> allowCarParking);
-    /*TuanPDCoding*/
 
     /*TinhHDCoding*/
     @Transactional

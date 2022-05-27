@@ -16,13 +16,9 @@ public interface ILocationService {
     /*Find By Id Dùng Chung*/
 
     /*TuanPDCoding*/
-    void createLocation(LocationDto locationDto);
+    void createLocation(Location location);
 
-    void editLocation(LocationDto locationDto);
-
-    void editAllowParkingById(Location location);
-
-    void createAllowParking(LocationDto locationDto, Set<AllowedCarParking> allowedCarParking);
+    void editLocation(Location location);
     /*TuanPDCoding*/
 
     Page<LocationList> findAll(String code,String id,int page);
