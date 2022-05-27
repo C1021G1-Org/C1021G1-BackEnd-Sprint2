@@ -1,4 +1,4 @@
-package com.example.carparkingmanagementbe;
+package com.example.carparkingmanagementbe.news;
 
 import com.example.carparkingmanagementbe.controller.NewsController;
 import com.example.carparkingmanagementbe.service.Impl.NewsService;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class NewsController_getAllNews {
+public class NewsController_getAllNews_sonnh {
     @Autowired
     private NewsController newsController;
 

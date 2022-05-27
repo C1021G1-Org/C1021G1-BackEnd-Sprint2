@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -57,14 +59,31 @@ public class NewsController {
     @PatchMapping("/updateNews/{id}")
     public ResponseEntity<?> updateNews(@Valid @RequestBody NewsDto newsDto, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
-
-            return new ResponseEntity<>(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.NOT_ACCEPTABLE);
-        } else {
+            Map<String, String> errorMap = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            response.put("error", errorMap);
+            return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
+        }
 
             newsService.updateNews(id, newsDto);
-            return new ResponseEntity<Void>(HttpStatus.OK);
+            return new ResponseEntity<Void>(HttpStatus.CREATED);
         }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
     }
+
 
     //SonNH
     @GetMapping("/list")
