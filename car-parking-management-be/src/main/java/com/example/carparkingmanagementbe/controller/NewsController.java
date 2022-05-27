@@ -34,9 +34,7 @@ public class NewsController {
             response.put("error", errorMap);
             return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
         } else {
-            News news = new News();
-            BeanUtils.copyProperties(newsDto, news);
-            newsService.createNews(news);
+            newsService.createNews(newsDto);
             return new ResponseEntity<Void>(HttpStatus.CREATED);
         }
     }
@@ -62,10 +60,8 @@ public class NewsController {
 
             return new ResponseEntity<>(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.NOT_ACCEPTABLE);
         } else {
-            News news = new News();
-            System.out.println(newsDto);
-            BeanUtils.copyProperties(newsDto, news);
-            newsService.updateNews(id, news);
+
+            newsService.updateNews(id, newsDto);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }
     }

@@ -1,9 +1,7 @@
 package com.example.carparkingmanagementbe.dto;
 
-import com.example.carparkingmanagementbe.model.NewsType;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -34,7 +32,7 @@ public class NewsDto {
     private Boolean delFlag;
 
     @NotNull(message = "Vui lòng chọn loại tin tức")
-    private NewsType newsType;
+    private Long idNewsType;
 
     public NewsDto() {
     }
@@ -103,11 +101,11 @@ public class NewsDto {
         this.delFlag = delFlag;
     }
 
-    public NewsType getNewsType() {
-        return newsType;
+    public Long getIdNewsType() {
+        return idNewsType;
     }
 
-    public void setNewsType(NewsType newsType) {
-        this.newsType = newsType;
+    public void setIdNewsType(Long idNewsType) {
+        this.idNewsType = idNewsType;
     }
 }

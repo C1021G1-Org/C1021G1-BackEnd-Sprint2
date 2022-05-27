@@ -11,7 +11,7 @@ import java.util.List;
 
 @Transactional
 @Repository
-public interface NewsRepository extends JpaRepository<News, Long> {
+public interface    NewsRepository extends JpaRepository<News, Long> {
     @Modifying
     @Query(value = "insert into news (news.code, news.date, news.author, news.del_flag, news.title , news.img, news.description, news.id_news_type) " +
             "values(?1, ?2, ?3 , ?4 , ?5, ?6, ?7, ?8)", nativeQuery = true)
