@@ -1,6 +1,5 @@
 package com.example.carparkingmanagementbe.controller;
 
-
 import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import com.example.carparkingmanagementbe.dto.CustomerDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.service.ICarService;
-
 import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
-
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 

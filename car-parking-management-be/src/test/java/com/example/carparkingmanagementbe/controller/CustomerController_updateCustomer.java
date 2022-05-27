@@ -529,4 +529,26 @@ public class CustomerController_updateCustomer {
                 .andExpect(status().is4xxClientError());
     }
 
+    @Test
+    public void updateCustomer_24() throws Exception {
+        CustomerDtoCheck customerDtoCheck = new CustomerDtoCheck();
+        customerDtoCheck.setId(1L);
+        customerDtoCheck.setCode("KH-001");
+        customerDtoCheck.setName("Ngô Duy Bảo");
+        customerDtoCheck.setBirthday("1995-09-08");
+        customerDtoCheck.setIdCard("203469874120");
+        customerDtoCheck.setEmail("ngobao@gmail.com");
+        customerDtoCheck.setPhone("0359874611");
+        customerDtoCheck.setAddress("64 Hà Huy Tập");
+        customerDtoCheck.setGender(true);
+        customerDtoCheck.setWard(966L);
+
+        this.mockMvc.perform(MockMvcRequestBuilders
+                        .patch("/api/customer/update/1")
+                        .content(this.objectMapper.writeValueAsString(customerDtoCheck))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful());
+    }
+
 }
