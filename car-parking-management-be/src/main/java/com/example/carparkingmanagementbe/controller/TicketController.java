@@ -50,7 +50,7 @@ public class TicketController {
         return new ResponseEntity<>(ticketPage, HttpStatus.OK);
     }
 
-    @PostMapping("/search")
+    @GetMapping("/search")
     public ResponseEntity<Page<Ticket>> getSearchTicketPage(@RequestBody TicketDtoSearch ticketDtoSearch, @RequestParam(defaultValue = "0") int page) {
         PageRequest pageRequest = PageRequest.of(page, 5);
         Page<Ticket> ticketPage = ticketService.searchTicketPage(ticketDtoSearch.getFloor(),
