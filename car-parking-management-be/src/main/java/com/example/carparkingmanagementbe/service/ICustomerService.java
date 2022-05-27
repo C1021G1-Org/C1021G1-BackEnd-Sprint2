@@ -1,9 +1,10 @@
 package com.example.carparkingmanagementbe.service;
 
+import com.example.carparkingmanagementbe.dto.CustomerDto;
+import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
 import com.example.carparkingmanagementbe.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -26,4 +27,9 @@ public interface ICustomerService {
 
     //ThangDBX kiem tra id co ton tai hay khong
     Optional<Customer> findCustomerById(Long id);
+
+
+    void createCustomer(CustomerDto customerDto);
+    void updateCustomer(CustomerDtoCheck customerDtoCheck);
+
 }
