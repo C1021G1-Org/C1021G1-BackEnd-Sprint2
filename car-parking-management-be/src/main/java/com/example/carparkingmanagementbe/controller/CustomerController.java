@@ -49,6 +49,8 @@ public class CustomerController {
         customerService.createCustomer(customerDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+//    Bảo Validate
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
@@ -63,7 +65,7 @@ public class CustomerController {
     }
 //    Bảo hiển thị
     @GetMapping("/detail/{id}")
-    public ResponseEntity<List<Car>> findCustomerById(@PathVariable Long id) {
+    public ResponseEntity<List<Car>> findCarByCustomerId(@PathVariable Long id) {
         List<Car> carList = carService.selectCar(id);
         if (carList == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
