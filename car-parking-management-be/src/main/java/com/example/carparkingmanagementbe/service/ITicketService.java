@@ -1,6 +1,7 @@
 package com.example.carparkingmanagementbe.service;
 
 import com.example.carparkingmanagementbe.model.Ticket;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
@@ -23,4 +24,17 @@ public interface ITicketService {
     Ticket getTicketById(Long idTicket);
 
     // tam end
+
+
+    //    LongLT
+    Ticket findTicketById(Long id);
+
+    void updateTicket(Long idLocation,
+                      Double sumPrice,
+                      Long idTicketType,
+
+                      String endDate,
+                      Long idTicket );
+//    LongLT End
+
 }

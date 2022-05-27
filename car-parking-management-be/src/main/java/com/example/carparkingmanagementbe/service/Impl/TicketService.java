@@ -8,11 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
-public class TicketServiceImpl implements ITicketService {
-
+public class TicketService implements ITicketService {
 
     // tam begin
     @Autowired
@@ -40,4 +37,20 @@ public class TicketServiceImpl implements ITicketService {
 
 
     // tam end
+
+
+
+    //    LongLT
+
+
+    @Override
+    public Ticket findTicketById(Long id) {
+
+        return ticketRepository.findByIdTicket(id);
+    }
+    @Override
+    public void updateTicket(Long idLocation, Double sumPrice, Long idTicketType, String endDate, Long idTicket) {
+        ticketRepository.updateTicket(idLocation, sumPrice, idTicketType, endDate, idTicket);
+    }
+//    LongLT
 }
