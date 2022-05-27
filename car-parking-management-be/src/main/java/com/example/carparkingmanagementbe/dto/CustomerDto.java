@@ -1,9 +1,10 @@
 package com.example.carparkingmanagementbe.dto;
-
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 
 public class CustomerDto implements Validator {
@@ -137,6 +138,17 @@ public class CustomerDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        CustomerDto customerDto = (CustomerDto) target;
+        String inputBirthday = customerDto.getBirthday();
+        if (inputBirthday != null) {
+            LocalDate birthDay = LocalDate.parse(inputBirthday, formatter);
+            LocalDate current = LocalDate.now();
+            int betweenDate =  Period.between(birthDay, current).getYears();
+            if(betweenDate<18){
+                errors.rejectValue("birthday","","Khách hàng phải lớn hơn 18 tuổi.");
+            }
+        }
 
     }
 }

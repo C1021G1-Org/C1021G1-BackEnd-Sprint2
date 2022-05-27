@@ -1,7 +1,6 @@
 package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.model.District;
-import com.example.carparkingmanagementbe.model.Province;
 import com.example.carparkingmanagementbe.service.IDistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,27 +1,18 @@
 package com.example.carparkingmanagementbe.controller;
-
-
-
 import com.example.carparkingmanagementbe.dto.CustomerDto;
 import com.example.carparkingmanagementbe.model.Car;
-
 import com.example.carparkingmanagementbe.service.ICarService;
-import com.example.carparkingmanagementbe.service.ICustomerService;
-
-
 import com.example.carparkingmanagementbe.model.Customer;
-
+import com.example.carparkingmanagementbe.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Optional;
-
 import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
-
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
@@ -89,7 +80,7 @@ public class CustomerController {
 
 //    Bảo thêm mới
     @PostMapping("/create")
-    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto){
+    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto,BindingResult bindingResult){
         char[] charArray = customerDto.getName().toCharArray();
         boolean foundSpace = true;
         for (int i = 0; i < charArray.length; i++) {
@@ -101,6 +92,16 @@ public class CustomerController {
             } else {
                 foundSpace = true;
             }
+        }
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            response.put("error", errorMap);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         customerDto.setName(String.valueOf(charArray));
         customerService.createCustomer(customerDto);
@@ -121,14 +122,29 @@ public class CustomerController {
 
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<?> updateFlight(@PathVariable Long id,@Valid @RequestBody CustomerDtoCheck customerDtoCheck) {
+    public ResponseEntity<?> updateFlight(@PathVariable Long id, @Valid @RequestBody CustomerDtoCheck customerDtoCheck,
+                                          BindingResult bindingResult) {
         customerDtoCheck.setId(id);
+        new CustomerDtoCheck().validate(customerDtoCheck, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            response.put("error", errorMap);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
         customerService.updateCustomer(customerDtoCheck);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
 
+
 //    Validate thêm mới
+
+    // tronghd validate dữ liệu thêm mới
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(

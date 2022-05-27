@@ -56,7 +56,7 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void updateCustomer(CustomerDtoCheck customerDtoCheck) {
-        customerRepository.updateFlight(customerDtoCheck.getCode(), customerDtoCheck.getName(), customerDtoCheck.getBirthday(),
+        customerRepository.updateCustomer(customerDtoCheck.getName(), customerDtoCheck.getBirthday(),
                 customerDtoCheck.getIdCard(),customerDtoCheck.getEmail(), customerDtoCheck.getPhone(),
                 customerDtoCheck.getAddress(), customerDtoCheck.getGender(), true, customerDtoCheck.getWard(),
                 customerDtoCheck.getId());
