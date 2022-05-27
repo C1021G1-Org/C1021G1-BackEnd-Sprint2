@@ -43,6 +43,5 @@ public class Location {
     @ManyToOne
     @JoinColumn(name = "id_floor", referencedColumnName = "id")
     private Floor floor;
-
 }
 
