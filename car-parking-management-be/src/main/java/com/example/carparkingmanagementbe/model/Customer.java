@@ -40,5 +40,6 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "id_ward", referencedColumnName = "id")
     private Ward ward;
+
 }
 
