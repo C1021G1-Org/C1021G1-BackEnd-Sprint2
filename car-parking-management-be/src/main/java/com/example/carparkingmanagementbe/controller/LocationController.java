@@ -8,34 +8,78 @@ import com.example.carparkingmanagementbe.service.ILocationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.carparkingmanagementbe.dto.LocationList;
+
+import com.example.carparkingmanagementbe.dto.LocationDto;
+import com.example.carparkingmanagementbe.model.AllowedCarParking;
+
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.example.carparkingmanagementbe.dto.LocationList;
 import org.springframework.data.domain.Page;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Set;
+
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-
 @RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping(value = "/api/location")
+@RequestMapping("/api/location")
 public class LocationController {
-    //anh tinh code
+
     @Autowired
     private ILocationService iLocationService;
 
+    /*TuanPDCoding*/
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findLocationByIdDto(@PathVariable Long id) {
+        Location location = iLocationService.findLocationById(id);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(location, HttpStatus.OK);
+    }
+    /*TuanPDCoding*/
+    @PostMapping(value = "/create")
+    public ResponseEntity<?> createLocation(@Valid @RequestBody LocationDto locationDto, Set<AllowedCarParking> allowedCarParking, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.NOT_FOUND);
+        }
+        iLocationService.createLocation(locationDto);
+        iLocationService.createAllowParking(locationDto, allowedCarParking);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    /*TuanPDCoding*/
+    @PatchMapping(value = "/update/{id}")
+    public ResponseEntity<?> updateLocation(@Valid @RequestBody LocationDto locationDto, Location location, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ResponseEntity<>(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.NOT_FOUND);
+        }
+        iLocationService.editLocation(locationDto);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+
+    /*TinhHDCoding*/
     @GetMapping("/list")
     public ResponseEntity<Page<LocationList>> getAllLocation(@RequestParam(defaultValue = "") String code,
                                                              @RequestParam(defaultValue = "") String id,
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
+        System.out.println(locationPage.getTotalPages());
+        if(locationPage.getTotalPages()<=page){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         if (locationPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -86,17 +130,7 @@ public class LocationController {
 
     }
 
-    //tìm id trongTa
-    @GetMapping("/{id}")
-    public ResponseEntity<Location> getALlId(@PathVariable Long id) {
-        Location location = iLocationService.findLocationById(id);
-        if (location == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            return new ResponseEntity<>(location, HttpStatus.OK);
-        }
 
-    }
 
     //xóa location trongTa
     @DeleteMapping("/delete/{id}")
@@ -105,12 +139,18 @@ public class LocationController {
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         if (location.getIsEmpty()) {
             Map<String, String> error = new HashMap<>();
             error.put("isEmpty", "vi tri nay dang co nguoi dau xe khong the xoa");
             return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
+
         iLocationService.deleteLocationById(id);
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 }
+
+
+
+

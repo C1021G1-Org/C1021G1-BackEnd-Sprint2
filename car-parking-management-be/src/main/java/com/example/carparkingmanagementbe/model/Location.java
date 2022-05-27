@@ -1,6 +1,7 @@
 package com.example.carparkingmanagementbe.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Location {
     private Boolean delFlag;
     private Boolean isEmpty;
     private String description;
+
     @OneToOne(mappedBy = "location")
     @JsonBackReference
     private Ticket ticket;
@@ -41,10 +43,12 @@ public class Location {
     @ManyToOne
     @JoinColumn(name = "id_floor", referencedColumnName = "id")
     private Floor floor;
+
     public static void main(String[] args) {
         Location location =new Location();
 
         System.out.println(location.ticket.getCar().getCustomer().getName());
     }
+
 }
 

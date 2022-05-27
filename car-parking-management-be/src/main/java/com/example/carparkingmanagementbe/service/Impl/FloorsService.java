@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FloorsService implements IFloorsService {
+
 @Autowired
 private FloorsRepository repository;
     @Override
     public Floor findFloorsById(Long id) {
         return repository.findById(id).orElse(null) ;
     }
+
 }
