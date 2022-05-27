@@ -15,4 +15,5 @@ public interface ILocationService {
     Page<Location> getAllLocation(Pageable pageable);
     Location findLocationById(Long id);
     void updateColorLocation(Long id);
+    Page<Location> findAllLocation(Pageable pageable);
 }

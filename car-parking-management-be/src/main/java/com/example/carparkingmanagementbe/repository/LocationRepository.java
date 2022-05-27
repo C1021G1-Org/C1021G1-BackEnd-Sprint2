@@ -5,6 +5,7 @@ import com.example.carparkingmanagementbe.model.Location;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public interface LocationRepository extends JpaRepository<Location,Long> {
     //anh tinh code
     @Transactional
@@ -51,10 +53,8 @@ Page<Location> getAllLocation(Pageable pageable);
             nativeQuery = true)
     Location findLocationById(Long id);
 
-    @Query(value = "UPDATE location " +
-            "SET is_empty = 1 " +
-            "WHERE id = ? " +
-            "AND location.is_empty = 0 ",
+    @Modifying
+    @Query(value = "UPDATE location SET is_empty = 1 WHERE id = ? ",
             nativeQuery = true)
     void updateIsEmpty(Long id);
 }
