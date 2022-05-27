@@ -22,6 +22,7 @@ public class Floor {
     private Long id;
     private String name;
     private Boolean delFlag;
+
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "floor")
     private Set<Location> locationSet;
