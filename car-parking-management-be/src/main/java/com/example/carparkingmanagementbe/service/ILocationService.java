@@ -23,15 +23,11 @@ public interface ILocationService {
     Location findLocationById(Long id);
 
     /*TuanPDCoding*/
-    void createLocation(LocationDto locationDto);
+    void createLocation(Location location);
 
-    /*TuanPDCoding*/
-    void editLocation(LocationDto locationDto);
 
-    /*TuanPDCoding*/
-    void editAllowParkingById(Location location);
+    void editLocation(Location location);
 
-    void createAllowParking(LocationDto locationDto, Set<AllowedCarParking> allowedCarParking);
     /*TuanPDCoding*/
 
     //Xoa vi tri do cua trongTA
