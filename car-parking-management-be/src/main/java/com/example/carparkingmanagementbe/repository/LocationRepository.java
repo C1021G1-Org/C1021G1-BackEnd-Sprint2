@@ -41,7 +41,10 @@ import java.util.Set;
 
 @Transactional
 @Repository
-public interface LocationRepository extends JpaRepository<Location, Long> {
+
+public interface LocationRepository extends JpaRepository<Location,Long> {
+    //anh tinh code
+
 
     //detail location TrongTA
     @Query(value = "SELECT location.id, location.code, floor.name as nameFloor, customer.name as nameCustomer,\n" +
@@ -109,6 +112,7 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 
 
     /*TinhHDCoding*/
+
     @Transactional
     @Query(value = "SELECT location.id,location.code,location.id_floor as floorId , floor.name as floorName FROM location JOIN floor on  location.id_floor = floor.id  where location.code like %?1% and id_floor like %?2%  and location.del_flag = 1", nativeQuery = true)
     List<LocationList> findByList(String code, String id);
@@ -149,13 +153,9 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             nativeQuery = true)
     Location findByIdLocation(Long id);
 
-
     //datNVN code update
-    @Query(value = "UPDATE location " +
-            "SET is_empty = 1 " +
-            "WHERE id = ? " +
-            "AND location.is_empty = 0 ",
-            nativeQuery = true)
+    @Modifying
+    @Query(value = "UPDATE location SET is_empty = 1 WHERE id = ? ",nativeQuery = true)
     void updateIsEmpty(Long id);
 
 }

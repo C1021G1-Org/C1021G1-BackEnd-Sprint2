@@ -110,5 +110,11 @@ public class LocationService implements ILocationService {
         locationRepository.updateIsEmpty(id);
     }
 
+
+    @Override
+    public Page<Location> findAllLocation(Pageable pageable) {
+        return locationRepository.findAll(pageable);
+    }
+
 }
 
