@@ -1,11 +1,12 @@
 package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.dto.LocationList;
-
+import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:4200")
 @RequestMapping(value = "/api/location")
 public class LocationController {
+    //anh tinh code
     @Autowired
     private ILocationService iLocationService;
 
@@ -28,5 +30,33 @@ public class LocationController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(locationPage, HttpStatus.OK);
+    }
+    // dat code
+    @GetMapping("/map-parking")
+    public ResponseEntity<Page<Location>> getAllLocation(@RequestParam(defaultValue = "0") int page) {
+        Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 86));
+        if (getAllLocation.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(getAllLocation, HttpStatus.OK);
+    }
+
+    @GetMapping("/map-parking/{id}")
+    public ResponseEntity<Location> findLocationById(@PathVariable Long id) {
+        Location location = iLocationService.findLocationById(id);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(location,HttpStatus.OK);
+    }
+
+    @PatchMapping("/update-map-parking/{id}")
+    public ResponseEntity<Location> updateColorLocation(@PathVariable Long id) {
+        Location location = iLocationService.findLocationById(id);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        iLocationService.updateColorLocation(id);
+        return new ResponseEntity<>(location,HttpStatus.OK);
     }
 }

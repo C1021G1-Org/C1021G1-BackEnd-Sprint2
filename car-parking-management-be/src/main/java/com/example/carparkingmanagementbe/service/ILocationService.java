@@ -11,4 +11,8 @@ public interface ILocationService {
 //    Page<Location> search(String code, Long name, Pageable pageable);
 
     Page<LocationList> findAll(String code,String id,int page);
+
+    Page<Location> getAllLocation(Pageable pageable);
+    Location findLocationById(Long id);
+    void updateColorLocation(Long id);
 }
