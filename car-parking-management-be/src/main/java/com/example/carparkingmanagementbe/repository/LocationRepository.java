@@ -15,6 +15,6 @@ import java.util.List;
 @Repository
 public interface LocationRepository extends JpaRepository<Location,Long> {
     @Transactional
-    @Query(value = "SELECT location.id,location.code,location.id_floor as floorId , floor.name as floorName FROM location JOIN floor on  location.id_floor = location.id  where location.code like %?1% and id_floor like %?2%  and location.del_flag = 1",nativeQuery = true)
+    @Query(value = "SELECT location.id,location.code,location.id_floor as floorId , floor.name as floorName FROM location JOIN floor on  location.id_floor = floor.id  where location.code like %?1% and id_floor like %?2%  and location.del_flag = 1",nativeQuery = true)
     List<LocationList> findByList(String code,String id);
 }
