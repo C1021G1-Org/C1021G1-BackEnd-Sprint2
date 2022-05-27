@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "ticket")
 public class Ticket {
@@ -18,6 +17,10 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
+    @Column(columnDefinition = "DATE")
+    private String startDate;
+    @Column(columnDefinition = "DATE")
+    private String endDate;
     @Column(columnDefinition = "LONGTEXT")
     private String imgCarIn;
     @Column(columnDefinition = "LONGTEXT")
@@ -28,7 +31,7 @@ public class Ticket {
     private String timeOut;
     private Boolean delFlag;
     private Boolean isDoing;
-    private Double price;
+    private Double sumPrice;
     @ManyToOne
     @JoinColumn(name = "id_ticket_type", referencedColumnName = "id")
     private TicketType ticketType;
