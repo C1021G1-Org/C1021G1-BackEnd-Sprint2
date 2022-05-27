@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -21,7 +23,7 @@ import java.util.Optional;
 public class LocationController {
     @Autowired
     private ILocationService iLocationService;
-
+    // detail location parking TrongTa
     @GetMapping("/detail/{id}")
     public ResponseEntity<LocationDetailDto> getId(@PathVariable Long id) {
         LocationDetailDto location = iLocationService.findById(id);
@@ -33,6 +35,7 @@ public class LocationController {
         }
 
     }
+    //tìm id trongTa
     @GetMapping("/{id}")
     public ResponseEntity<Location> getALlId(@PathVariable Long id) {
         Location location = iLocationService.findLocationById(id);
@@ -45,15 +48,23 @@ public class LocationController {
 
     }
 
-
-    @DeleteMapping("/delete-location/{id}")
-    public ResponseEntity<Location> deleteNews(@PathVariable Long id) {
-        Location news = iLocationService.findLocationById(id);
-        if (news == null) {
+    //xóa location trongTa
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteNews(@PathVariable Long id) {
+        Location location = iLocationService.findLocationById(id);
+        if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        iLocationService.deleteLocationById(id);
-        return new ResponseEntity<>(news, HttpStatus.OK);
+        if (location.getIsEmpty()) {
+            Map<String,String> error =new HashMap<>();
+            error.put("isEmpty" ,"vi tri nay dang co nguoi dau xe khong the xoa");
+            return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+        }
+
+
+            iLocationService.deleteLocationById(id);
+            return new ResponseEntity<>(location, HttpStatus.OK);
+
     }
 
 }

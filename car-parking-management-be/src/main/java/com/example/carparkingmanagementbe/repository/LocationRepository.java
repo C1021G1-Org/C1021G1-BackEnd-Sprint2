@@ -44,20 +44,16 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "\tJOIN car on ticket.id_car = car.id\n" +
             "\tJOIN car_type on car_type.id = car.id_car_type\n" +
             "\tJOIN customer on customer.id = car.id_customer\n" +
-            "WHERE location.id = 2", nativeQuery = true)
+            "WHERE location.id = ?", nativeQuery = true)
     Location findLocationById(Long id);
 
-
+//Xóa vị trí đỗ TrongTA
     @Modifying
     @Query(value = "UPDATE location" +
-            " SET location.del_flag = 0 " +
+            " SET location.del_flag = 0  and location.is_empty = 0 " +
             "where location.id = ?", nativeQuery = true)
     void removeLocationById(Long id);
-//    @Query(value = "SELECT location.id,location.code,location.del_flag,location.description,location.height,location.is_empty,\n" +
-//            "location.length,location.number,location.width,location.id_floor, floor.name \n" +
-//            "\tFROM location JOIN floor ON location.id_floor =floor.id\n" +
-//            "    WHERE location.id =?", nativeQuery = true)
-//    Location findLocationById(Long id);
+
 }
 
 
