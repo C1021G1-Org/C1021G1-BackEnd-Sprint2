@@ -43,5 +43,12 @@ public class Location {
     @ManyToOne
     @JoinColumn(name = "id_floor", referencedColumnName = "id")
     private Floor floor;
+
+    public static void main(String[] args) {
+        Location location =new Location();
+
+        System.out.println(location.ticket.getCar().getCustomer().getName());
+    }
+
 }
 
