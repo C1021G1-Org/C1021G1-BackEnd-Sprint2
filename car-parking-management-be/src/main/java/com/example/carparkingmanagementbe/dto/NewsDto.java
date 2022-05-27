@@ -3,6 +3,7 @@ package com.example.carparkingmanagementbe.dto;
 import com.example.carparkingmanagementbe.model.NewsType;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -13,7 +14,7 @@ public class NewsDto {
     private String code;
 
     @NotNull(message = "Vui lòng nhập tên tác giả")
-    @Size(min = 5, max = 50, message = "Tên tác giả phải từ 5 đến 50 kí tự")
+    @Length(min = 5, max = 50, message = "Tên tác giả phải từ 5 đến 50 kí tự")
     private String author;
 
     @NotNull(message = "Vui lòng nhập tiêu đề cho bài viết")
@@ -32,7 +33,7 @@ public class NewsDto {
 
     private Boolean delFlag;
 
-
+    @NotNull(message = "Vui lòng chọn loại tin tức")
     private NewsType newsType;
 
     public NewsDto() {

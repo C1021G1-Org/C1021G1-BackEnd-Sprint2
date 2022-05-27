@@ -6,6 +6,7 @@ import com.example.carparkingmanagementbe.service.INewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +21,7 @@ public class NewsService implements INewsService {
 
     @Override
     public void createNews(News news) {
-        repository.createNews(news.getCode(), news.getDate(), news.getAuthor(), news.getDelFlag(), news.getTitle(), news.getImg(), news.getDescription(), news.getNewsType().getId()    );
+        repository.createNews(news.getCode(), news.getDate(), news.getAuthor(), news.getDelFlag(), news.getTitle(), news.getImg(), news.getDescription(), news.getNewsType().getId());
     }
 
     @Override
@@ -28,4 +29,12 @@ public class NewsService implements INewsService {
         repository.updateNews(news.getDate(), news.getAuthor(), news.getTitle(), news.getImg(), news.getDescription(), news.getNewsType().getId(), id);
 
     }
+
+    //    SonNH
+    @Override
+    public List<News> getAll() {
+        return repository.getAllNews();
+    }
+    //    SonNH
+
 }
