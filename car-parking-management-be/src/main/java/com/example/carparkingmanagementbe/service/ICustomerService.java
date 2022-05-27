@@ -21,12 +21,33 @@ public interface ICustomerService {
                                   String id_card,
                                   Pageable page);
 
+    //ThangDBX search chi voi end Date
+    Page<Customer> searchEndDate(String date,
+                                 String code,
+                                 String phone,
+                                 String id_card,
+                                 Pageable page);
+
+    //ThangDBX search chi voi start date
+    Page<Customer> searchStartDate(String date,
+                                   String code,
+                                   String phone,
+                                   String id_card,
+                                   Pageable page);
+
+    //ThangDBX search khong co date
+    Page<Customer> searchCustomerNoDate(String code,
+                                        String phone,
+                                        String id_card,
+                                        Pageable page);
 
     //ThangDBX delete customer
     void deleteCustomer(Long id);
 
     //ThangDBX kiem tra id co ton tai hay khong
     Optional<Customer> findCustomerById(Long id);
+
+
 
 
     void createCustomer(CustomerDto customerDto);

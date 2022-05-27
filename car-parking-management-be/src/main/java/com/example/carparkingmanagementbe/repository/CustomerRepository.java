@@ -58,6 +58,55 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
                                   String id_card,
                                   Pageable page);
 
+    //ThangDBX search chi co startDate
+    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
+            "from customer \n" +
+            "where `del_flag` = true \n" +
+            "and birthday > ?1 \n" +
+            "and code like %?2% \n" +
+            "and phone like %?3% \n" +
+            "and id_card like %?4% " ,
+            countQuery = "SELECT count(*) FROM customer",
+            nativeQuery = true)
+    Page<Customer> searchStartDate(String date,
+                                   String code,
+                                   String phone,
+                                   String id_card,
+                                   Pageable page);
+
+    //ThangDBX search chi co endDate
+    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
+            "from customer \n" +
+            "where `del_flag` = true \n" +
+            "and birthday < ?1 \n" +
+            "and code like %?2% \n" +
+            "and phone like %?3% \n" +
+            "and id_card like %?4% " ,
+            countQuery = "SELECT count(*) FROM customer",
+            nativeQuery = true)
+    Page<Customer> searchEndDate(String date,
+                                   String code,
+                                   String phone,
+                                   String id_card,
+                                   Pageable page);
+
+
+    // Search trong truong hop khong ghi date
+    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
+            "from customer \n" +
+            "where `del_flag` = true \n" +
+            "and code like %?1% \n" +
+            "and phone like %?2% \n" +
+            "and id_card like %?3% " ,
+            countQuery = "SELECT count(*) FROM customer",
+            nativeQuery = true)
+    Page<Customer> searchCustomerNoDate(String code,
+                                   String phone,
+                                   String id_card,
+                                   Pageable page);
+
+    //-------------------------------------------------------------------------------------------------------
+
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO customer (`name`, email,`code`,gender,id_card,phone,birthday,del_flag,address,id_ward) " +

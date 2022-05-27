@@ -56,10 +56,22 @@ public class CustomerController {
                                                      @RequestParam(defaultValue = "",required = false) String id_card,
                                                         @RequestParam(defaultValue = "0") int page){
         Page<Customer> customerList = null;
-        customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,2));
+        if ("".equals(startDate) && "".equals(endDate)){
+            customerList = customerService.searchCustomerNoDate(code,phone,id_card, PageRequest.of(page,2));
+        }
+        if ("".equals(startDate) && !"".equals(endDate)){
+            customerList = customerService.searchEndDate(endDate,code,phone,id_card,PageRequest.of(page,2));
+        }
+        if (!"".equals(startDate) && "".equals(endDate)){
+            customerList = customerService.searchStartDate(startDate,code,phone,id_card,PageRequest.of(page,2));
+        }
+        if (!"".equals(startDate) && !"".equals(endDate)){
+            customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,2));
+        }
+
 
         if (customerList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             return new ResponseEntity<>(customerList,HttpStatus.OK);
         }
