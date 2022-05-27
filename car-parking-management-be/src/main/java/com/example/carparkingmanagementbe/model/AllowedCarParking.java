@@ -20,7 +20,6 @@ public class AllowedCarParking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-
     @ManyToMany(mappedBy = "allowedCarParkingSet")
     @JsonBackReference
     private Set<Location> locationSet;

@@ -10,10 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @SpringBootTest
 @AutoConfigureMockMvc
 class CarParkingManagementBeApplicationTests {
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
+
 
     @Test
     void contextLoads() {
