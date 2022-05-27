@@ -1,5 +1,4 @@
 package com.example.carparkingmanagementbe.controller;
-
 import com.example.carparkingmanagementbe.dto.CarDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.service.ICarService;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -53,5 +51,4 @@ public class CarController {
             return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
         }
     }
-
 }
