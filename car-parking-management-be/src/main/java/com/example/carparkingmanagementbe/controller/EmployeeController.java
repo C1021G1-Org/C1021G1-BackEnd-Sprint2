@@ -11,15 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.carparkingmanagementbe.dto.EmployeeDto;
 import com.example.carparkingmanagementbe.dto.EmployeeDtoCheck;
-import com.example.carparkingmanagementbe.model.Account;
 import org.springframework.beans.BeanUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.Valid;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -34,7 +31,7 @@ public class EmployeeController {
 
     @GetMapping("/list")
     public ResponseEntity<Page<Employee>> getAllEmployee(@RequestParam(defaultValue = "0") int page) {
-        Page<Employee> employeeList = iEmployeeService.getAllEmployee(PageRequest.of(page, 5));
+        Page<Employee> employeeList = iEmployeeService.getAllEmployee(PageRequest.of(page, 10));
         if (employeeList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -51,14 +48,14 @@ public class EmployeeController {
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<Employee>> getById(@PathVariable Long id) {
-        Optional<Employee> employeeOptional = iEmployeeService.findByEmployeeId(id);
-        if (!employeeOptional.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(employeeOptional, HttpStatus.OK);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Optional<Employee>> getById(@PathVariable Long id) {
+//        Optional<Employee> employeeOptional = iEmployeeService.findByEmployeeId(id);
+//        if (!employeeOptional.isPresent()) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<>(employeeOptional, HttpStatus.OK);
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Employee> deleteEmployee(@PathVariable Long id) {
