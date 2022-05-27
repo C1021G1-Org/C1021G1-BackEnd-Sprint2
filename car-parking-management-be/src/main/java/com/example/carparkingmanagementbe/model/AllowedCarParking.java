@@ -18,11 +18,7 @@ public class AllowedCarParking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Boolean carFourSeats;
-    private Boolean carSevenSeats;
-    private Boolean carTwelveSeats;
-    private Boolean carOtherType;
-    private String description;
+    private String name;
     @ManyToMany(mappedBy = "allowedCarParkingSet")
     private Set<Location> locationSet;
 }
