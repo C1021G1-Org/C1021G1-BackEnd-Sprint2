@@ -8,10 +8,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FloorsService implements IFloorsService {
-@Autowired
-private FloorsRepository floorsRepository;
+
+    @Autowired
+    private FloorsRepository floorsRepository;
+
     @Override
     public Floor findById(Long id) {
         return floorsRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Floor findFloorsById(Long id) {
+        return floorsRepository.findById(id).orElse(null);
+    }
+
 }

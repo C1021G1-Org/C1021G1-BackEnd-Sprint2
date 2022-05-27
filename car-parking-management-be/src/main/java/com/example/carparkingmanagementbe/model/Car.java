@@ -35,7 +35,6 @@ public class Car {
     @JoinColumn(name = "id_employee", referencedColumnName = "id")
     private Employee employee;
 
-
     @ManyToOne
     @JoinColumn(name = "id_car_type", referencedColumnName = "id")
     private CarType carType;
