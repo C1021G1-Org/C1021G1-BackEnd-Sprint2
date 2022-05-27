@@ -7,13 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @Repository
 public interface NewsRepository extends JpaRepository<News, Long> {
     @Modifying
     @Query(value = "insert into news (news.code, news.date, news.author, news.del_flag, news.title , news.img, news.description, news.id_news_type) " +
-            "values(?1, ?2, ?3 , ?4 , ?5, ?6, ?7, ?8)",nativeQuery = true)
-    void createNews(String code , String date ,String author, Boolean delFlag, String title, String img, String description, Long idNewsType);
+            "values(?1, ?2, ?3 , ?4 , ?5, ?6, ?7, ?8)", nativeQuery = true)
+    void createNews(String code, String date, String author, Boolean delFlag, String title, String img, String description, Long idNewsType);
 
     @Modifying
     @Query(value = "update news" +
@@ -25,5 +27,12 @@ public interface NewsRepository extends JpaRepository<News, Long> {
             " from news " +
             "where news.id = ? ", nativeQuery = true)
     News findNewsById(Long id);
+
+    //    SonNH
+    @Query(value = "select news.id, news.author, news.date, news.code, news.title, news.del_flag, news.img, news.description, news.id_news_type " +
+            " from news ", nativeQuery = true)
+    List<News> getAllNews();
+
+//    SonNH
 
 }
