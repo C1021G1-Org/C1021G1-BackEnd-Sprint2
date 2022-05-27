@@ -17,44 +17,45 @@ import java.util.Set;
 @Service
 public class LocationService implements ILocationService {
     @Autowired
-    private LocationRepository repository;
+    private LocationRepository locationRepository;
 
     @Autowired
     private FloorsRepository floorsRepository;
 
+
     /*Find By Id Dùng Chung*/
     @Override
     public Location findLocationById(Long id) {
-        return repository.findLocationById(id);
+        return locationRepository.findLocationById(id);
     }
     /*Find By Id Dùng Chung*/
 
     /*TuanPDCoding*/
     @Override
     public void createLocation(LocationDto locationDto) {
-        repository.createLocation(locationDto.getCode(), locationDto.getNumber(), locationDto.getDelFlag(), locationDto.getIsEmpty(), locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getDescription(), locationDto.getId_floor());
+        locationRepository.createLocation(locationDto.getCode(), locationDto.getNumber(), locationDto.getDelFlag(), locationDto.getIsEmpty(), locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getDescription(), locationDto.getId_floor());
     }
 
     @Override
     public void editLocation(LocationDto locationDto) {
-        repository.editLocationById(locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getId());
+        locationRepository.editLocationById(locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getId());
     }
 
     @Override
     public void editAllowParkingById(Location location) {
-        repository.editAllowParkingById(location.getId(), location.getAllowedCarParkingSet());
+        locationRepository.editAllowParkingById(location.getId(), location.getAllowedCarParkingSet());
     }
 
     @Override
     public void createAllowParking(LocationDto locationDto, Set<AllowedCarParking> allowedCarParking) {
-        repository.createAllowParking(locationDto.getId_floor(), allowedCarParking);
+        locationRepository.createAllowParking(locationDto.getId_floor(), allowedCarParking);
     }
     /*TuanPDCoding*/
 
     /*TinhHDCoding*/
     @Override
     public Page<LocationList> findAll(String code, String id, int page) {
-        List<LocationList> locationLists = repository.findByList(code, id);
+        List<LocationList> locationLists = locationRepository.findByList(code, id);
         Pageable pageableContent = PageRequest.of(page, 5);
         int startPage = (int) pageableContent.getOffset();
         int endPage = Math.min((startPage + pageableContent.getPageSize()), locationLists.size());
@@ -62,4 +63,16 @@ public class LocationService implements ILocationService {
         return locationListPage;
     }
     /*TinhHDCoding*/
+
+    /*DatNVNCoding*/
+    @Override
+    public Page<Location> getAllLocation(Pageable pageable) {
+        return locationRepository.getAllLocation(pageable);
+    }
+
+    @Override
+    public void updateColorLocation(Long id) {
+        locationRepository.updateIsEmpty(id);
+    }
+    /*DatNVNCoding*/
 }
