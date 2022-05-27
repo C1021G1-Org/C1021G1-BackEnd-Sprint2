@@ -30,6 +30,7 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public void deleteEmployee(Long id) {
         employeeRepository.deleteEmployee(id);
+    }
 
     @Override
     public void createEmployee(EmployeeDto employeeDto) {
