@@ -3,14 +3,17 @@ package com.example.carparkingmanagementbe.repository;
 import com.example.carparkingmanagementbe.model.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+
+
+import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
-public interface CarRepository extends JpaRepository<Car, Long> {
+public interface CarRepository extends JpaRepository<Car,Long> {
+
 
     //TrongHD thêm mới xe
     @Transactional
@@ -27,6 +30,32 @@ public interface CarRepository extends JpaRepository<Car, Long> {
     //    tronghd lấy giá trị validate trùng nhau
     @Query(value = "select count(car_plate) from car where car_plate = ?", nativeQuery = true)
     Integer finByCarPlate(String carPlate);
+
+    //BaoND lấy thông tin khách hàng
+    @Query(value = "select car.id," +
+            "car.car_company," +
+            "car.car_plate," +
+            "car.`code`," +
+            "car.`name`," +
+            "car.id_car_type," +
+            "car.id_customer," +
+            "car.id_employee," +
+            "customer.address," +
+            "customer.account_id," +
+            "customer.birthday," +
+            "customer.`code`," +
+            "customer.email," +
+            "customer.gender," +
+            "customer.id_card," +
+            "customer.`name`," +
+            "customer.phone," +
+            "customer.del_flag," +
+            "customer.id_ward " +
+            "from car " +
+            "join customer " +
+            "on car.id_customer = customer.id " +
+            "where customer.id = ?;",nativeQuery = true)
+    List<Car> selectCustomerAndCar(Long id);
 
     //TrongHD lấy thông tin khách hàng
     @Query(value = "select car.id," +

@@ -1,5 +1,7 @@
 package com.example.carparkingmanagementbe.service.Impl;
 
+
+
 import com.example.carparkingmanagementbe.dto.CarDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.repository.CarRepository;
@@ -14,7 +16,11 @@ public class CarService implements ICarService {
 
     @Autowired
     private CarRepository carRepository;
+    @Override
+    public List<Car> selectCar(Long id) {
+        return carRepository.selectCustomerAndCar(id);
 
+    }
     @Override
     public void createCar(CarDto carDto) {
         carRepository.createCar(carDto.getCode(), carDto.getName(), carDto.getCarPlate(), carDto.getCarCompany(),
