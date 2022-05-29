@@ -5,12 +5,19 @@ import com.example.carparkingmanagementbe.dto.EmployeeDto;
 import com.example.carparkingmanagementbe.model.Account;
 import com.example.carparkingmanagementbe.model.Role;
 import com.example.carparkingmanagementbe.model.SignForm;
+import com.example.carparkingmanagementbe.model.Ward;
+import com.example.carparkingmanagementbe.service.ICustomerService;
+import com.example.carparkingmanagementbe.service.IDistrictService;
+import com.example.carparkingmanagementbe.service.IProvinceService;
 import com.example.carparkingmanagementbe.service.Impl.AccountService;
+import com.example.carparkingmanagementbe.service.Impl.RoleService;
+import com.example.carparkingmanagementbe.service.Impl.WardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,6 +35,22 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private WardService wardService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private IProvinceService provinceService;
+    @Autowired
+    private IDistrictService districtService;
+    @Autowired
+    ICustomerService customerService;
+
 //    @GetMapping("/accounts")
 //    public ResponseEntity<List<Account>> getAccounts() {
 //        return ResponseEntity.ok().body(accountService.getAccounts());
@@ -44,33 +67,37 @@ public class AccountController {
 //        return ResponseEntity.ok().body(accountService.saveRole(role));
 //    }
 
-    @PostMapping(value = "api/signUp")
+    @PostMapping(value = "/signUp")
     public ResponseEntity<?> register(@Valid @RequestBody SignForm signForm) {
-        CustomerDto customerDto = new CustomerDto();
-        EmployeeDto employeeDto = new EmployeeDto();
-        System.out.println("sign up");
-        if (accountService.existAccountByPhone(signForm.getPhone())) {
-            return new ResponseEntity<>("duplicate phone", HttpStatus.BAD_REQUEST);
-        }
-        if (accountService.existAccountByIdCard(signForm.getIdCard())) {
-            return new ResponseEntity<>("duplicate idCard", HttpStatus.BAD_REQUEST);
-        }
+
+
         if (accountService.existAccountByEmail(signForm.getEmail())) {
             return new ResponseEntity<>("duplicate email", HttpStatus.BAD_REQUEST);
         }
-        Account acc = new Account();
-        BeanUtils.copyProperties(signForm, acc);
-        acc.setPassword(passwordEncoder.encode(signForm.getPassword()));
-        Set<Role> roleSet = new HashSet<>();
-        roleSet.add(new Role(3L, RoleName.ROLE_CUSTOMER));
-        if (acc.getEmail().equals("admin@gmail.com")) {
-            roleSet.add(new Role(2L, RoleName.ROLE_EMPLOYEE));
-            roleSet.add(new Role(1L, RoleName.ROLE_ADMIN));
-        }
-        if (acc.getEmail().equals("employee@gmail.com")) {
-            roleSet.add(new Role(2L, RoleName.ROLE_EMPLOYEE));
-        }
-        acc.setRoles(roleSet);
+        Ward ward = new Ward();
+        ward.setId(signForm.getIdWard());
+
+        System.out.println("sign up");
+        CustomerDto customer = new CustomerDto();
+        Account account = new Account();
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleService.findById(2L));
+        account.setEmail(signForm.getEmail());
+        account.setPassword(passwordEncoder.encode(signForm.getPassword()));
+        account.setRoles(roles);
+        accountService.save(account);
+
+        customer.setAddress(signForm.getAddress());
+        customer.setBirthday(signForm.getDateOfBirth());
+        customer.setName(signForm.getName());
+        customer.setPhone(signForm.getPhone());
+        customer.setGender(signForm.getGender());
+//        customer.setAccount(account);
+        customer.setEmail(account.getEmail());
+//        customer.setCarSet(null);
+        customer.setWard(ward.getId());
+
+        customerService.createCustomer(customer);
 
 
         //employeeDto.getAddress_Employee(),employeeDto.getCode_Employee()
@@ -84,20 +111,6 @@ public class AccountController {
 //        employeeDto.setGender_Employee(acc.getGender());
 //        employeeDto.setName_Employee(acc.getFullName());
 //        employeeDto.setPhone_Employee(acc.getPhone());
-        if (!acc.getEmail().equals("employee@gmail.com")) {
-            customerDto.setNameCustomer(acc.getFullName());
-            customerDto.setPhoneCustomer(acc.getPhone());
-            customerDto.setBirthdayCustomer(acc.getBirthday());
-            customerDto.setGenderCustomer(acc.getGender());
-            customerDto.setEmailCustomer(acc.getEmail());
-            customerDto.setIdCardCustomer(acc.getIdCard());
-            customerDto.setAddressCustomer(acc.getAddress());
-            customerDto.setCustomerType(4L);
-            customerDto.setCountries(acc.getCountry().getId());
-            customerService.save(customerDto);
-            accountService.save(acc);
-
-        }
-        return new ResponseEntity<>(acc, HttpStatus.CREATED);
+        return new ResponseEntity<>(account, HttpStatus.CREATED);
     }
 }

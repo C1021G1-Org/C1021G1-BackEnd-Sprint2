@@ -1,7 +1,15 @@
 package com.example.carparkingmanagementbe.model;
 
-import javax.persistence.OneToMany;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.OneToMany;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SignForm {
     private String name;
     private String address;
