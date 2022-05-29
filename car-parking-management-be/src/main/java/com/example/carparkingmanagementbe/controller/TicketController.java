@@ -67,6 +67,9 @@ public class TicketController {
     public ResponseEntity<?> deleteTicket(@PathVariable Long id) {
 
         Ticket ticket = ticketService.getTicketById(id);
+        if (ticket == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String endDate = ticket.getEndDate();
         LocalDate current = LocalDate.now();
