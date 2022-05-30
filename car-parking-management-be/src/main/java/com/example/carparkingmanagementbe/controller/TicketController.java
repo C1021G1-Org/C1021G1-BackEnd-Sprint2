@@ -1,9 +1,13 @@
 package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
+import com.example.carparkingmanagementbe.model.Floor;
 import com.example.carparkingmanagementbe.model.Ticket;
 
+import com.example.carparkingmanagementbe.model.TicketType;
+import com.example.carparkingmanagementbe.service.IFloorsService;
 import com.example.carparkingmanagementbe.service.ITicketService;
+import com.example.carparkingmanagementbe.service.ITicketTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,15 +33,22 @@ import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api")
+@RequestMapping("/api/ticket")
 public class TicketController {
     //ta controller begin
     @Autowired
     private ITicketService ticketService;
+
+    @Autowired
+    private IFloorsService floorsService;
+
+    @Autowired
+    private ITicketTypeService ticketTypeService;
 
 
     @GetMapping("/check")
@@ -50,14 +61,16 @@ public class TicketController {
         return new ResponseEntity<>(ticketPage, HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<Page<Ticket>> getSearchTicketPage(@RequestBody TicketDtoSearch ticketDtoSearch, @RequestParam(defaultValue = "0") int page) {
+    @PostMapping("/search")
+    public ResponseEntity<?> getSearchTicketPage(@RequestBody TicketDtoSearch ticketDtoSearch, @RequestParam(defaultValue = "0") int page) {
         PageRequest pageRequest = PageRequest.of(page, 5);
         Page<Ticket> ticketPage = ticketService.searchTicketPage(ticketDtoSearch.getFloor(),
                 ticketDtoSearch.getTicketTypeName(), ticketDtoSearch.getEndDate(), ticketDtoSearch.getNameCustomer(),
                 ticketDtoSearch.getPhoneCustomer(), pageRequest);
         if (ticketPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            Map<String, String> map = new HashMap<>();
+            map.put("messageEros", "hien tai trong da ta chua co");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(ticketPage, HttpStatus.OK);
 
@@ -101,6 +114,24 @@ public class TicketController {
             map.put("messageEros", "Vẩn còn hạng");
             return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/getFloor")
+    public ResponseEntity<List<Floor>> getAllFloor() {
+        List<Floor> floorList = floorsService.getAllFloor();
+        if (floorList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(floorList, HttpStatus.OK);
+    }
+
+    @GetMapping("/getTypeTicket")
+    public ResponseEntity<List<TicketType>> getAllTypeTicket() {
+        List<TicketType> ticketTypeList = ticketTypeService.getAllTicketType();
+        if (ticketTypeList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ticketTypeList, HttpStatus.OK);
     }
 
 // tam controller end
