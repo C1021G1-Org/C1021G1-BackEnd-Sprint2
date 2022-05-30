@@ -6,44 +6,18 @@ import com.example.carparkingmanagementbe.model.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
 import com.example.carparkingmanagementbe.dto.LocationList;
-
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
-
-import com.example.carparkingmanagementbe.model.Location;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-
-import org.springframework.data.web.PageableDefault;
-
-
-import com.example.carparkingmanagementbe.dto.LocationList;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import java.util.List;
-
-import java.util.Optional;
-
-//location.description,\n" +
-//        "   location.width, location.is_empty, location.number,\n" +
-//        "   location.height, location.length, location.del_flag,\n" +
-//        "   location.id_floor,
-
 import java.util.Set;
-
 
 @Transactional
 @Repository
-
-public interface LocationRepository extends JpaRepository<Location,Long> {
-    //anh tinh code
+public interface LocationRepository extends JpaRepository<Location, Long> {
 
 
     //detail location TrongTA
@@ -155,7 +129,7 @@ public interface LocationRepository extends JpaRepository<Location,Long> {
 
     //datNVN code update
     @Modifying
-    @Query(value = "UPDATE location SET is_empty = 1 WHERE id = ? ",nativeQuery = true)
+    @Query(value = "UPDATE location SET is_empty = 1 WHERE id = ? ", nativeQuery = true)
     void updateIsEmpty(Long id);
 
 }
