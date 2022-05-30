@@ -1,6 +1,7 @@
 package com.example.carparkingmanagementbe.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class EmployeeDto {
@@ -12,7 +13,7 @@ public class EmployeeDto {
             message = "Vui lòng nhập đúng email!")
     private String email;
     @NotBlank(message = "Vui lòng nhập trường này!")
-    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$",
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,30}$",
             message = "Vui lòng nhập mật khẩu tối thiểu 8 ký tự bao gồm chữ in hoa, chữ thường, số!")
     private String password;
     @NotBlank(message = "Vui lòng nhập trường này!")
@@ -34,9 +35,12 @@ public class EmployeeDto {
     @Pattern(regexp = REGEX_ADDRESS,
             message = "Vui lòng nhập 6-40 ký tự không bao gồm ký tự đặc biệt!")
     private String address;
+    @NotNull
     private Long id_ward;
+    @NotNull
     private Long id_position;
     private Long account_id;
+    private Boolean delFlag;
 
     public EmployeeDto() {
     }
@@ -135,5 +139,13 @@ public class EmployeeDto {
 
     public void setAccount_id(Long account_id) {
         this.account_id = account_id;
+    }
+
+    public Boolean getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
     }
 }

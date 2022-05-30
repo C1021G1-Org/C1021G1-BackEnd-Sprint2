@@ -25,11 +25,13 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class AccountController {
 
     @Autowired
@@ -83,6 +85,7 @@ public class AccountController {
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.findById(2L));
         account.setEmail(signForm.getEmail());
+        account.setEnabled(true);
         account.setPassword(passwordEncoder.encode(signForm.getPassword()));
         account.setRoles(roles);
         accountService.save(account);
@@ -94,11 +97,18 @@ public class AccountController {
         customer.setGender(signForm.getGender());
 //        customer.setAccount(account);
         customer.setEmail(account.getEmail());
-//        customer.setCarSet(null);
+        int code = (int) Math.floor((Math.random()*899) + 100);
+        String codeRandom = String.valueOf(code);
+        customer.setCode("KH-" + codeRandom);
+
+        System.out.println(customer.getCode());
+
+        customer.setIdCard(signForm.getIdCard());
+        customer.setIdAccount(account.getId());
+
+        System.out.println(account.getId());
         customer.setWard(ward.getId());
-
-        customerService.createCustomer(customer);
-
+        customerService.signUpCustomer(customer);
 
         //employeeDto.getAddress_Employee(),employeeDto.getCode_Employee()
         //                ,true,employeeDto.getBirthday_Employee(),employeeDto.getEmail_Employee(),
