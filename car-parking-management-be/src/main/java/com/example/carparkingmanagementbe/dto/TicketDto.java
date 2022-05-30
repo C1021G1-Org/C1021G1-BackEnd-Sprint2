@@ -5,6 +5,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -13,9 +14,10 @@ import java.time.temporal.ChronoUnit;
 public class TicketDto implements Validator {
     private Long id;
 
-
+    @NotNull(message = "Vui lòng không để trống")
     private Double sumPrice;
 
+    //    @NotEmpty(message = "Vui lòng không để trống")
     @NotNull(message = "Vui lòng không để trống")
     private Long ticketType;
 
@@ -77,18 +79,27 @@ public class TicketDto implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        TicketDto productDto = (TicketDto) target;
-        String inputBirthday = productDto.getEndDate();
+        TicketDto ticketDto = (TicketDto) target;
+        String inputBirthday = ticketDto.getEndDate();
         LocalDate birthDay = LocalDate.parse(inputBirthday, formatter);
         //  LocalDate birthdayToLocalDate = LocalDate.of(birthDay.getYear(),birthDay.getMonth(), birthDay.getDayOfMonth());
         LocalDate current = LocalDate.now();
-        long betweenDate = ChronoUnit.DAYS.between( current,birthDay);
+        long betweenDate = ChronoUnit.DAYS.between(current, birthDay);
+        if (ticketDto.getTicketType() != null) {
+            if (ticketDto.getTicketType() == 1) {
+                if (betweenDate != 1) {
+                    errors.rejectValue("endDate", "", "Phải bằng 1");
+                }
+            } else if (ticketDto.getTicketType() == 2) {
+                if (betweenDate <= 30) {
+                    errors.rejectValue("endDate", "", "Phải lớn hơn hoặc bằng 30 ngày");
+                }
+            }
+            if (ticketDto.getTicketType() == null) {
+                errors.rejectValue("ticketType", "", "Vé ko đưlocationể null");
+            }
 
-        if (betweenDate <0 || betweenDate > 31) {
-            errors.rejectValue("endDate", "", "error date update");
         }
-
-
     }
 
 }
