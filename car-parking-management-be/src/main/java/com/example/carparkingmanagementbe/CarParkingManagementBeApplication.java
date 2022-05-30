@@ -1,5 +1,6 @@
 package com.example.carparkingmanagementbe;
 
+import com.example.carparkingmanagementbe.model.Ticket;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -7,7 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CarParkingManagementBeApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(CarParkingManagementBeApplication.class, args);
+//        String str = "hello";
+//        System.out.println(str);
+
     }
 
 }

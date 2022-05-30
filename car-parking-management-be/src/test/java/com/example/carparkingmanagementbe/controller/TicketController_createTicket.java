@@ -29,7 +29,7 @@ public class TicketController_createTicket {
     private ObjectMapper objectMapper;
 
     @Test
-    public void createTicket_codeTicket_13() throws Exception {
+    public void createTicket_codeTicket_18() throws Exception {
         CreateTicketDto createTicketDto = new CreateTicketDto();
         createTicketDto.setCode("TK-1234");
         createTicketDto.setStartDate("2000-05-20");
@@ -40,8 +40,8 @@ public class TicketController_createTicket {
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
         createTicketDto.setTicketType(1L);
-        createTicketDto.setLocation(10L);
-        createTicketDto.setCar(10L);
+        createTicketDto.setLocation(9L);
+        createTicketDto.setCar(9L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .post("/api/ticket/create")
@@ -51,18 +51,19 @@ public class TicketController_createTicket {
     }
 
     @Test
-    public void createTicket_codeTicket_14() throws Exception {
+    public void createTicket_codeTicket_13() throws Exception {
         CreateTicketDto createTicketDto = new CreateTicketDto();
-        createTicketDto.setCode("");
-        createTicketDto.setStartDate("30-05-2022");
-        createTicketDto.setEndDate("30-06-2022");
+        createTicketDto.setCode(null);
+        createTicketDto.setStartDate("2000-05-20");
+        createTicketDto.setEndDate("2000-05-20");
         createTicketDto.setImgCarIn("https://otovina.net/wp-content/uploads/2021/01/lambiensodai.jpg");
         createTicketDto.setImgCarOut("https://otovina.net/wp-content/uploads/2021/01/lambiensodai.jpg");
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
-        createTicketDto.setTicketType(1L);
-        createTicketDto.setLocation(1L);
-        createTicketDto.setCar(1L);
+        createTicketDto.setSumPrice(70000D);
+        createTicketDto.setTicketType(2L);
+        createTicketDto.setLocation(3L);
+        createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
                         .post("/api/ticket/create")
