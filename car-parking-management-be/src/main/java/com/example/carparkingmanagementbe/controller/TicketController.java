@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -60,10 +61,22 @@ public class TicketController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions (
+            MethodArgumentNotValidException ex){
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return errors;
+    }
+
     @PatchMapping("/updateTime")
     public ResponseEntity<?> update (@Valid @RequestBody CreateTicketDto createTicketDto){
-        Car car = new Car();
-        car.setId(createTicketDto.getCar());
+        Car car = carService.findById(createTicketDto.getCar());
         Location location = new Location();
         location.setId(createTicketDto.getLocation());
         TicketType ticketType = new TicketType();

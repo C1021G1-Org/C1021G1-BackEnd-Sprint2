@@ -1,19 +1,51 @@
 package com.example.carparkingmanagementbe.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class CreateTicketDto {
     private Long id;
+    @NotNull(message = "phải bắt buộc nhập!")
+    @NotBlank(message = "không được để trống!")
+    @Pattern(regexp = "^([TK-])+([0-9]{4})$", message = "Vui lòng nhập đúng định dạng. ([TK-]XXXX) trong đó X là số từ (0-9)!")
+
     private String code;
+    @NotNull(message = "phải bắt buộc nhập!")
+    @NotBlank(message = "không được để trống!")
     private String imgCarIn;
+
+    @NotNull(message = "phải bắt buộc nhập!")
+    @NotBlank(message = "không được để trống!")
     private String imgCarOut;
+
+    @NotNull(message = "phải bắt buộc nhập!")
+    @NotBlank(message = "không được để trống!")
     private String timeIn;
+
+    @NotNull(message = "phải bắt buộc nhập!")
+    @NotBlank(message = "không được để trống!")
     private String timeOut;
+
+    @NotNull(message = "phải bắt buộc nhập!")
+    @NotBlank(message = "không được để trống!")
     private String startDate;
+
+    @NotNull(message = "phải bắt buộc nhập!")
+    @NotBlank(message = "không được để trống!")
     private String endDate;
+
     private Boolean delFlag;
     private Boolean isDoing;
     private Double sumPrice;
+
+    @NotNull(message = "phải bắt buộc nhập!")
     private Long ticketType;
+
+    @NotNull(message = "phải bắt buộc nhập!")
     private Long location;
+
+    @NotNull(message = "phải bắt buộc nhập!")
     private Long car;
 
     public CreateTicketDto() {
