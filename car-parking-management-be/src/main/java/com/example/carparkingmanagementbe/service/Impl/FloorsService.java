@@ -7,6 +7,8 @@ import com.example.carparkingmanagementbe.service.IFloorsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FloorsService implements IFloorsService {
 
@@ -15,6 +17,11 @@ private FloorsRepository repository;
     @Override
     public Floor findFloorsById(Long id) {
         return repository.findById(id).orElse(null) ;
+    }
+
+    @Override
+    public List<Floor> findAll() {
+        return repository.findAll();
     }
 
 }

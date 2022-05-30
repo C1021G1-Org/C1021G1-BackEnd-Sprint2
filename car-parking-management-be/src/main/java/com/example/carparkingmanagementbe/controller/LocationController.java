@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.Set;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class LocationController {
         }
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
+
     /*TuanPDCoding*/
     @PostMapping(value = "/create")
     public ResponseEntity<?> createLocation(@Valid @RequestBody LocationDto locationDto, Set<AllowedCarParking> allowedCarParking, BindingResult bindingResult) {
@@ -67,10 +69,9 @@ public class LocationController {
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
         System.out.println(locationPage.getTotalPages());
-        if(locationPage.getTotalPages()<=page){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (locationPage.getTotalPages() <= page) {
+            new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
         if (locationPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

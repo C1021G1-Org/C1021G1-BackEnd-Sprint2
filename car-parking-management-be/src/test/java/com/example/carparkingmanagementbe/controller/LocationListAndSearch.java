@@ -1,5 +1,4 @@
 package com.example.carparkingmanagementbe.controller;
-
 import com.example.carparkingmanagementbe.dto.LocationList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -9,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+
 @SpringBootTest
 @AutoConfigureMockMvc
 public class LocationListAndSearch {
