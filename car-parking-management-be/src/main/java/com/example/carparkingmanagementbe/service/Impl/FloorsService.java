@@ -26,7 +26,7 @@ public class FloorsService implements IFloorsService {
 
     @Override
     public List<Floor> findAll() {
-        return repository.findAll();
+        return floorsRepository.findAll();
     }
 
 }
