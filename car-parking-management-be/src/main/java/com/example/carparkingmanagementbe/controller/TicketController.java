@@ -2,10 +2,12 @@ package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
 import com.example.carparkingmanagementbe.model.Floor;
+import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.model.Ticket;
 
 import com.example.carparkingmanagementbe.model.TicketType;
 import com.example.carparkingmanagementbe.service.IFloorsService;
+import com.example.carparkingmanagementbe.service.ILocationService;
 import com.example.carparkingmanagementbe.service.ITicketService;
 import com.example.carparkingmanagementbe.service.ITicketTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,8 @@ public class TicketController {
     @Autowired
     private ITicketTypeService ticketTypeService;
 
+    @Autowired
+    private ILocationService locationService;
 
     @GetMapping("/check")
     public ResponseEntity<Page<Ticket>> getAllTicket(@RequestParam(defaultValue = "0") int page) {
@@ -179,6 +183,25 @@ public class TicketController {
 
         }
     }
+
+    @GetMapping("/location")
+    public ResponseEntity<List<Location>> getAllLocation() {
+        List<Location> locationList = locationService.findAll();
+        if (locationList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(locationList, HttpStatus.OK);
+    }
+    @GetMapping("/getByFloor/{id}")
+    public ResponseEntity<List<Location>> getAllLocationByFloor(@PathVariable Long id) {
+        List<Location> locationList = locationService.getListLocation(id);
+        if (locationList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(locationList, HttpStatus.OK);
+    }
+
+
 // longLT End}
 }
 
