@@ -10,9 +10,20 @@ import com.example.carparkingmanagementbe.dto.LocationList;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+
+
+
+
+
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+
+
+
+
 import java.util.Set;
 
 @Transactional
