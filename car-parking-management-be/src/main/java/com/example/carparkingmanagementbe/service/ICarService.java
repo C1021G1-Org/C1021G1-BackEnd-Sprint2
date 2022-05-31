@@ -3,6 +3,8 @@ package com.example.carparkingmanagementbe.service;
 
 
 import com.example.carparkingmanagementbe.dto.CarDto;
+import com.example.carparkingmanagementbe.dto.CarPlateDto;
+import com.example.carparkingmanagementbe.dto.CarTicketDto;
 import com.example.carparkingmanagementbe.model.Car;
 
 import java.util.List;
@@ -21,6 +23,6 @@ public interface ICarService {
     Integer findByCarPlate(String carPlate);
 
     List<Car> findByIdCustomer(Long id);
-    List<Car> findCarModal(String name, String phone, String plate);
-    void chooseCar(String plate);
+    List<CarPlateDto> findCarModal(String name, String phone, String plate);
+    List<CarTicketDto> chooseCar(String plate);
 }

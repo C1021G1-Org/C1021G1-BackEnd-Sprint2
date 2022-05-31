@@ -1,5 +1,7 @@
 package com.example.carparkingmanagementbe.controller;
 import com.example.carparkingmanagementbe.dto.CarDto;
+import com.example.carparkingmanagementbe.dto.CarPlateDto;
+import com.example.carparkingmanagementbe.dto.CarTicketDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.service.ICarTypeService;
@@ -53,16 +55,18 @@ public class CarController {
     }
     //SonDCM findCardModal
     @GetMapping("/findModal")
-    public ResponseEntity<List<Car>> findCarModal(@RequestAttribute String name, String phone, String plate){
-        if(carService.findCarModal(name, phone, plate).isEmpty()){
+    public ResponseEntity<List<CarPlateDto>> findCarModal(@RequestParam(required = false, value = "") String name,
+                                                  @RequestParam(required = false, value = "") String phone ,
+                                                  @RequestParam(required = false, value = "") String plate){
+        List<CarPlateDto> carList = carService.findCarModal(name, phone, plate);
+        if(carList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }else {
-            return new ResponseEntity<>(carService.findCarModal(name, phone, plate), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(carList, HttpStatus.OK);
         }
     }
     @GetMapping("/chooseCar")
-    public ResponseEntity<?> chooseCar( @RequestAttribute String plate){
-        carService.chooseCar(plate);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<List<CarTicketDto>> chooseCar(@RequestParam(required = false, value = "") String plate){
+        return new ResponseEntity<>(carService.chooseCar(plate),HttpStatus.OK);
     }
 }
