@@ -5,6 +5,9 @@ import com.example.carparkingmanagementbe.repository.TicketTypeRepository;
 import com.example.carparkingmanagementbe.service.ITicketTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.krb5.internal.Ticket;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -13,9 +16,9 @@ public class TicketTypeService implements ITicketTypeService {
 
     @Autowired
     private TicketTypeRepository ticketTypeRepository;
-
     @Override
-    public List<TicketType> getAllTicketType() {
+    public List<TicketType> findAllTicket() {
+
         return ticketTypeRepository.findAll();
     }
 }
