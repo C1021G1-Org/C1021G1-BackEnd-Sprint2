@@ -6,5 +6,7 @@ import java.util.List;
 
 public interface IFloorsService {
 
+
     List<Floor> findAllFloor();
+
 }

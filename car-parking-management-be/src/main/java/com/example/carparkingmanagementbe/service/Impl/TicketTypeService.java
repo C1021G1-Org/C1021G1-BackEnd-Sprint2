@@ -9,12 +9,16 @@ import sun.security.krb5.internal.Ticket;
 
 import java.util.List;
 
+import java.util.List;
+
 @Service
 public class TicketTypeService implements ITicketTypeService {
+
     @Autowired
     private TicketTypeRepository ticketTypeRepository;
     @Override
     public List<TicketType> findAllTicket() {
+
         return ticketTypeRepository.findAll();
     }
 }

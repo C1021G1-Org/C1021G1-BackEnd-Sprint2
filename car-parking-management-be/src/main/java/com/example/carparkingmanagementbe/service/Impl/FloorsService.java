@@ -11,10 +11,12 @@ import java.util.List;
 @Service
 public class FloorsService implements IFloorsService {
 
+
     @Autowired
     private FloorsRepository floorsRepository;
     @Override
     public List<Floor> findAllFloor() {
         return floorsRepository.findAll();
     }
+
 }
