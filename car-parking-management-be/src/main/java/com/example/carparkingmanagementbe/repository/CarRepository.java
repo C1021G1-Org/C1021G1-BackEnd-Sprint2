@@ -84,5 +84,26 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "on car.id_customer = customer.id " +
             "where customer.id = ?;",nativeQuery = true)
     List<Car> findByIdCustomer(Long id);
-
+    // SonDCM tim xe modal
+    @Query(value = "SELECT c.car_palate,cs.name,cs.id_card  FROM car AS c JOIN customer AS cs ON c.id_customer = cs.id WHERE cs.name like '%?%' AND  cs.phone like '%?%' AND c.car_palate like '%?%'", nativeQuery = true)
+    List<Car> findCarModal(String name, String phone, String plate);
+   // SonDCM chon xe
+    @Query(value = "select c.car_plate," +
+            "c.name," +
+            "cs.name," +
+            "t.id_ticket_type," +
+            "c.car_company," +
+            "cs.phone," +
+            "c.start_date," +
+            "c.end_date," +
+            "l.id_floor," +
+            "l.code," +
+            "t.img_car_in," +
+            "t.img_car_out" +
+            "from car as c" +
+            " join ticket as t on c.id = t.id_car " +
+            " join location as l on t.id_location = l.id " +
+            " join customer as cs on cs.id = c.id_customer " +
+            " where car_plate = ?", nativeQuery = true)
+    void chooseCar(String plate);
 }

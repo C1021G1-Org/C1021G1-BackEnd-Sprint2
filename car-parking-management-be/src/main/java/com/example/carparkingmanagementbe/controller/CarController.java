@@ -51,4 +51,18 @@ public class CarController {
             return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
         }
     }
+    //SonDCM findCardModal
+    @GetMapping("/findModal")
+    public ResponseEntity<List<Car>> findCarModal(@RequestAttribute String name, String phone, String plate){
+        if(carService.findCarModal(name, phone, plate).isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }else {
+            return new ResponseEntity<>(carService.findCarModal(name, phone, plate), HttpStatus.OK);
+        }
+    }
+    @GetMapping("/chooseCar")
+    public ResponseEntity<?> chooseCar( @RequestAttribute String plate){
+        carService.chooseCar(plate);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

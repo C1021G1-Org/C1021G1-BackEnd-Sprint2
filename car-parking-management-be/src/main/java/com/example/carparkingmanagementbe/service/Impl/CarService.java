@@ -46,4 +46,15 @@ public class CarService implements ICarService {
     public List<Car> findByIdCustomer(Long id) {
         return carRepository.findByIdCustomer(id);
     }
+
+    @Override
+    public List<Car> findCarModal(String name, String phone, String plate) {
+        return carRepository.findCarModal(name, phone, plate);
+    }
+
+    @Override
+    public void chooseCar(String plate) {
+        carRepository.chooseCar(plate);
+    }
+
 }

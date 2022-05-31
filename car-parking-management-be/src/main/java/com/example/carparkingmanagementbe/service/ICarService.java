@@ -21,5 +21,6 @@ public interface ICarService {
     Integer findByCarPlate(String carPlate);
 
     List<Car> findByIdCustomer(Long id);
-
+    List<Car> findCarModal(String name, String phone, String plate);
+    void chooseCar(String plate);
 }
