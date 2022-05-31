@@ -32,7 +32,6 @@ public interface ITicketService {
     void updateTicket(Long idLocation,
                       Double sumPrice,
                       Long idTicketType,
-
                       String endDate,
                       Long idTicket );
 //    LongLT End

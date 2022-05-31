@@ -5,5 +5,8 @@ import com.example.carparkingmanagementbe.model.Floor;
 import java.util.List;
 
 public interface IFloorsService {
-    List<Floor> getAllFloor();
+
+
+    List<Floor> findAllFloor();
+
 }

@@ -5,5 +5,8 @@ import com.example.carparkingmanagementbe.model.TicketType;
 import java.util.List;
 
 public interface ITicketTypeService {
-    List<TicketType> getAllTicketType();
+
+
+    List<TicketType> findAllTicket();
+
 }

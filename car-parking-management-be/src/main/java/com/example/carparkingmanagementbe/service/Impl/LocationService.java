@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class LocationService implements ILocationService {
+
     @Autowired
     private LocationRepository locationRepository;
 
