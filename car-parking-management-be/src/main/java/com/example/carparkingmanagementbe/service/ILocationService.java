@@ -23,17 +23,12 @@ public interface ILocationService {
     Location findLocationById(Long id);
 
     /*TuanPDCoding*/
-    void createLocation(LocationDto locationDto);
+    void createLocation(Location location);
+
+
+    void editLocation(Location location);
 
     /*TuanPDCoding*/
-    void editLocation(LocationDto locationDto);
-
-    /*TuanPDCoding*/
-    void editAllowParkingById(Location location);
-
-    void createAllowParking(LocationDto locationDto, Set<AllowedCarParking> allowedCarParking);
-    /*TuanPDCoding*/
-
 
     //Xoa vi tri do cua trongTA
     void deleteLocationById(Long id);
@@ -44,11 +39,12 @@ public interface ILocationService {
     //Dat suu nhi code tim list
     Page<Location> getAllLocation(Pageable pageable);
 
-
     //DatNVN code tim id
     Location findByIdLocation(Long id);
 
     //DatNVN code update
     void updateColorLocation(Long id);
+
+    Page<Location> findAllLocation(Pageable pageable);
 
 }
