@@ -1,9 +1,9 @@
 package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
-import com.example.carparkingmanagementbe.model.Ticket;
+import com.example.carparkingmanagementbe.model.*;
 
-import com.example.carparkingmanagementbe.service.ITicketService;
+import com.example.carparkingmanagementbe.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,15 +29,28 @@ import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api")
+@RequestMapping("/api/ticket")
 public class TicketController {
     //ta controller begin
     @Autowired
     private ITicketService ticketService;
+
+    @Autowired
+    private IFloorsService iFloorsService;
+
+    @Autowired
+    private ILocationService iLocationService;
+
+    @Autowired
+    private ITicketTypeService iTicketTypeService;
+
+    @Autowired
+    private ICarService iCarService;
 
 
     @GetMapping("/check")
@@ -102,6 +115,41 @@ public class TicketController {
 
 // tam controller end
 //long begin
+
+    @GetMapping("/ticketType")
+    public ResponseEntity<List<TicketType>> getAllTicketType() {
+        List<TicketType> ticketTypeList = iTicketTypeService.findAllTicket();
+        if (ticketTypeList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(ticketTypeList, HttpStatus.OK);
+    }
+
+    @GetMapping("/location")
+    public ResponseEntity<List<Location>> getAllLocation() {
+        List<Location> locationList = iLocationService.findAllLocation();
+        if (locationList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND );
+        }
+        return new ResponseEntity<>(locationList, HttpStatus.OK);
+    }
+
+    @GetMapping("/floor")
+    public ResponseEntity<List<Floor>> getAllFloor() {
+        List<Floor> floors = iFloorsService.findAllFloor();
+        if (floors.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND );
+        }
+        return new ResponseEntity<>(floors, HttpStatus.OK);
+    }
+    @GetMapping("/car")
+    public ResponseEntity<List<Car>> getAllCar() {
+        List<Car> cars = iCarService.findAll();
+        if (cars.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND );
+        }
+        return new ResponseEntity<>(cars, HttpStatus.OK);
+    }
 
     @GetMapping("/edit/{id}")
     public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
