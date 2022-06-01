@@ -30,6 +30,7 @@ public class Ticket {
     @Column(columnDefinition = "DATETIME")
     private String timeOut;
     private Boolean delFlag;
+    private String userEmail;
     private Boolean isDoing;
     private Double sumPrice;
     @ManyToOne
