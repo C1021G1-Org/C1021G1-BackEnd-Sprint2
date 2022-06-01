@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.carparkingmanagementbe.dto.EmployeeDto;
 import com.example.carparkingmanagementbe.dto.EmployeeDtoCheck;
@@ -70,7 +71,7 @@ public class EmployeeController {
 
   //PhuHDQ
     @PostMapping("/create")
-    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
         char[] charArray = employeeDto.getName().toCharArray();
         boolean foundSpace = true;
         for (int i = 0; i < charArray.length; i++) {
@@ -82,6 +83,16 @@ public class EmployeeController {
             } else {
                 foundSpace = true;
             }
+        }
+        new EmployeeDtoCheck().validate(employeeDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            response.put("error", errorMap);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         employeeDto.setName(String.valueOf(charArray));
         iEmployeeService.createEmployee(employeeDto);
@@ -108,7 +119,7 @@ public class EmployeeController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDtoCheck employeeDtoCheck) {
+    public ResponseEntity<?> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDtoCheck employeeDtoCheck, BindingResult bindingResult) {
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDtoCheck.setId(id);
         if (iEmployeeService.findEmployeeById(id).isPresent()) {
@@ -136,13 +147,12 @@ public class EmployeeController {
             }
         }
         Map<String, String> errors = new HashMap<>();
-        if (iEmployeeService.findByEmailNot(employeeDtoCheck.getId(), employeeDtoCheck.getEmail()) > 0) {
-            errors.put("email", "Email đã tồn tại!");
-        }
-        if (iEmployeeService.findByPhoneNot(employeeDtoCheck.getId(), employeeDtoCheck.getPhone()) > 0) {
-            errors.put("phone", "Số điện thoại đã tồn tại!");
-        }
+//        if (iEmployeeService.findByEmailNot(employeeDtoCheck.getId(), employeeDtoCheck.getEmail()) > 0) {
+//            errors.put("email", "Email đã tồn tại!");
+//        }
+//        if (iEmployeeService.findByPhoneNot(employeeDtoCheck.getId(), employeeDtoCheck.getPhone()) > 0) {
+//            errors.put("phone", "Số điện thoại đã tồn tại!");
+//        }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
-
 }

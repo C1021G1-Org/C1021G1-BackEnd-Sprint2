@@ -58,26 +58,14 @@ public class LocationService implements ILocationService {
 
     /*TuanPDCoding*/
     @Override
-    public void createLocation(LocationDto locationDto) {
-        locationRepository.createLocation(locationDto.getCode(), locationDto.getNumber(), locationDto.getDelFlag(), locationDto.getIsEmpty(), locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getDescription(), locationDto.getId_floor());
+    public void createLocation(Location location) {
+        locationRepository.save(location);
     }
 
     /*TuanPDCoding*/
     @Override
-    public void editLocation(LocationDto locationDto) {
-        locationRepository.editLocationById(locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getId());
-    }
-
-    /*TuanPDCoding*/
-    @Override
-    public void editAllowParkingById(Location location) {
-        locationRepository.editAllowParkingById(location.getId(), location.getAllowedCarParkingSet());
-    }
-
-    /*TuanPDCoding*/
-    @Override
-    public void createAllowParking(LocationDto locationDto, Set<AllowedCarParking> allowedCarParking) {
-        locationRepository.createAllowParking(locationDto.getId_floor(), allowedCarParking);
+    public void editLocation(Location location) {
+        locationRepository.save(location);
     }
 
     /*TinhHDCoding*/
@@ -109,7 +97,6 @@ public class LocationService implements ILocationService {
     public void updateColorLocation(Long id) {
         locationRepository.updateIsEmpty(id);
     }
-
 
     @Override
     public Page<Location> findAllLocation(Pageable pageable) {
