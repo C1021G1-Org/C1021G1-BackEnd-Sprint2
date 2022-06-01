@@ -90,6 +90,13 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "and ticket.user_email is null ", nativeQuery = true)
     void updateUserEmail(@Param("userEmail") String userEmail, @Param("idTicket") Long idTicket);
 
+    @Modifying
+    @Query(value = "update ticket " +
+            "set ticket.user_email = null " +
+            "where ticket.id = :idTicket " +
+            " and ticket.del_flag = 1 ", nativeQuery = true)
+    void updateNullUser(@Param("idTicket") Long idTicket);
+
     @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date,ticket.user_email " +
             ",ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type " +
             " from ticket " +
@@ -102,9 +109,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
 //    LongLT
 
-    @Query(value = "select ticket.id, ticket.code, ticket.start_date,ticket.end_date, ticket.img_car_in, ticket.img_car_out,ticket.user_email \n" +
-            "            ticket.sum_price, ticket.time_in, ticket.time_out, ticket.is_doing, ticket.id_car, ticket.id_location, ticket.id_ticket_type, ticket.del_flag\n" +
-            "            from ticket where ticket.id = ? " +
+    @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date,ticket.user_email " +
+            ",ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type " +
+            "from ticket " +
+            "where ticket.id = ? " +
             "and ticket.del_flag = 1 ", nativeQuery = true)
     Ticket findByIdTicket(Long id);
 

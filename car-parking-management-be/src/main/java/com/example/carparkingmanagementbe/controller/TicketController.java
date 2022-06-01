@@ -199,6 +199,28 @@ public class TicketController {
 
     }
 
+    @PatchMapping("/updateUserNull/{id}")
+    public ResponseEntity<?> updateUserNull(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
+        if (updateUserEmailDto.getRole().contains("ROLE_EMPLOYEE") || updateUserEmailDto.getRole().contains("ROLE_ADMIN")) {
+            Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
+            if (ticket == null) {
+                Map<String, String> map = new HashMap<>();
+                map.put("messageEros", "vé đang được người khác thao tác không thể truy cập");
+                return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            } else {
+                ticketService.updateNullUser(id);
+                Map<String, String> map = new HashMap<>();
+                map.put("messageSuccess", "da update ve null");
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+
+        } else {
+            Map<String, String> map = new HashMap<>();
+            map.put("messageEros", "không đủ thẩm quyền để làm việc");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
+    }
+
 //    @GetMapping("/getFloor")
 //    public ResponseEntity<List<Floor>> getAllFloor() {
 //        List<Floor> floorList = floorsService.getAllFloor();

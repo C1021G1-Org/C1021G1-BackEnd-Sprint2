@@ -27,6 +27,7 @@ public interface ITicketService {
 
     Ticket getTicketAction(Long idTicket,String userEmail);
 
+    void updateNullUser(Long idTicket);
     // tam end
 
 
