@@ -14,6 +14,8 @@ import java.time.temporal.ChronoUnit;
 public class TicketDto implements Validator {
     private Long id;
 
+    private String floor;
+
     @NotNull(message = "Vui lòng không để trống")
     private Double sumPrice;
 
@@ -71,6 +73,14 @@ public class TicketDto implements Validator {
         this.endDate = endDate;
     }
 
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
+    }
+
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -91,7 +101,7 @@ public class TicketDto implements Validator {
                     errors.rejectValue("endDate", "", "Phải bằng 1");
                 }
             } else if (ticketDto.getTicketType() == 2) {
-                if (betweenDate <= 30) {
+                if (betweenDate < 30) {
                     errors.rejectValue("endDate", "", "Phải lớn hơn hoặc bằng 30 ngày");
                 }
             }

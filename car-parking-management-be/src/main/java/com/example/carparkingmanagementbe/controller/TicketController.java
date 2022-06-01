@@ -115,7 +115,7 @@ public class TicketController {
                 map.put("messageEros", "xe vẩn còn bên trong nên không thể xóa");
                 return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
             } else {
-                DateTimeFormatter formatterInOut = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                DateTimeFormatter formatterInOut = DateTimeFormatter.ofPattern("yyyy-MM-dd 'T' HH:mm:ss.SSSZ");
                 String timeIn = ticket.getTimeIn();
                 String timeOut = ticket.getTimeOut();
                 String changeTimeIn = String.format(timeIn, formatterInOut);
