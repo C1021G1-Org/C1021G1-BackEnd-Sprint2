@@ -7,6 +7,7 @@ import com.example.carparkingmanagementbe.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -54,21 +55,17 @@ public class CustomerController {
         Page<Customer> customerList = null;
 
         if ("".equals(startDate) && "".equals(endDate)){
-            customerList = customerService.searchCustomerNoDate(code,phone,id_card, PageRequest.of(page,2));
+            customerList = customerService.searchCustomerNoDate(code,phone,id_card, PageRequest.of(page,5));
         }
         if ("".equals(startDate) && !"".equals(endDate)){
-            customerList = customerService.searchEndDate(endDate,code,phone,id_card,PageRequest.of(page,2));
+            customerList = customerService.searchEndDate(endDate,code,phone,id_card,PageRequest.of(page,5));
         }
         if (!"".equals(startDate) && "".equals(endDate)){
-            customerList = customerService.searchStartDate(startDate,code,phone,id_card,PageRequest.of(page,2));
+            customerList = customerService.searchStartDate(startDate,code,phone,id_card,PageRequest.of(page,5));
         }
         if (!"".equals(startDate) && !"".equals(endDate)){
-            customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,2));
+            customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,5));
         }
-
-
-        customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,2));
-
 
         if (customerList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -76,6 +73,15 @@ public class CustomerController {
             return new ResponseEntity<>(customerList,HttpStatus.OK);
         }
 
+    }
+
+    @GetMapping("/not-pagination")
+    public ResponseEntity<Page<Customer>> getAllCustomerNotPagination(){
+        Page<Customer> customers = this.customerService.findAllCustomer(Pageable.unpaged());
+        if (customers.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
     //ThangDBX delete customer
@@ -89,6 +95,17 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
 
+    }
+
+    //ThangDBX tim customer theo ID
+    @GetMapping("find/{id}")
+    public ResponseEntity<?> findCustomerByIdToDelte(@PathVariable("id") Long id){
+        Optional<Customer> customer = customerService.findCustomerById(id);
+        if (!customer.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(customer ,HttpStatus.OK);
+        }
     }
 
 
