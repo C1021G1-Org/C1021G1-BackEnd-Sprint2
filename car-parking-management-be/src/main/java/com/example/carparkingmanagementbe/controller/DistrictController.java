@@ -1,6 +1,6 @@
 package com.example.carparkingmanagementbe.controller;
 
-import com.example.carparkingmanagementbe.model.Car;
+
 import com.example.carparkingmanagementbe.model.District;
 import com.example.carparkingmanagementbe.service.IDistrictService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@CrossOrigin("*")   
+@CrossOrigin("*")
 @RequestMapping("/api/district")
 public class DistrictController {
     @Autowired
