@@ -20,16 +20,8 @@ public class Car {
     private Long id;
     private String code;
     private String name;
-
     private String carPlate;
     private String carCompany;
-
-    @Column(columnDefinition = "DATE")
-    private String startDate;
-    @Column(columnDefinition = "DATE")
-    private String endDate;
-
-
     private Boolean delFlag;
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id")
@@ -40,8 +32,6 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "id_employee", referencedColumnName = "id")
     private Employee employee;
-
-
     @ManyToOne
     @JoinColumn(name = "id_car_type", referencedColumnName = "id")
     private CarType carType;
