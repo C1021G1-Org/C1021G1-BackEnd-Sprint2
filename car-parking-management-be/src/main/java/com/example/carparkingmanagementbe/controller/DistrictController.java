@@ -11,11 +11,11 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/customer")
+@RequestMapping("/api/district")
 public class DistrictController {
     @Autowired
     private IDistrictService districtService;
-    @GetMapping("/district-list/{id}")
+    @GetMapping("/district-list")
     public ResponseEntity<List<District>> getAllDistrict(@PathVariable Long id) {
         List<District> districtList = districtService.getAllDistrict(id);
         if (districtList.isEmpty()) {

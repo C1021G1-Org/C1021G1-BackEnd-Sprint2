@@ -51,4 +51,13 @@ public class CarController {
             return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
         }
     }
+//    Bảo hiển thị xe theo id customer
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<List<Car>> findCarByCustomerId(@PathVariable Long id) {
+        List<Car> carList = carService.selectCar(id);
+        if (carList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(carList, HttpStatus.OK);
+    }
 }

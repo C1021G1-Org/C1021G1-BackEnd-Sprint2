@@ -79,4 +79,10 @@ public class CustomerService implements ICustomerService {
                 customerDtoCheck.getId());
     }
 
+    @Override
+    public Customer save(Customer customer) {
+         return customerRepository.save(customer);
+    }
+
+
 }
