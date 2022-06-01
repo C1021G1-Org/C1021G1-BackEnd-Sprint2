@@ -10,11 +10,8 @@ import java.time.format.DateTimeFormatter;
 public class CustomerDto implements Validator {
     private static final String REGEX_NAME = "^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+(\\s[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+)*$";
     private static final String REGEX_PHONE = "^(0[3|7|8|5|9])+([0-9]{8,9})$";
-    @NotNull(message = "Trường này không thể để trống")
-    @NotEmpty(message = "Trường này không thể để trống")
-    @Pattern(regexp = "((KH-|kh-)\\d{3})", message = "Mã khách hàng phải là KH-XXX")
     private String code;
-
+    private Long id;
     @Size(min = 5,max = 40,message = "Tên phải từ 5-40 kí tự.")
     @Pattern(regexp = REGEX_NAME, message = "Vui lòng nhập đúng tên của bạn!")
     @NotEmpty(message = "Trường này không thể để trống.")
@@ -50,6 +47,13 @@ public class CustomerDto implements Validator {
     public CustomerDto() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;

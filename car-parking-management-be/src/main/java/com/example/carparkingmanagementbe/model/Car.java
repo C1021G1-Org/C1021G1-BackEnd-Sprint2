@@ -20,12 +20,8 @@ public class Car {
     private Long id;
     private String code;
     private String name;
-
     private String carPlate;
     private String carCompany;
-
-
-
     private Boolean delFlag;
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id")

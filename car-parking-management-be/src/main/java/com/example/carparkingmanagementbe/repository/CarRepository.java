@@ -1,5 +1,6 @@
 package com.example.carparkingmanagementbe.repository;
 
+import com.example.carparkingmanagementbe.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.carparkingmanagementbe.model.Car;
 import org.springframework.data.jpa.repository.Modifying;
@@ -65,7 +66,6 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "customer.address," +
             "customer.account_id," +
             "customer.birthday," +
-            "customer.`code`," +
             "customer.email," +
             "customer.gender," +
             "customer.id_card," +
