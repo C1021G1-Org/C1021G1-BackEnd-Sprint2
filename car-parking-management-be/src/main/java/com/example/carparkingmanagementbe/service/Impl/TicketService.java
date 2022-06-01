@@ -35,6 +35,21 @@ public class TicketService implements ITicketService {
         return ticketRepository.getTicketById(idTicket);
     }
 
+    @Override
+    public void updateUserEmail(String userEmail, Long idTicket) {
+        ticketRepository.updateUserEmail(userEmail,idTicket);
+    }
+
+    @Override
+    public Ticket getTicketAction(Long idTicket, String userEmail) {
+        return ticketRepository.getTicketAction(idTicket,userEmail);
+    }
+
+    @Override
+    public void updateNullUser(Long idTicket) {
+        ticketRepository.updateNullUser(idTicket);
+    }
+
 
     // tam end
 

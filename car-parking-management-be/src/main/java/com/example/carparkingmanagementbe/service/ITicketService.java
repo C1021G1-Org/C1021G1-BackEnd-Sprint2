@@ -23,6 +23,11 @@ public interface ITicketService {
 
     Ticket getTicketById(Long idTicket);
 
+    void updateUserEmail(String userEmail,Long idTicket);
+
+    Ticket getTicketAction(Long idTicket,String userEmail);
+
+    void updateNullUser(Long idTicket);
     // tam end
 
 

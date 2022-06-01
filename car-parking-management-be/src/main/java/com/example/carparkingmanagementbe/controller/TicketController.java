@@ -2,6 +2,7 @@ package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
 
+import com.example.carparkingmanagementbe.dto.ticket.UpdateUserEmailDto;
 import com.example.carparkingmanagementbe.model.*;
 
 import com.example.carparkingmanagementbe.service.*;
@@ -25,6 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.ResultSet;
 import java.time.LocalDate;
 
 
@@ -70,8 +72,6 @@ public class TicketController {
     private ITicketTypeService ticketTypeService;
 
 
-
-
     @GetMapping("/check")
     public ResponseEntity<Page<Ticket>> getAllTicket(@RequestParam(defaultValue = "0") int page) {
         Pageable pageable = PageRequest.of(page, 5);
@@ -98,42 +98,127 @@ public class TicketController {
     }
 
     @PatchMapping("/delete/{id}")
-    public ResponseEntity<?> deleteTicket(@PathVariable Long id) {
+    public ResponseEntity<?> deleteTicket(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
 
-        Ticket ticket = ticketService.getTicketById(id);
+        Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
         if (ticket == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            Map<String, String> map = new HashMap<>();
+            map.put("messageEros", "email không phù hợp");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String endDate = ticket.getEndDate();
-        LocalDate current = LocalDate.now();
-        LocalDate changeEndDay = LocalDate.parse(endDate, formatter);
-        Long betweenDay = ChronoUnit.DAYS.between(changeEndDay, current);
-        if (betweenDay >= 0) {
-            if (ticket.getTimeOut() == null) {
-                Map<String, String> map = new HashMap<>();
-                map.put("messageEros", "xe vẩn còn bên trong nên không thể xóa");
-                return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
-            } else {
-                DateTimeFormatter formatterInOut = DateTimeFormatter.ofPattern("yyyy-MM-dd 'T' HH:mm:ss.SSSZ");
-                String timeIn = ticket.getTimeIn();
-                String timeOut = ticket.getTimeOut();
-                String changeTimeIn = String.format(timeIn, formatterInOut);
-                String changeTimeOut = String.format(timeOut, formatterInOut);
-                int check = changeTimeIn.compareTo(changeTimeOut);
-                if (check < 0) {
-                    ticketService.deleteTicketByDel(ticket.getId());
-                    return new ResponseEntity<>(check, HttpStatus.OK);
-                } else {
+        if (updateUserEmailDto.getRole().contains("ROLE_EMPLOYEE") || updateUserEmailDto.getRole().contains("ROLE_ADMIN")) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String endDate = ticket.getEndDate();
+            LocalDate current = LocalDate.now();
+            LocalDate changeEndDay = LocalDate.parse(endDate, formatter);
+            Long betweenDay = ChronoUnit.DAYS.between(changeEndDay, current);
+            if (betweenDay >= 0) {
+                if (ticket.getTimeOut() == null) {
                     Map<String, String> map = new HashMap<>();
                     map.put("messageEros", "xe vẩn còn bên trong nên không thể xóa");
                     return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+                } else {
+                    DateTimeFormatter formatterInOut = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+                    String timeIn = ticket.getTimeIn();
+                    String timeOut = ticket.getTimeOut();
+                    String changeTimeIn = String.format(timeIn, formatterInOut);
+                    String changeTimeOut = String.format(timeOut, formatterInOut);
+                    int check = changeTimeIn.compareTo(changeTimeOut);
+                    if (check < 0) {
+                        ticketService.deleteTicketByDel(ticket.getId());
+                        return new ResponseEntity<>(check, HttpStatus.OK);
+                    } else {
+                        Map<String, String> map = new HashMap<>();
+                        map.put("messageEros", "xe vẩn còn bên trong nên không thể xóa");
+                        return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+                    }
                 }
+            } else {
+                Map<String, String> map = new HashMap<>();
+                map.put("messageEros", "Vẩn còn hạng");
+                return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
             }
         } else {
             Map<String, String> map = new HashMap<>();
-            map.put("messageEros", "Vẩn còn hạng");
-            return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+            map.put("messageEros", "không đủ thẩm quyền để làm việc");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping("/updateUserEmail/{id}")
+    public ResponseEntity<?> updateUserEmail(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
+        Ticket ticket = ticketService.getTicketById(id);
+        if (ticket == null) {
+            Map<String, String> map = new HashMap<>();
+            map.put("messageEros", "không tim thấy vé");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        } else {
+            if (updateUserEmailDto.getRole().contains("ROLE_EMPLOYEE") || updateUserEmailDto.getRole().contains("ROLE_ADMIN")) {
+                if (ticket.getUserEmail() == null) {
+                    ticketService.updateUserEmail(updateUserEmailDto.getEmail(), id);
+                    Map<String, String> map = new HashMap<>();
+                    map.put("messageSuccess", "thành công");
+                    return new ResponseEntity<>(map, HttpStatus.OK);
+                } else if (ticket.getUserEmail().equals(updateUserEmailDto.getEmail())) {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("messageSuccess", "thành công");
+                    return new ResponseEntity<>(map, HttpStatus.OK);
+
+                } else {
+                    Map<String, String> map = new HashMap<>();
+                    map.put("messageEros", "đã có người đang thao tác với vé");
+                    return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+                }
+
+            } else {
+                Map<String, String> map = new HashMap<>();
+                map.put("messageEros", "không đủ thẩm quyền để làm việc");
+                return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            }
+
+        }
+
+
+    }
+
+    @PostMapping("/getTicketAction/{id}")
+    public ResponseEntity<?> getTicketAction(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
+        if (updateUserEmailDto.getRole().contains("ROLE_EMPLOYEE") || updateUserEmailDto.getRole().contains("ROLE_ADMIN")) {
+            Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
+            if (ticket == null) {
+                Map<String, String> map = new HashMap<>();
+                map.put("messageEros", "vé đang được người khác thao tác không thể truy cập");
+                return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(ticket, HttpStatus.OK);
+        } else {
+            Map<String, String> map = new HashMap<>();
+            map.put("messageEros", "không đủ thẩm quyền để làm việc");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
+
+
+    }
+
+    @PatchMapping("/updateUserNull/{id}")
+    public ResponseEntity<?> updateUserNull(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
+        if (updateUserEmailDto.getRole().contains("ROLE_EMPLOYEE") || updateUserEmailDto.getRole().contains("ROLE_ADMIN")) {
+            Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
+            if (ticket == null) {
+                Map<String, String> map = new HashMap<>();
+                map.put("messageEros", "vé đang được người khác thao tác không thể truy cập");
+                return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+            } else {
+                ticketService.updateNullUser(id);
+                Map<String, String> map = new HashMap<>();
+                map.put("messageSuccess", "da update ve null");
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }
+
+        } else {
+            Map<String, String> map = new HashMap<>();
+            map.put("messageEros", "không đủ thẩm quyền để làm việc");
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
     }
 
@@ -171,7 +256,7 @@ public class TicketController {
     public ResponseEntity<List<Location>> getAllLocation() {
         List<Location> locationList = iLocationService.findAll();
         if (locationList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND );
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(locationList, HttpStatus.OK);
     }
@@ -180,15 +265,16 @@ public class TicketController {
     public ResponseEntity<List<Floor>> getAllFloor() {
         List<Floor> floors = iFloorsService.findAllFloor();
         if (floors.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND );
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(floors, HttpStatus.OK);
     }
+
     @GetMapping("/car")
     public ResponseEntity<List<Car>> getAllCar() {
         List<Car> cars = iCarService.findAll();
         if (cars.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND );
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
@@ -235,7 +321,6 @@ public class TicketController {
 
         }
     }
-
 
 
     @GetMapping("/getByFloor/{id}")
