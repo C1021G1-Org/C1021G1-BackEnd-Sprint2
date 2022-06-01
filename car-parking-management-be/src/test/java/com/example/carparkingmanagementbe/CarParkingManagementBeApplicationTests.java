@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 class CarParkingManagementBeApplicationTests {
 
-
     @Test
     void contextLoads() {
     }

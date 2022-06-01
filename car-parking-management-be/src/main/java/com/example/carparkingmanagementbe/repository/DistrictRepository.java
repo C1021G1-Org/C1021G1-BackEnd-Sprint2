@@ -7,11 +7,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DistrictRepository extends JpaRepository<District,Long> {
     @Query(value = "SELECT district.id,district.name,district.prefix,district.id_province " +
+            "FROM district "
+            , nativeQuery = true)
+    List<District> getAllDistrict();
+
+    @Query(value = "SELECT district.id,district.name,district.prefix,district.id_province " +
             "FROM district " +
-            "where district.id_province = ?;", nativeQuery = true)
-    List<District> getAllDistrict(Long id);
+            "where district.id_province = ?"
+            , nativeQuery = true)
+    List<District> getDistrictById(Long id);
 }
