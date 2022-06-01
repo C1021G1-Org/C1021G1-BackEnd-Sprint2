@@ -126,6 +126,7 @@ public class CustomerController {
 //        customerService.createCustomer(customerDto);
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto,customer);
+
         customerService.save(customer);
         carDto.setCustomer(customer.getId());
         carService.createCar(carDto);
