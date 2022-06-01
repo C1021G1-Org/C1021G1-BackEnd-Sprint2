@@ -53,4 +53,5 @@ public interface ICustomerService {
     void createCustomer(CustomerDto customerDto);
     void updateCustomer(CustomerDtoCheck customerDtoCheck);
 
+    Customer save(Customer customer);
 }

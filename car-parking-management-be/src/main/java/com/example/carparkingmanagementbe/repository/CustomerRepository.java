@@ -24,9 +24,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     //ThangDBX kiem tra customer id co ton tai hay khong
     @Query(value = "select id, address, birthday, `code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
-            "from customer\n" +
-            "where del_flag = true \n" +
-            "and id = ?", nativeQuery = true)
+            "from customer " +
+            "where id = ? " +
+            "and del_flag = 1", nativeQuery = true)
     Optional<Customer> findCustomerById(Long id);
 
 //    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
@@ -117,5 +117,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
             "c.email = ?4, c.phone = ?5, c.address = ?6, c.gender = ?7, c.del_flag = ?8, c.id_ward = ?9 WHERE id = ?10", nativeQuery = true)
     void updateCustomer(String name, String birthday, String idCard,
                       String email, String phone, String address, Boolean gender, Boolean delFlag,Long ward, Long id);
+
+
 
 }
