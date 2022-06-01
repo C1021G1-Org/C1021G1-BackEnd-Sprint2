@@ -66,7 +66,6 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "customer.address," +
             "customer.account_id," +
             "customer.birthday," +
-            "customer.`code`," +
             "customer.email," +
             "customer.gender," +
             "customer.id_card," +
