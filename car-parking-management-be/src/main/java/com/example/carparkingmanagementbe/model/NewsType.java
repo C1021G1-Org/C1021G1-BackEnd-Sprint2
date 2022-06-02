@@ -23,4 +23,7 @@ public class NewsType {
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "newsType")
     private Set<News> newsSet;
+
+    public NewsType(int i) {
+    }
 }

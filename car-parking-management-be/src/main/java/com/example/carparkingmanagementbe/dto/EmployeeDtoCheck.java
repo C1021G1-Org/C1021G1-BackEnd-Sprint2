@@ -1,10 +1,21 @@
 package com.example.carparkingmanagementbe.dto;
 
+import com.example.carparkingmanagementbe.service.IEmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
+public class EmployeeDtoCheck implements Validator {
 
-public class EmployeeDtoCheck {
+    @Autowired
+    IEmployeeService iEmployeeService;
+
     private static final String REGEX_NAME = "^([a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+(\\s[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+)*){6,40}$";
     private static final String REGEX_ADDRESS = "^([0-9a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+(\\s[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+)*){4,40}$";
     private Long id;
@@ -133,5 +144,34 @@ public class EmployeeDtoCheck {
 
     public void setAccount_id(Long account_id) {
         this.account_id = account_id;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        EmployeeDto employeeDto = (EmployeeDto) target;
+        String inputBirthday = employeeDto.getBirthday();
+        if (inputBirthday != null) {
+            LocalDate birthDay = LocalDate.parse(inputBirthday, formatter);
+            LocalDate current = LocalDate.now();
+            int betweenDate =  Period.between(birthDay, current).getYears();
+            if(betweenDate<18){
+                errors.rejectValue("birthday","","Nhân viên phải lớn hơn 18 tuổi.");
+            }
+        }
+        if (iEmployeeService.findByEmailNot(employeeDto.getId(), employeeDto.getEmail()) > 0) {
+            errors.rejectValue("email","","Email đã tồn tại.");
+        }
+        if (iEmployeeService.findByCodeNot(employeeDto.getId(), employeeDto.getCode()) > 0) {
+            errors.rejectValue("code","","Mã nhân viên đã tồn tại.");
+        }
+        if (iEmployeeService.findByPhoneNot(employeeDto.getId(), employeeDto.getPhone()) > 0) {
+            errors.rejectValue("phone","","Số điện thoại đã tồn tại.");
+        }
     }
 }
