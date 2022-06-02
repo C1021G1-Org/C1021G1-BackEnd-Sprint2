@@ -22,4 +22,10 @@ public class WardService implements IWardService {
     public List<Ward> getWardById(Long id) {
         return wardRepository.getWardById(id);
     }
+
+
+    @Override
+    public Optional<Ward> findWardById(Long id) {
+        return wardRepository.findById(id);
+    }
 }

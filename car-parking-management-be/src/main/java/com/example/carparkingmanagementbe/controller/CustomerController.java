@@ -5,6 +5,7 @@ import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.service.ICustomerService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,6 +47,7 @@ public class CustomerController {
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
+    Page<Customer> customerList;
     //ThangDBX tim kiem full truong
     @GetMapping("search")
     public ResponseEntity<Page<Customer>> searchFull(@RequestParam(defaultValue = "",required = false) String startDate,
@@ -54,7 +56,6 @@ public class CustomerController {
                                                      @RequestParam(defaultValue = "",required = false) String phone,
                                                      @RequestParam(defaultValue = "",required = false) String id_card,
                                                         @RequestParam(defaultValue = "0") int page){
-        Page<Customer> customerList = null;
 
         if ("".equals(startDate) && "".equals(endDate)){
             customerList = customerService.searchCustomerNoDate(code,phone,id_card, PageRequest.of(page,5));
@@ -113,7 +114,7 @@ public class CustomerController {
 
 //    Bảo thêm mới
     @PostMapping("/create")
-    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto, @Valid @RequestBody CarDto carDto, BindingResult bindingResult){
+    public ResponseEntity<?> createCustomer( @Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult){
         char[] charArray = customerDto.getName().toCharArray();
         boolean foundSpace = true;
         for (int i = 0; i < charArray.length; i++) {
@@ -140,12 +141,13 @@ public class CustomerController {
         int code = (int) Math.floor((Math.random()*899) + 100);
         String codeRandom = String.valueOf(code);
         customerDto.setCode("KH-" + codeRandom);
-//        customerService.createCustomer(customerDto);
+        customerService.createCustomer(customerDto);
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto,customer);
+        customer.getWard().setId(customerDto.getWard());
         customerService.save(customer);
-        carDto.setCustomer(customer.getId());
-        carService.createCar(carDto);
+//        carDto.setCustomer(customer.getId());
+//        carService.createCar(carDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -203,9 +205,6 @@ public class CustomerController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<Optional<Customer>> findCustomerWithId(@PathVariable Long id) {
         Optional<Customer> customerOptional = customerService.findCustomerById(id);
-        if (customerOptional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(customerOptional, HttpStatus.OK);
     }
 
