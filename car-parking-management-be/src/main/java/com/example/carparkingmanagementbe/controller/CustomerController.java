@@ -119,7 +119,6 @@ public class CustomerController {
     }
 
     // tronghd validate dữ liệu thêm mới
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
@@ -133,7 +132,7 @@ public class CustomerController {
         return errors;
     }
 
-//    Bảo hiển thị
+    //    Bảo hiển thị
     @GetMapping("/detail/{id}")
     public ResponseEntity<List<Car>> findCustomerById(@PathVariable Long id) {
         List<Car> carList = carService.selectCar(id);

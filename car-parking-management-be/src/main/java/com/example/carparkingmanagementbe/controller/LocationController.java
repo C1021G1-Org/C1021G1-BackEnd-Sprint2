@@ -105,7 +105,6 @@ public class LocationController {
                                                              @RequestParam(defaultValue = "") String id,
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
-        System.out.println(locationPage.getTotalPages());
         if (locationPage.getTotalPages() <= page) {
             new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -120,7 +119,8 @@ public class LocationController {
 
     // dat code
     @GetMapping("/map-parking")
-    public ResponseEntity<Page<Location>> getAllLocation(@RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Location>> getAllLocation(
+                                                         @RequestParam(defaultValue = "0") int page) {
         Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 86));
         if (getAllLocation.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -155,7 +155,6 @@ public class LocationController {
     @DeleteMapping("/update-map-parking/{id}")
     public ResponseEntity<Location> updateColorLocation(@PathVariable Long id) {
         Location location = iLocationService.findLocationById(id);
-        System.out.println(location.getIsEmpty());
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -167,7 +166,6 @@ public class LocationController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<LocationDetailDto> getId(@PathVariable Long id) {
         LocationDetailDto location = iLocationService.findById(id);
-
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

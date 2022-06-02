@@ -49,7 +49,23 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "AND del_flag = 1 ", nativeQuery = true)
     Location findLocationById(Long id);
 
-
+    //datNVN code tim id
+    @Query(value = "SELECT " +
+            "location.id, " +
+            "location.code, " +
+            "location.del_flag, " +
+            "location.description, " +
+            "location.height, " +
+            "location.is_empty, " +
+            "location.length, " +
+            "location.number, " +
+            "location.width, " +
+            "location.id_floor " +
+            "FROM location " +
+            "WHERE location.id = ? " +
+            "AND location.is_empty = 0 ",
+            nativeQuery = true)
+    Location findByIdLocation(Long id);
     /*TuanPDCoding*/
     @Modifying
     @Query(value = "UPDATE location SET\n" +
@@ -104,28 +120,12 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             ",location.description" +
             ",location.id_floor" +
             " FROM location " +
-            "WHERE location.del_flag = 1",
+            "WHERE  location.del_flag = 1",
             nativeQuery = true, countQuery = "SELECT COUNT(*) FROM location WHERE location.del_flag = 1")
     Page<Location> getAllLocation(Pageable pageable);
 
 
-    //datNVN code tim id
-    @Query(value = "SELECT " +
-            "location.id, " +
-            "location.code, " +
-            "location.del_flag, " +
-            "location.description, " +
-            "location.height, " +
-            "location.is_empty, " +
-            "location.length, " +
-            "location.number, " +
-            "location.width, " +
-            "location.id_floor " +
-            "FROM location " +
-            "WHERE location.id = ? " +
-            "AND location.is_empty = 0 ",
-            nativeQuery = true)
-    Location findByIdLocation(Long id);
+
 
     //datNVN code update
     @Modifying
