@@ -191,7 +191,7 @@ public class EmployeeController {
 
     @GetMapping("/district-list/{id}")
     public ResponseEntity<List<District>> getAllDistrict(@PathVariable Long id) {
-        List<District> districtList = iDistrictService.getAllDistrict(id);
+        List<District> districtList = iDistrictService.getDistrictById(id);
         if (districtList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -209,7 +209,7 @@ public class EmployeeController {
 
     @GetMapping("/ward-list/{id}")
     public ResponseEntity<List<Ward>> getAllWard(@PathVariable Long id) {
-        List<Ward> wardList = iWardService.getAllWard(id);
+        List<Ward> wardList = iWardService.getWardById(id);
         if (wardList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
