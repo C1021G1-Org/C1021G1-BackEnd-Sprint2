@@ -52,28 +52,34 @@ public class CustomerController {
                                                      @RequestParam(defaultValue = "",required = false) String endDate,
                                                      @RequestParam(defaultValue = "",required = false) String code,
                                                      @RequestParam(defaultValue = "",required = false) String phone,
-                                                     @RequestParam(defaultValue = "",required = false) String id_card,
+                                                     @RequestParam(defaultValue = "",required = false) String idCard,
                                                         @RequestParam(defaultValue = "0") int page){
         Page<Customer> customerList = null;
 
         if ("".equals(startDate) && "".equals(endDate)){
-            customerList = customerService.searchCustomerNoDate(code,phone,id_card, PageRequest.of(page,5));
+            customerList = customerService.searchCustomerNoDate(code,phone,idCard, PageRequest.of(page,5));
         }
         if ("".equals(startDate) && !"".equals(endDate)){
-            customerList = customerService.searchEndDate(endDate,code,phone,id_card,PageRequest.of(page,5));
+            customerList = customerService.searchEndDate(endDate,code,phone,idCard,PageRequest.of(page,5));
         }
         if (!"".equals(startDate) && "".equals(endDate)){
-            customerList = customerService.searchStartDate(startDate,code,phone,id_card,PageRequest.of(page,5));
+            customerList = customerService.searchStartDate(startDate,code,phone,idCard,PageRequest.of(page,5));
         }
         if (!"".equals(startDate) && !"".equals(endDate)){
-            customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,5));
+            customerList = customerService.searchFullDate(startDate,endDate,code,phone,idCard, PageRequest.of(page,5));
         }
 
-        if (customerList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(customerList,HttpStatus.OK);
+        try {
+            if (customerList.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(customerList,HttpStatus.OK);
+            }
+        } catch (NullPointerException exception){
+            exception.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
 
     }
 
@@ -101,7 +107,7 @@ public class CustomerController {
 
     //ThangDBX tim customer theo ID
     @GetMapping("find/{id}")
-    public ResponseEntity<?> findCustomerByIdToDelte(@PathVariable("id") Long id){
+    public ResponseEntity<Optional<Customer>> findCustomerByIdToDelte(@PathVariable("id") Long id){
         Optional<Customer> customer = customerService.findCustomerById(id);
         if (!customer.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
