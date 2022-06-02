@@ -3,13 +3,9 @@ package com.example.carparkingmanagementbe.service;
 
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
 import com.example.carparkingmanagementbe.dto.LocationList;
-import com.example.carparkingmanagementbe.dto.LocationDto;
-import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Location;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.Set;
 
 public interface ILocationService {
     //Tim id cho cac truong thong tin chi tiet vi tri do cua trongTA
@@ -19,15 +15,11 @@ public interface ILocationService {
     Location findLocationById(Long id);
 
     /*TuanPDCoding*/
-    void createLocation(LocationDto locationDto);
+    void createLocation(Location location);
 
-    /*TuanPDCoding*/
-    void editLocation(LocationDto locationDto);
 
-    /*TuanPDCoding*/
-    void editAllowParkingById(Location location);
+    void editLocation(Location location);
 
-    void createAllowParking(LocationDto locationDto, Set<AllowedCarParking> allowedCarParking);
     /*TuanPDCoding*/
 
     //Xoa vi tri do cua trongTA

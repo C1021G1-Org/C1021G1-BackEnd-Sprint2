@@ -6,16 +6,11 @@ import com.example.carparkingmanagementbe.repository.LocationRepository;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.carparkingmanagementbe.dto.LocationList;
-
-import com.example.carparkingmanagementbe.dto.LocationDto;
-import com.example.carparkingmanagementbe.model.AllowedCarParking;
-import com.example.carparkingmanagementbe.repository.FloorsRepository;
 import org.springframework.data.domain.*;
 
 import java.util.List;
-import java.util.Set;
+
 
 @Service
 public class LocationService implements ILocationService {
@@ -47,26 +42,14 @@ public class LocationService implements ILocationService {
 
     /*TuanPDCoding*/
     @Override
-    public void createLocation(LocationDto locationDto) {
-        locationRepository.createLocation(locationDto.getCode(), locationDto.getNumber(), locationDto.getDelFlag(), locationDto.getIsEmpty(), locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getDescription(), locationDto.getId_floor());
+    public void createLocation(Location location) {
+        locationRepository.save(location);
     }
 
     /*TuanPDCoding*/
     @Override
-    public void editLocation(LocationDto locationDto) {
-        locationRepository.editLocationById(locationDto.getHeight(), locationDto.getLength(), locationDto.getWidth(), locationDto.getId());
-    }
-
-    /*TuanPDCoding*/
-    @Override
-    public void editAllowParkingById(Location location) {
-        locationRepository.editAllowParkingById(location.getId(), location.getAllowedCarParkingSet());
-    }
-
-    /*TuanPDCoding*/
-    @Override
-    public void createAllowParking(LocationDto locationDto, Set<AllowedCarParking> allowedCarParking) {
-        locationRepository.createAllowParking(locationDto.getId_floor(), allowedCarParking);
+    public void editLocation(Location location) {
+        locationRepository.save(location);
     }
 
     /*TinhHDCoding*/
@@ -98,7 +81,6 @@ public class LocationService implements ILocationService {
     public Page<Location> searchLocationCode(String code, Pageable pageable) {
         return locationRepository.searchLocationCode(code, pageable);
     }
-
 
     @Override
     public Page<Location> findAllLocation(Pageable pageable) {

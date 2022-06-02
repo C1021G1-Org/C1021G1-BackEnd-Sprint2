@@ -1,32 +1,24 @@
 package com.example.carparkingmanagementbe.repository;
 
-
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
 import com.example.carparkingmanagementbe.model.Location;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
 import com.example.carparkingmanagementbe.dto.LocationList;
-
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
-
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
-
 import java.util.Set;
 
 
 @Transactional
 @Repository
-
-public interface LocationRepository extends JpaRepository<Location,Long> {
-    //anh tinh code
+public interface LocationRepository extends JpaRepository<Location, Long> {
 
 
     //detail location TrongTA
@@ -94,8 +86,8 @@ public interface LocationRepository extends JpaRepository<Location,Long> {
     void createAllowParking(Long id_floor, Set<AllowedCarParking> allowCarParking);
 
 
-    /*TinhHDCoding*/
 
+    /*TinhHDCoding*/
     @Transactional
     @Query(value = "SELECT location.id,location.code,location.id_floor as floorId , floor.name as floorName " +
             "FROM location JOIN floor on  location.id_floor = floor.id  " +
