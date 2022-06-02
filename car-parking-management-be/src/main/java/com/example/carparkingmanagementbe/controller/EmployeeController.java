@@ -142,7 +142,7 @@ public class EmployeeController {
         return employee.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/update/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDtoCheck employeeDtoCheck, BindingResult bindingResult) {
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDtoCheck.setId(id);
@@ -171,12 +171,6 @@ public class EmployeeController {
             }
         }
         Map<String, String> errors = new HashMap<>();
-//        if (iEmployeeService.findByEmailNot(employeeDtoCheck.getId(), employeeDtoCheck.getEmail()) > 0) {
-//            errors.put("email", "Email đã tồn tại!");
-//        }
-//        if (iEmployeeService.findByPhoneNot(employeeDtoCheck.getId(), employeeDtoCheck.getPhone()) > 0) {
-//            errors.put("phone", "Số điện thoại đã tồn tại!");
-//        }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
