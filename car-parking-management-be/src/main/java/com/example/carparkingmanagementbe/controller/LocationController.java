@@ -105,7 +105,6 @@ public class LocationController {
                                                              @RequestParam(defaultValue = "") String id,
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
-        System.out.println(locationPage.getTotalPages());
         if (locationPage.getTotalPages() <= page) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -122,6 +121,7 @@ public class LocationController {
     @GetMapping("/map-parking")
     public ResponseEntity<Page<Location>> getAllLocation(@RequestParam(defaultValue = "0") int page) {
         Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 84));
+
         if (getAllLocation.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
