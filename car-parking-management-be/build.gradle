@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'mysql:mysql-connector-java'
@@ -34,6 +35,13 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 //    testImplementation 'org.springframework.security:spring-security-test'
+
+
+    implementation group: 'org.bytedeco.javacpp-presets', name: 'opencv', version: '3.4.3-1.4.3'
+
+    implementation group: 'com.asprise.ocr',
+            name: 'java-ocr-api', version: '[15,)'
+    implementation group: 'net.sourceforge.tess4j', name: 'tess4j', version: '5.2.1'
 }
 
 tasks.named('test') {

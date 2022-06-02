@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="c35411ad-9bea-4ef1-947f-706e3d5f7141" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/car-parking-management-be/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/static/test.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/static/test2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/tessdata/spa.traineddata" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/opencv_tutorial/opencv_tutorial.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/opencv_tutorial/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/EmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/TicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/TicketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,12 +53,31 @@
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
+  <component name="RunManager">
+    <configuration name="CarParkingManagementBeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="car-parking-management-be.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.carparkingmanagementbe.CarParkingManagementBeApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -56,10 +89,11 @@
       <option name="presentableId" value="Default" />
       <updated>1653528922265</updated>
       <workItem from="1653528964276" duration="253000" />
+      <workItem from="1654162122558" duration="2206000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
 </project>

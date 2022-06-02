@@ -1,5 +1,6 @@
 package com.example.carparkingmanagementbe.controller;
 
+import com.asprise.ocr.Ocr;
 import com.example.carparkingmanagementbe.dto.CreateTicketDto;
 import com.example.carparkingmanagementbe.dto.TicketDto;
 import com.example.carparkingmanagementbe.model.Car;
@@ -8,6 +9,8 @@ import com.example.carparkingmanagementbe.model.Ticket;
 import com.example.carparkingmanagementbe.model.TicketType;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.service.Impl.TicketService;
+import lombok.RequiredArgsConstructor;
+import net.sourceforge.tess4j.Tesseract;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
@@ -24,18 +27,30 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.validation.Valid;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 
+
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/ticket")
 public class TicketController {
+    private static final String FILE7 = "E:\\Project-Flight\\sprint 2\\C1021G1-BackEnd-Sprint2\\car-parking-management-be\\src\\main\\resources\\static\\test2.jpg";
+
     @Autowired
     private ITicketService ticketService;
 
@@ -43,7 +58,7 @@ public class TicketController {
     private ICarService carService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createTicket (@Valid @RequestBody CreateTicketDto createTicketDto){
+    public ResponseEntity<?> createTicket(@Valid @RequestBody CreateTicketDto createTicketDto) {
         Car car = carService.findById(createTicketDto.getCar());
         Location location = new Location();
         location.setId(createTicketDto.getLocation());
@@ -55,7 +70,7 @@ public class TicketController {
         ticket.setCar(car);
         ticket.setLocation(location);
         ticket.setTicketType(ticketType);
-        BeanUtils.copyProperties(createTicketDto,ticket);
+        BeanUtils.copyProperties(createTicketDto, ticket);
         ticket.setIsDoing(false);
         ticketService.createTicket(ticket);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
@@ -63,8 +78,8 @@ public class TicketController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions (
-            MethodArgumentNotValidException ex){
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
@@ -75,7 +90,7 @@ public class TicketController {
     }
 
     @PatchMapping("/updateTime")
-    public ResponseEntity<?> update (@Valid @RequestBody CreateTicketDto createTicketDto){
+    public ResponseEntity<?> update(@Valid @RequestBody CreateTicketDto createTicketDto) {
         Car car = carService.findById(createTicketDto.getCar());
         Location location = new Location();
         location.setId(createTicketDto.getLocation());
@@ -87,7 +102,7 @@ public class TicketController {
         ticket.setCar(car);
         ticket.setLocation(location);
         ticket.setTicketType(ticketType);
-        BeanUtils.copyProperties(createTicketDto,ticket);
+        BeanUtils.copyProperties(createTicketDto, ticket);
         ticket.setIsDoing(false);
         ticketService.updateTicket(ticket);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -99,7 +114,56 @@ public class TicketController {
 //        return new ResponseEntity<>(HttpStatus.CREATED);
 //    }
 
+    @PostMapping("/check")
+    public ResponseEntity<?> readImage(@RequestParam("file") MultipartFile file) throws Exception {
+//        Path source = Paths.get(path);
+        String fullTess = changeFile(file);
 
+
+
+        return new ResponseEntity<>(fullTess, HttpStatus.OK);
+
+    }
+
+    public String changeFile(MultipartFile file) throws Exception {
+        Path target = Paths.get("E:\\Project-Flight\\sprint 2\\C1021G1-BackEnd-Sprint2\\car-parking-management-be\\src\\main\\resources\\static\\test2.jpg");
+        BufferedImage original = ImageIO.read(file.getInputStream());
+        BufferedImage newBufferedImage = new BufferedImage(
+                600,
+                600,
+                BufferedImage.TYPE_BYTE_BINARY);
+        newBufferedImage.createGraphics()
+                .drawImage(original,
+                        0,
+                        0,
+                        original.getWidth(),
+                        original.getHeight(),
+                        Color.BLACK,
+                        null);
+        ImageIO.write(newBufferedImage, "jpg", target.toFile());
+//        changeImage(FILE);
+        Tesseract tesseract = new Tesseract();
+        tesseract.setLanguage("spa");
+        tesseract.setDatapath("E:\\Project-Flight\\sprint 2\\C1021G1-BackEnd-Sprint2\\car-parking-management-be\\src\\main\\resources\\tessdata");
+
+        String fullTess = tesseract.doOCR(new File(FILE7));
+        System.out.println(fullTess);
+        String[] arrayString = fullTess.split("");
+        String result = "";
+        for (String item : arrayString) {
+            if (item.trim().length() > 0) {
+                result += item;
+            }
+        }
+        return result;
+//        Ocr.setUp(); // one time setup
+//        Ocr ocr = new Ocr(); // create a new OCR engine
+//        ocr.startEngine("eng", Ocr.SPEED_FASTEST); // English
+//        String s = ocr.recognize(new File[]{new File(FILE7)}
+//                , Ocr.RECOGNIZE_TYPE_TEXT, Ocr.OUTPUT_FORMAT_PLAINTEXT);
+//        System.out.println("Result: " + s);
+//        ocr.stopEngine();
+    }
 
     @GetMapping("/check")
     public ResponseEntity<Page<Ticket>> getAllTicket(@RequestParam(defaultValue = "0") int page) {
@@ -136,7 +200,7 @@ public class TicketController {
         if (betweenDay >= 0) {
             if (ticket.getTimeOut() == null) {
                 Map<String, String> map = new HashMap<>();
-                map.put("messageEros", "xe vẩn còn bên trong nên không thể xóa");
+                map.put("messageEros", "xe vẩn còn bên trong nên không thể xóa hihi");
                 return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
             } else {
                 DateTimeFormatter formatterInOut = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
@@ -207,5 +271,7 @@ public class TicketController {
         }
     }
 // longLT End}
+
+
 }
 
