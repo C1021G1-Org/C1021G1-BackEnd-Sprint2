@@ -32,7 +32,8 @@ public class WardController {
         if (!ward.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(ward,HttpStatus.OK);
+        return new ResponseEntity<>(ward, HttpStatus.OK);
+    }
 
     //TrongHD lấy thông tin khách hàng
     @GetMapping("/{id}")
