@@ -67,6 +67,7 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager">
     <configuration name="CarParkingManagementBeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -89,7 +90,7 @@
       <option name="presentableId" value="Default" />
       <updated>1653528922265</updated>
       <workItem from="1653528964276" duration="253000" />
-      <workItem from="1654162122558" duration="2206000" />
+      <workItem from="1654162122558" duration="3121000" />
     </task>
     <servers />
   </component>
