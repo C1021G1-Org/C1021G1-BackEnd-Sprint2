@@ -3,17 +3,11 @@ import com.example.carparkingmanagementbe.dto.CarPlateDto;
 import com.example.carparkingmanagementbe.dto.CarTicketDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.carparkingmanagementbe.model.Car;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import com.example.carparkingmanagementbe.model.Car;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import java.util.List;
-
 import java.util.List;
 
 @Repository
@@ -88,11 +82,11 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "where customer.id = ?;",nativeQuery = true)
     List<Car> findByIdCustomer(Long id);
     // SonDCM tim xe modal
-    @Query(value = "SELECT c.car_plate carPlate,cs.name customerName,cs.id_card idCard " +
-            "FROM car AS c " +
+    @Query(value = "SELECT c.car_plate carPlate,cs.name customerName,cs.id_card idCard ,cs.phone phoneNumber" +
+            " FROM car AS c " +
             "   JOIN customer AS cs " +
             "       ON c.id_customer = cs.id " +
-            "WHERE cs.name like %:name% OR  cs.phone like %:phone% OR c.car_plate like %:plate%", nativeQuery = true)
+            "WHERE cs.name like %:name% AND  cs.phone like %:phone% AND c.car_plate like %:plate%", nativeQuery = true)
     List<CarPlateDto> findCarModal(@Param("name") String name, @Param("phone") String phone, @Param("plate") String plate);
    // SonDCM chon xe
     @Query(value = "select c.car_plate carPlate," +

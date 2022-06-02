@@ -4,4 +4,5 @@ public interface CarPlateDto {
     String getCarPlate();
     String getCustomerName();
     String getIdCard();
+    String getPhoneNumber();
 }
