@@ -3,8 +3,6 @@ package com.example.carparkingmanagementbe.controller;
 import com.example.carparkingmanagementbe.dto.NewsDto;
 import com.example.carparkingmanagementbe.model.News;
 import com.example.carparkingmanagementbe.service.INewsService;
-import com.example.carparkingmanagementbe.service.Impl.NewsService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +24,7 @@ public class NewsController {
     private INewsService newsService;
 
     @PostMapping("/createNews")
-    public ResponseEntity<?> createNews(@Valid @RequestBody NewsDto newsDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> createNews(@Valid @RequestBody NewsDto newsDto, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             Map<String, String> errorMap = new HashMap<>();
             Map<String, Object> response = new HashMap<>();
@@ -37,7 +35,7 @@ public class NewsController {
             return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
         } else {
             newsService.createNews(newsDto);
-            return new ResponseEntity<Void>(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
     }
 
@@ -57,7 +55,7 @@ public class NewsController {
     }
 
     @PatchMapping("/updateNews/{id}")
-    public ResponseEntity<?> updateNews(@Valid @RequestBody NewsDto newsDto, @PathVariable Long id, BindingResult bindingResult) {
+    public ResponseEntity<Object> updateNews(@Valid @RequestBody NewsDto newsDto, @PathVariable Long id, BindingResult bindingResult) {
         if (bindingResult.hasFieldErrors()) {
             Map<String, String> errorMap = new HashMap<>();
             Map<String, Object> response = new HashMap<>();
@@ -69,7 +67,7 @@ public class NewsController {
         }
 
             newsService.updateNews(id, newsDto);
-            return new ResponseEntity<Void>(HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         }
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -87,7 +85,7 @@ public class NewsController {
 
     //SonNH
     @GetMapping("/list")
-    public ResponseEntity<?> getAllNews() {
+    public ResponseEntity<Object> getAllNews() {
         List<News> newsList;
         newsList = newsService.getAll();
         if (newsList == null) {
