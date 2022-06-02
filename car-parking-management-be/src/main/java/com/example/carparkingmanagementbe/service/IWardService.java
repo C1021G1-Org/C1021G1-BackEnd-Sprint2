@@ -6,7 +6,8 @@ import java.util.List;
 
 
 public interface IWardService {
+    List<Ward> getAllWard(Long id);
+    Optional<Ward> findWardById(Long id);
     List<Ward> getAllWard();
     List<Ward> getWardById(Long id);
-
 }
