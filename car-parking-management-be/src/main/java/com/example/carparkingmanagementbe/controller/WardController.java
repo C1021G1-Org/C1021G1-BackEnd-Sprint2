@@ -16,11 +16,21 @@ public class WardController {
     @Autowired
     private IWardService wardService;
     @GetMapping("/ward-list")
-    public ResponseEntity<List<Ward>> getAllWard(@PathVariable Long id) {
-        List<Ward> wardList = wardService.getAllWard(id);
+    public ResponseEntity<List<Ward>> getAllWard() {
+        List<Ward> wardList = wardService.getAllWard();
         if (wardList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(wardList,HttpStatus.OK);
+    }
+
+    //TrongHD lấy thông tin khách hàng
+    @GetMapping("/{id}")
+    public ResponseEntity<List<Ward>> findByIdWard(@PathVariable Long id) {
+        List<Ward> ward = wardService.getWardById(id);
+        if (ward == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(ward, HttpStatus.OK);
     }
 }

@@ -7,13 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DistrictService implements IDistrictService {
     @Autowired
     private DistrictRepository districtRepository;
     @Override
-    public List<District> getAllDistrict(Long id) {
-        return districtRepository.getAllDistrict(id);
+    public List<District> getAllDistrict() {
+        return districtRepository.getAllDistrict();
+    }
+
+    @Override
+    public List<District> getDistrictById(Long id) {
+        return districtRepository.getDistrictById(id);
     }
 }

@@ -1,6 +1,4 @@
 package com.example.carparkingmanagementbe.controller;
-
-
 import com.example.carparkingmanagementbe.dto.LocationDto;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Floor;
