@@ -13,10 +13,11 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/customer")
+@RequestMapping("/api")
 public class WardController {
     @Autowired
     private IWardService wardService;
+
     @GetMapping("/ward-list/{id}")
     public ResponseEntity<List<Ward>> getAllWard(@PathVariable Long id) {
         List<Ward> wardList = wardService.getAllWard(id);

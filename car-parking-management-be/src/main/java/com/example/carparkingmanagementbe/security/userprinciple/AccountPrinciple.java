@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 public class AccountPrinciple implements UserDetails {
 
-    private Long id;
     private String email;
     private String password;
     private Boolean isEnabled;
@@ -30,7 +29,7 @@ public class AccountPrinciple implements UserDetails {
 
     public static AccountPrinciple build(Account account){
         List<GrantedAuthority> authorityList = account.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getRole().name())).collect(Collectors.toList());
+                new SimpleGrantedAuthority(role.getRoles().name())).collect(Collectors.toList());
         return new AccountPrinciple(
                 account.getEmail(),
                 account.getPassword(),
@@ -38,7 +37,15 @@ public class AccountPrinciple implements UserDetails {
                 authorityList
         );
     }
-    
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
