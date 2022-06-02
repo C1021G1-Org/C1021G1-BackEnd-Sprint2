@@ -1,9 +1,8 @@
 package com.example.carparkingmanagementbe.controller;
-
-
 import com.example.carparkingmanagementbe.dto.LocationDto;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Floor;
+
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.service.IFloorsService;
@@ -25,7 +24,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Map;
-
 
 @RestController
 @CrossOrigin("http://localhost:4200")

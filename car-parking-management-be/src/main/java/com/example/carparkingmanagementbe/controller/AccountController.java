@@ -1,4 +1,4 @@
 package com.example.carparkingmanagementbe.controller;
 
-public class AccountController {
+public class  AccountController {
 }

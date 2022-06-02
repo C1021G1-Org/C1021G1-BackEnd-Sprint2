@@ -1,6 +1,7 @@
 package com.example.carparkingmanagementbe.repository;
 
 import com.example.carparkingmanagementbe.model.Employee;
+import com.example.carparkingmanagementbe.model.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -73,4 +75,6 @@ public interface EmployeeRepository extends JpaRepository<Employee,Long> {
     @Query(value = "SELECT COUNT(phone) FROM employee WHERE NOT id =? and phone = ?", nativeQuery = true)
     Integer findByPhoneNot(Long id, String phone);
 
+    @Query(value = "SELECT COUNT(code) FROM employee WHERE NOT id =? and code = ?", nativeQuery = true)
+    Integer findByCodeNot(Long id, String code);
 }
