@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.Set;
 import java.util.HashMap;
@@ -31,13 +32,14 @@ public class LocationController {
 
     /*TuanPDCoding*/
     @GetMapping("/{id}")
-    public ResponseEntity<?> findLocationByIdDto(@PathVariable Long id) {
+    public ResponseEntity<?> findLocationById(@PathVariable Long id) {
         Location location = iLocationService.findLocationById(id);
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
+
     /*TuanPDCoding*/
     @PostMapping(value = "/create")
     public ResponseEntity<?> createLocation(@Valid @RequestBody LocationDto locationDto, Set<AllowedCarParking> allowedCarParking, BindingResult bindingResult) {
@@ -68,7 +70,7 @@ public class LocationController {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
 
         System.out.println(locationPage.getTotalPages());
-        if(locationPage.getTotalPages()<=page){
+        if (locationPage.getTotalPages() <= page) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
@@ -81,23 +83,13 @@ public class LocationController {
     // dat code
     @GetMapping("/map-parking")
     public ResponseEntity<Page<Location>> getAllLocation(@RequestParam(defaultValue = "0") int page) {
-        Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 86));
+        Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 84));
         if (getAllLocation.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(getAllLocation, HttpStatus.OK);
     }
 
-    // dat code
-    @GetMapping("/map-parking/{id}")
-    public ResponseEntity<Location> findLocationById(@PathVariable Long id) {
-        Location location = iLocationService.findLocationById(id);
-        if (location == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(location, HttpStatus.OK);
-
-    }
 
     @GetMapping("/listMapParking")
     public ResponseEntity<Page<Location>> listAllLocation(Pageable pageable) {
@@ -112,7 +104,6 @@ public class LocationController {
     @DeleteMapping("/update-map-parking/{id}")
     public ResponseEntity<Location> updateColorLocation(@PathVariable Long id) {
         Location location = iLocationService.findLocationById(id);
-        System.out.println(location.getIsEmpty());
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -125,7 +116,6 @@ public class LocationController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<LocationDetailDto> getId(@PathVariable Long id) {
         LocationDetailDto location = iLocationService.findById(id);
-
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
@@ -150,6 +140,16 @@ public class LocationController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
+    @GetMapping("/searchMap")
+    public ResponseEntity<Page<Location>> searchMapParking(@RequestParam(defaultValue = "", required = false) String code,
+                                                           @RequestParam(defaultValue = "0") int page) {
+        Page<Location> locationPage = null;
+        locationPage = iLocationService.searchLocationCode(code, PageRequest.of(page, 84));
+        if (locationPage == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(locationPage, HttpStatus.OK);
+    }
 
 }
 
