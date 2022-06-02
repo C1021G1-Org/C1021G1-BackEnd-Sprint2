@@ -5,8 +5,10 @@ import com.example.carparkingmanagementbe.model.Ward;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface IWardService {
-    List<Ward> getAllWard(Long id);
 
     Optional<Ward> findWardById(Long id);
+    List<Ward> getAllWard();
+    List<Ward> getWardById(Long id);
 }

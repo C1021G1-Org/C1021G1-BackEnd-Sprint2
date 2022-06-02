@@ -31,6 +31,7 @@ public class Ticket {
     private String timeOut;
     private Boolean delFlag;
     private Boolean isDoing;
+
     private Double sumPrice;
     @ManyToOne
     @JoinColumn(name = "id_ticket_type", referencedColumnName = "id")
@@ -38,7 +39,6 @@ public class Ticket {
     @OneToOne
     @JoinColumn(name = "id_location", referencedColumnName = "id")
     private Location location;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_car", referencedColumnName = "id")
     private Car car;

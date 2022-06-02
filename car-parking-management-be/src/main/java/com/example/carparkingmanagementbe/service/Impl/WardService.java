@@ -14,9 +14,15 @@ public class WardService implements IWardService {
     @Autowired
     private WardRepository wardRepository;
     @Override
-    public List<Ward> getAllWard(Long id) {
-        return wardRepository.getAllWard(id);
+    public List<Ward> getAllWard() {
+        return wardRepository.getAllWard();
     }
+
+    @Override
+    public List<Ward> getWardById(Long id) {
+        return wardRepository.getWardById(id);
+    }
+
 
     @Override
     public Optional<Ward> findWardById(Long id) {
