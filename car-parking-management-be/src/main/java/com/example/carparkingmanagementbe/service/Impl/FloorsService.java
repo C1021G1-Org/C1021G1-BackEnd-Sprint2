@@ -24,15 +24,12 @@ public class FloorsService implements IFloorsService {
 
     public List<Floor> findAll() {
         return floorsRepository.findAll();
+    }
 
     public Floor findFloorsById(Long id) {
         return floorsRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public List<Floor> findAll() {
-        return repository.findAll();
 
-    }
 
 }
