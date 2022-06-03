@@ -32,7 +32,7 @@ public class NewsController_editNews_tiennnl {
 
 
     @Test
-    public void editNews_code_13() throws Exception{
+    public void editNews_code_19() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode(null);
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -53,7 +53,7 @@ public class NewsController_editNews_tiennnl {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void createNews_author_13() throws Exception{
+    public void createNews_author_19() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("");
@@ -74,7 +74,7 @@ public class NewsController_editNews_tiennnl {
                 .andExpect(status().is4xxClientError());
     }
     @Test
-    public void createNews_title_13() throws Exception{
+    public void createNews_title_19() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -96,7 +96,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_date_13() throws Exception{
+    public void createNews_date_19() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -118,7 +118,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_description_13() throws Exception{
+    public void createNews_description_19() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -140,7 +140,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_img_13() throws Exception{
+    public void createNews_img_19() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -162,7 +162,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_idNewsType_13() throws Exception{
+    public void createNews_idNewsType_19() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -184,7 +184,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_author_14() throws Exception{
+    public void createNews_author_20() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("");
@@ -206,7 +206,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_title_14() throws Exception{
+    public void createNews_title_20() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -228,7 +228,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_description_14() throws Exception{
+    public void createNews_description_20() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -250,7 +250,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_author_15() throws Exception{
+    public void createNews_author_21() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nugyeenx 1");
@@ -272,7 +272,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_author_16() throws Exception{
+    public void createNews_author_22() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("n");
@@ -294,7 +294,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_title_16() throws Exception{
+    public void createNews_title_22() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -316,7 +316,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_description_16() throws Exception{
+    public void createNews_description_22() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");
@@ -338,7 +338,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_author_17() throws Exception{
+    public void createNews_author_23() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên ádhasdhagsduagwhgashdygahsdwaiuyhdiasduhsaduihsadiuahdiuhadawd");
@@ -359,7 +359,7 @@ public class NewsController_editNews_tiennnl {
     }
 
     @Test
-    public void createNews_allValid_18() throws Exception{
+    public void createNews_allValid_24() throws Exception{
         NewsDto newsDto = new NewsDto();
         newsDto.setCode("NE-001");
         newsDto.setAuthor("Nguyễn Ngọc Long Tiên");

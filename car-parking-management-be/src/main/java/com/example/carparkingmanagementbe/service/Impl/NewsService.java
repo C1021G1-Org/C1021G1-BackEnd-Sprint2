@@ -21,12 +21,12 @@ public class NewsService implements INewsService {
 
     @Override
     public void createNews(NewsDto newsDto) {
-        repository.createNews(newsDto.getCode(), newsDto.getDate(), newsDto.getAuthor(), newsDto.getDelFlag(), newsDto.getTitle(), newsDto.getImg(), newsDto.getDescription(), newsDto.getIdNewsType());
+        repository.createNews(newsDto.getCode(), newsDto.getDate(), newsDto.getAuthor(), newsDto.getDelFlag(), newsDto.getTitle(), newsDto.getImg(), newsDto.getDescription(), newsDto.getNewsType());
     }
 
     @Override
     public void updateNews(Long id, NewsDto newsDto) {
-        repository.updateNews(newsDto.getDate(), newsDto.getAuthor(), newsDto.getTitle(), newsDto.getImg(), newsDto.getDescription(), newsDto.getIdNewsType(), id);
+        repository.updateNews(newsDto.getDate(), newsDto.getAuthor(), newsDto.getTitle(), newsDto.getImg(), newsDto.getDescription(), newsDto.getNewsType(), id);
 
     }
 
