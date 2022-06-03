@@ -73,10 +73,10 @@ public class TicketController {
 
     private Map<String, String> mapError = new HashMap<>();
     private Map<String, String> mapSuccess = new HashMap<>();
-    private  static final String MESSAGE = "message";
-    private  static final String EMPLOYEE = "ROLE_EMPLOYEE";
-    private  static final String ADMIN = "ROLE_ADMIN";
-    private  static final String NOT_AUTHORIZE = "không đủ thẩm quyền để làm việc";
+    private static final String MESSAGE = "message";
+    private static final String EMPLOYEE = "ROLE_EMPLOYEE";
+    private static final String ADMIN = "ROLE_ADMIN";
+    private static final String NOT_AUTHORIZE = "không đủ thẩm quyền để làm việc";
 
     @GetMapping("/check")
     public ResponseEntity<Page<Ticket>> getAllTicket(@RequestParam(defaultValue = "0") int page) {
@@ -129,11 +129,11 @@ public class TicketController {
                     ticketService.deleteTicketByDel(ticket.getId());
                     return new ResponseEntity<>(check, HttpStatus.OK);
                 } else {
-                    mapError.put(MESSAGE, "xe vẩn còn bên trong nên không thể xóa");
+                    mapError.put(MESSAGE, "xe vẫn còn bên trong nên không thể xóa");
                     return new ResponseEntity<>(mapError, HttpStatus.BAD_REQUEST);
                 }
             } else {
-                mapError.put(MESSAGE, "Vẩn còn hạng");
+                mapError.put(MESSAGE, "Vẫn còn hạn");
                 return new ResponseEntity<>(mapError, HttpStatus.BAD_REQUEST);
             }
         } else {
@@ -160,8 +160,10 @@ public class TicketController {
                     return new ResponseEntity<>(mapSuccess, HttpStatus.OK);
                 } else if (ticket.getUserEmail().equals(updateUserEmailDto.getEmail())) {
 
+
                     mapSuccess.put(MESSAGE, "thành công 2");
                     return new ResponseEntity<>(mapSuccess, HttpStatus.OK);
+
                 } else {
                     mapError.put(MESSAGE, "đã có người đang thao tác với vé");
                     return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
