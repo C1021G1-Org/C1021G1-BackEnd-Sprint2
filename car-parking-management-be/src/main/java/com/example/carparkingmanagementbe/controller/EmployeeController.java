@@ -1,13 +1,14 @@
 package com.example.carparkingmanagementbe.controller;
 
-import com.example.carparkingmanagementbe.model.Employee;
-import com.example.carparkingmanagementbe.service.IEmployeeService;
+import com.example.carparkingmanagementbe.model.*;
+import com.example.carparkingmanagementbe.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.example.carparkingmanagementbe.dto.EmployeeDto;
 import com.example.carparkingmanagementbe.dto.EmployeeDtoCheck;
@@ -17,18 +18,32 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/employee")
 public class EmployeeController {
 
-    //thuanpd
+
     @Autowired
     private IEmployeeService iEmployeeService;
 
+    @Autowired
+    private IPositionService iPositionService;
+
+    @Autowired
+    private IProvinceService iProvinceService;
+
+    @Autowired
+    private IDistrictService iDistrictService;
+
+    @Autowired
+    private IWardService iWardService;
+
+    //thuanpd
     @GetMapping("/list")
     public ResponseEntity<Page<Employee>> getAllEmployee(@RequestParam(defaultValue = "0") int page) {
         Page<Employee> employeeList = iEmployeeService.getAllEmployee(PageRequest.of(page, 10));
@@ -68,9 +83,9 @@ public class EmployeeController {
 
     }
 
-  //PhuHDQ
+    //PhuHDQ
     @PostMapping("/create")
-    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<?> createEmployee(@Valid @RequestBody EmployeeDto employeeDto, BindingResult bindingResult) {
         char[] charArray = employeeDto.getName().toCharArray();
         boolean foundSpace = true;
         for (int i = 0; i < charArray.length; i++) {
@@ -82,6 +97,26 @@ public class EmployeeController {
             } else {
                 foundSpace = true;
             }
+        }
+        Map<String, String> errorMap = new HashMap<>();
+        new EmployeeDtoCheck().validate(employeeDto, bindingResult);
+        if (iEmployeeService.findByEmailNot(employeeDto.getId(), employeeDto.getEmail()) > 0) {
+            errorMap.put("email", "Email đã tồn tại!");
+        }
+        if (iEmployeeService.findByCodeNot(employeeDto.getId(), employeeDto.getCode()) > 0) {
+            errorMap.put("code", "Mã nhân viên đã tồn tại!");
+            System.out.println(employeeDto.getCode());
+        }
+        if (iEmployeeService.findByPhoneNot(employeeDto.getId(), employeeDto.getPhone()) > 0) {
+            errorMap.put("phone", "Số điện thoại đã tồn tại!");
+        }
+        if (bindingResult.hasFieldErrors()) {
+            Map<String, Object> response = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            response.put("error", errorMap);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         employeeDto.setName(String.valueOf(charArray));
         iEmployeeService.createEmployee(employeeDto);
@@ -108,7 +143,7 @@ public class EmployeeController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDtoCheck employeeDtoCheck) {
+    public ResponseEntity<?> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDtoCheck employeeDtoCheck, BindingResult bindingResult) {
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDtoCheck.setId(id);
         if (iEmployeeService.findEmployeeById(id).isPresent()) {
@@ -136,13 +171,48 @@ public class EmployeeController {
             }
         }
         Map<String, String> errors = new HashMap<>();
-        if (iEmployeeService.findByEmailNot(employeeDtoCheck.getId(), employeeDtoCheck.getEmail()) > 0) {
-            errors.put("email", "Email đã tồn tại!");
-        }
-        if (iEmployeeService.findByPhoneNot(employeeDtoCheck.getId(), employeeDtoCheck.getPhone()) > 0) {
-            errors.put("phone", "Số điện thoại đã tồn tại!");
-        }
+//        if (iEmployeeService.findByEmailNot(employeeDtoCheck.getId(), employeeDtoCheck.getEmail()) > 0) {
+//            errors.put("email", "Email đã tồn tại!");
+//        }
+//        if (iEmployeeService.findByPhoneNot(employeeDtoCheck.getId(), employeeDtoCheck.getPhone()) > 0) {
+//            errors.put("phone", "Số điện thoại đã tồn tại!");
+//        }
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
+    @GetMapping("/list-position")
+    public ResponseEntity<List<Position>> getAllEmployee() {
+        List<Position> positionList = iPositionService.getAllPosition();
+        if (positionList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(positionList, HttpStatus.OK);
+    }
+
+    @GetMapping("/district-list/{id}")
+    public ResponseEntity<List<District>> getAllDistrict(@PathVariable Long id) {
+        List<District> districtList = iDistrictService.getDistrictById(id);
+        if (districtList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(districtList, HttpStatus.OK);
+    }
+
+    @GetMapping("/province-list")
+    public ResponseEntity<List<Province>> getAllProvince() {
+        List<Province> provinceList = iProvinceService.getAllProvince();
+        if (provinceList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(provinceList, HttpStatus.OK);
+    }
+
+    @GetMapping("/ward-list/{id}")
+    public ResponseEntity<List<Ward>> getAllWard(@PathVariable Long id) {
+        List<Ward> wardList = iWardService.getWardById(id);
+        if (wardList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(wardList, HttpStatus.OK);
+    }
 }

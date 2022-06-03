@@ -35,4 +35,8 @@ public class Ward {
     @JsonBackReference
     @OneToMany(mappedBy = "ward")
     private Set<Employee> employeeSet;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
