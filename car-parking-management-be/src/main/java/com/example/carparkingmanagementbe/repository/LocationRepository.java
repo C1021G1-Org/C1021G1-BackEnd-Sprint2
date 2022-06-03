@@ -1,23 +1,40 @@
 package com.example.carparkingmanagementbe.repository;
 
 
+
+
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
+import com.example.carparkingmanagementbe.dto.LocationList;
+import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Location;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import com.example.carparkingmanagementbe.dto.LocationList;
-import com.example.carparkingmanagementbe.model.AllowedCarParking;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Set;
+
 
 @Transactional
 @Repository
 public interface LocationRepository extends JpaRepository<Location, Long> {
+
+
+
+
+    @Query(value = "select location.id,location.code,location.number,location.length,location.width,location.height,location.del_flag,location.is_empty,location.description, " +
+            "location.id_floor " +
+            "from location " +
+            "join floor on floor.id = location.id_floor " +
+            "where location.id_floor = :idFloor ", nativeQuery = true)
+    List<Location> getListLocation(@Param("idFloor") Long idFloor);
+
+
 
 
     //detail location TrongTA
@@ -49,6 +66,23 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "AND del_flag = 1 ", nativeQuery = true)
     Location findLocationById(Long id);
 
+    //datNVN code tim id
+    @Query(value = "SELECT " +
+            "location.id, " +
+            "location.code, " +
+            "location.del_flag, " +
+            "location.description, " +
+            "location.height, " +
+            "location.is_empty, " +
+            "location.length, " +
+            "location.number, " +
+            "location.width, " +
+            "location.id_floor " +
+            "FROM location " +
+            "WHERE location.id = ? " +
+            "AND location.is_empty = 0 ",
+            nativeQuery = true)
+    Location findByIdLocation(Long id);
 
     /*TuanPDCoding*/
     @Modifying
@@ -88,7 +122,13 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
 
     /*TinhHDCoding*/
     @Transactional
+@Query(value = "SELECT location.id,location.code,location.id_floor as floorId , floor.name as floorName " +
+            "FROM location JOIN floor on  location.id_floor = floor.id  " +
+            "where location.code like %?1% and id_floor like %?2%  " +
+            "and location.del_flag = 1", nativeQuery = true)
+
     @Query(value = "SELECT location.id,location.code,location.id_floor as floorId , floor.name as floorName FROM location JOIN floor on  location.id_floor = floor.id  where location.code like %?1% and id_floor like %?2%  and location.del_flag = 1", nativeQuery = true)
+
     List<LocationList> findByList(String code, String id);
 
 
@@ -104,10 +144,32 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             ",location.description" +
             ",location.id_floor" +
             " FROM location " +
-            "WHERE location.del_flag = 1",
+"WHERE  location.del_flag = 1",
+
             nativeQuery = true, countQuery = "SELECT COUNT(*) FROM location WHERE location.del_flag = 1")
     Page<Location> getAllLocation(Pageable pageable);
 
+
+
+
+
+    //datNVN code update
+    @Modifying
+    @Query(value = "UPDATE location " +
+            "SET is_empty = 1 " +
+            "WHERE id = ? ",
+            nativeQuery = true)
+    void updateIsEmpty(Long id);
+
+    @Transactional
+    @Query(value = "SELECT * " +
+            "FROM location " +
+            "WHERE location.code " +
+            "LIKE :code " +
+            "AND location.del_flag = 1",
+            nativeQuery = true,
+            countQuery = "SELECT COUNT(*) FROM location WHERE location.del_flag = 1")
+    Page<Location> searchLocationCode(@Param("code")String code, Pageable pageable);
 
     //datNVN code tim id
     @Query(value = "SELECT " +
@@ -131,6 +193,7 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     @Modifying
     @Query(value = "UPDATE location SET is_empty = 1 WHERE id = ? ", nativeQuery = true)
     void updateIsEmpty(Long id);
+
 
 }
 
