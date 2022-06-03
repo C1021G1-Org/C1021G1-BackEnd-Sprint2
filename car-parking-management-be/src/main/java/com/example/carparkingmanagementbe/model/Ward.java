@@ -25,15 +25,12 @@ public class Ward {
     @JoinColumn(name = "id_district", referencedColumnName = "id")
     private District district;
 
-//    @ManyToOne
-//    @JoinColumn(name = "id_province", referencedColumnName = "id")
-//    private Province province;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "ward")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ward")
     private Set<Customer> customerSet;
     @JsonBackReference
-    @OneToMany(mappedBy = "ward")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ward")
     private Set<Employee> employeeSet;
 
     public void setId(Long id) {
