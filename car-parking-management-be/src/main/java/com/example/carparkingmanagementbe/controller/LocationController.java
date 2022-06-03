@@ -1,9 +1,8 @@
 package com.example.carparkingmanagementbe.controller;
-
-
 import com.example.carparkingmanagementbe.dto.LocationDto;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Floor;
+
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.service.IFloorsService;
@@ -26,7 +25,6 @@ import java.util.Set;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/location")
@@ -40,6 +38,7 @@ public class LocationController {
 
     @Autowired
     private IFloorsService floorsService;
+
     /*TuanPDCoding*/
     @GetMapping("/{id}")
     public ResponseEntity<?> findLocationById(@PathVariable Long id) {
@@ -105,8 +104,9 @@ public class LocationController {
                                                              @RequestParam(defaultValue = "") String id,
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
+
         if (locationPage.getTotalPages() <= page) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         if (locationPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -115,13 +115,10 @@ public class LocationController {
     }
 
 
-    /*DatNVNCoding*/
-
     // dat code
     @GetMapping("/map-parking")
-    public ResponseEntity<Page<Location>> getAllLocation(@RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Location>> getAllLocation ( @RequestParam(defaultValue = "0") int page){
         Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 84));
-
         if (getAllLocation.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -132,7 +129,7 @@ public class LocationController {
 
     /*DatNVNCoding*/
     @GetMapping("/listMapParking")
-    public ResponseEntity<Page<Location>> listAllLocation(Pageable pageable) {
+    public ResponseEntity<Page<Location>> listAllLocation (Pageable pageable){
         Page<Location> location = iLocationService.findAllLocation(pageable);
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -142,7 +139,7 @@ public class LocationController {
 
     // dat code update
     @DeleteMapping("/update-map-parking/{id}")
-    public ResponseEntity<Location> updateColorLocation(@PathVariable Long id) {
+    public ResponseEntity<Location> updateColorLocation (@PathVariable Long id){
         Location location = iLocationService.findLocationById(id);
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -153,7 +150,7 @@ public class LocationController {
 
     // detail location parking TrongTa
     @GetMapping("/detail/{id}")
-    public ResponseEntity<LocationDetailDto> getId(@PathVariable Long id) {
+    public ResponseEntity<LocationDetailDto> getId (@PathVariable Long id){
         LocationDetailDto location = iLocationService.findById(id);
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -164,7 +161,7 @@ public class LocationController {
 
     //xóa location trongTa
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteNews(@PathVariable Long id) {
+    public ResponseEntity<?> deleteNews (@PathVariable Long id){
         Location location = iLocationService.findLocationById(id);
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -179,19 +176,16 @@ public class LocationController {
     }
 
     @GetMapping("/searchMap")
-    public ResponseEntity<Page<Location>> searchMapParking(@RequestParam(defaultValue = "", required = false) String code,
-                                                           @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Page<Location>> searchMapParking (@RequestParam(defaultValue = "", required = false) String code,
+                                                            @RequestParam(defaultValue = "0") int page){
         Page<Location> locationPage = null;
         locationPage = iLocationService.searchLocationCode(code, PageRequest.of(page, 84));
-        if (locationPage == null) {
+        if (locationPage.getTotalPages() <= page) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (locationPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(locationPage, HttpStatus.OK);
     }
-
-
 }
-
-
-
-
