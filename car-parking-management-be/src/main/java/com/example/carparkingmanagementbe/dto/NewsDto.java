@@ -1,14 +1,14 @@
 package com.example.carparkingmanagementbe.dto;
 
+import com.example.carparkingmanagementbe.model.NewsType;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 public class NewsDto {
-
+    private Long id;
 
     @NotNull(message = "Vui lòng nhập mã bài viết")
     private String code;
@@ -16,7 +16,7 @@ public class NewsDto {
     @NotNull(message = "Vui lòng nhập tên tác giả")
     @NotBlank(message = "Vui lòng không bỏ trống tên tác giả")
     @Length(min = 5, max = 50, message = "Tên tác giả phải từ 5 đến 50 kí tự")
-    @Pattern(regexp = "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s\\W|_]+$", message = "Tên tác giả không được chứa số")
+    @Pattern(regexp = "^[a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỂẾưạảấầẩẫậắằẳẵặẹẻẽềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s\\W|     _]+$", message = "Tên tác giả không được chứa số")
     private String author;
 
     @NotNull(message = "Vui lòng nhập tiêu đề cho bài viết")
@@ -38,18 +38,10 @@ public class NewsDto {
     private Boolean delFlag;
 
     @NotNull(message = "Vui lòng chọn loại tin tức")
-    private Long idNewsType;
+    private NewsType newsType;
 
-    public NewsDto() {
-    }
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+
 
     public String getCode() {
         return code;
@@ -107,11 +99,19 @@ public class NewsDto {
         this.delFlag = delFlag;
     }
 
-    public Long getIdNewsType() {
-        return idNewsType;
+    public Long getId() {
+        return id;
     }
 
-    public void setIdNewsType(Long idNewsType) {
-        this.idNewsType = idNewsType;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public NewsType getNewsType() {
+        return newsType;
+    }
+
+    public void setNewsType(NewsType newsType) {
+        this.newsType = newsType;
     }
 }

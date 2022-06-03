@@ -80,9 +80,27 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public void signUpCustomer(CustomerDto customerDto) {
+        customerRepository.signUpCustomer(
+                customerDto.getName(),
+                customerDto.getEmail(),
+                customerDto.getCode(),
+                customerDto.getGender(),
+                customerDto.getIdCard(),
+                customerDto.getPhone(),
+                customerDto.getBirthday(),
+                true,
+                customerDto.getAddress(),
+                customerDto.getWard(),
+                customerDto.getIdAccount()
+        );
+    }
+
+
     public Customer save(Customer customer) {
          return customerRepository.save(customer);
     }
+
 
 
 }

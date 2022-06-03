@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -22,6 +23,16 @@ public class WardController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(wardList,HttpStatus.OK);
+    }
+
+    //PhuHDQ
+    @GetMapping("/ward/{id}")
+    public ResponseEntity<Optional<Ward>> findWardById(@PathVariable Long id) {
+        Optional<Ward> ward = wardService.findWardById(id);
+        if (!ward.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(ward, HttpStatus.OK);
     }
 
     //TrongHD lấy thông tin khách hàng

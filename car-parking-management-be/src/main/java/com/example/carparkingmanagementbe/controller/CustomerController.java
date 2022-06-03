@@ -5,6 +5,7 @@ import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.service.ICustomerService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -46,34 +47,40 @@ public class CustomerController {
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
+    Page<Customer> customerList;
     //ThangDBX tim kiem full truong
     @GetMapping("search")
     public ResponseEntity<Page<Customer>> searchFull(@RequestParam(defaultValue = "",required = false) String startDate,
                                                      @RequestParam(defaultValue = "",required = false) String endDate,
                                                      @RequestParam(defaultValue = "",required = false) String code,
                                                      @RequestParam(defaultValue = "",required = false) String phone,
-                                                     @RequestParam(defaultValue = "",required = false) String id_card,
+                                                     @RequestParam(defaultValue = "",required = false) String idCard,
                                                         @RequestParam(defaultValue = "0") int page){
-        Page<Customer> customerList = null;
 
         if ("".equals(startDate) && "".equals(endDate)){
-            customerList = customerService.searchCustomerNoDate(code,phone,id_card, PageRequest.of(page,5));
+            customerList = customerService.searchCustomerNoDate(code,phone,idCard, PageRequest.of(page,5));
         }
         if ("".equals(startDate) && !"".equals(endDate)){
-            customerList = customerService.searchEndDate(endDate,code,phone,id_card,PageRequest.of(page,5));
+            customerList = customerService.searchEndDate(endDate,code,phone,idCard,PageRequest.of(page,5));
         }
         if (!"".equals(startDate) && "".equals(endDate)){
-            customerList = customerService.searchStartDate(startDate,code,phone,id_card,PageRequest.of(page,5));
+            customerList = customerService.searchStartDate(startDate,code,phone,idCard,PageRequest.of(page,5));
         }
         if (!"".equals(startDate) && !"".equals(endDate)){
-            customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,5));
+            customerList = customerService.searchFullDate(startDate,endDate,code,phone,idCard, PageRequest.of(page,5));
         }
 
-        if (customerList.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(customerList,HttpStatus.OK);
+        try {
+            if (customerList.isEmpty()){
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            } else {
+                return new ResponseEntity<>(customerList,HttpStatus.OK);
+            }
+        } catch (NullPointerException exception){
+            exception.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
 
     }
 
@@ -101,7 +108,7 @@ public class CustomerController {
 
     //ThangDBX tim customer theo ID
     @GetMapping("find/{id}")
-    public ResponseEntity<?> findCustomerByIdToDelte(@PathVariable("id") Long id){
+    public ResponseEntity<Optional<Customer>> findCustomerByIdToDelte(@PathVariable("id") Long id){
         Optional<Customer> customer = customerService.findCustomerById(id);
         if (!customer.isPresent()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -113,7 +120,7 @@ public class CustomerController {
 
 //    Bảo thêm mới
     @PostMapping("/create")
-    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto, @Valid @RequestBody CarDto carDto, BindingResult bindingResult){
+    public ResponseEntity<?> createCustomer( @Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult){
         char[] charArray = customerDto.getName().toCharArray();
         boolean foundSpace = true;
         for (int i = 0; i < charArray.length; i++) {
@@ -140,12 +147,13 @@ public class CustomerController {
         int code = (int) Math.floor((Math.random()*899) + 100);
         String codeRandom = String.valueOf(code);
         customerDto.setCode("KH-" + codeRandom);
-//        customerService.createCustomer(customerDto);
+        customerService.createCustomer(customerDto);
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto,customer);
+        customer.getWard().setId(customerDto.getWard());
         customerService.save(customer);
-        carDto.setCustomer(customer.getId());
-        carService.createCar(carDto);
+//        carDto.setCustomer(customer.getId());
+//        carService.createCar(carDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -185,7 +193,6 @@ public class CustomerController {
 //    Validate thêm mới
 
     // tronghd validate dữ liệu thêm mới
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
@@ -199,13 +206,10 @@ public class CustomerController {
         return errors;
     }
 
-//    Bảo hiển thị
+    //    Bảo hiển thị
     @GetMapping("/detail/{id}")
     public ResponseEntity<Optional<Customer>> findCustomerWithId(@PathVariable Long id) {
         Optional<Customer> customerOptional = customerService.findCustomerById(id);
-        if (customerOptional == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
         return new ResponseEntity<>(customerOptional, HttpStatus.OK);
     }
 

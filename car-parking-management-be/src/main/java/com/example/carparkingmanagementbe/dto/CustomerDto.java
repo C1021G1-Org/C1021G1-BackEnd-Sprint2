@@ -43,6 +43,7 @@ public class CustomerDto implements Validator {
     private Boolean delFlag;
 
     private Long ward;
+    private Long idAccount;
 
     public CustomerDto() {
     }
@@ -133,6 +134,14 @@ public class CustomerDto implements Validator {
 
     public void setWard(Long ward) {
         this.ward = ward;
+    }
+
+    public Long getIdAccount() {
+        return idAccount;
+    }
+
+    public void setIdAccount(Long idAccount) {
+        this.idAccount = idAccount;
     }
 
     @Override
