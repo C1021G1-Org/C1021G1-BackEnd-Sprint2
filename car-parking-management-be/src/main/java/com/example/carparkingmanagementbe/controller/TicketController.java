@@ -1,44 +1,29 @@
 package com.example.carparkingmanagementbe.controller;
 
-import com.asprise.ocr.Ocr;
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
-
 import com.example.carparkingmanagementbe.dto.ticket.UpdateUserEmailDto;
 import com.example.carparkingmanagementbe.model.*;
-
 import com.example.carparkingmanagementbe.service.*;
-
 import com.example.carparkingmanagementbe.model.Floor;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.model.Ticket;
-
 import com.example.carparkingmanagementbe.model.TicketType;
 import com.example.carparkingmanagementbe.service.IFloorsService;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import com.example.carparkingmanagementbe.service.ITicketService;
 import com.example.carparkingmanagementbe.service.ITicketTypeService;
-
-import net.sourceforge.tess4j.Tesseract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import com.example.carparkingmanagementbe.dto.TicketDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.multipart.MultipartFile;
-import javax.imageio.ImageIO;
 import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -67,7 +52,6 @@ public class TicketController {
     @Autowired
     private ICarService iCarService;
 
-
     @Autowired
     private ITicketTypeService ticketTypeService;
 
@@ -77,7 +61,6 @@ public class TicketController {
     private static final String EMPLOYEE = "ROLE_EMPLOYEE";
     private static final String ADMIN = "ROLE_ADMIN";
     private static final String NOT_AUTHORIZE = "không đủ thẩm quyền để làm việc";
-    private static final String FILE7 = "D:\\codegym\\duan2\\C1021G1-BackEnd-Sprint2\\car-parking-management-be\\src\\main\\resources\\static\\1111.jpg";
 
     @GetMapping("/check")
     public ResponseEntity<Page<Ticket>> getAllTicket(@RequestParam(defaultValue = "0") int page) {
@@ -128,13 +111,14 @@ public class TicketController {
                 int check = changeTimeIn.compareTo(changeTimeOut);
                 if (check < 0) {
                     ticketService.deleteTicketByDel(ticket.getId());
-                    return new ResponseEntity<>(check, HttpStatus.OK);
+                    mapSuccess.put(MESSAGE,"Đã xóa thành công");
+                    return new ResponseEntity<>(mapSuccess, HttpStatus.OK);
                 } else {
-                    mapError.put(MESSAGE, "xe vẩn còn bên trong nên không thể xóa");
+                    mapError.put(MESSAGE, "xe vẫn còn bên trong nên không thể xóa");
                     return new ResponseEntity<>(mapError, HttpStatus.BAD_REQUEST);
                 }
             } else {
-                mapError.put(MESSAGE, "Vẩn còn hạng");
+                mapError.put(MESSAGE, "Vẫn còn hạn");
                 return new ResponseEntity<>(mapError, HttpStatus.BAD_REQUEST);
             }
         } else {
@@ -161,15 +145,16 @@ public class TicketController {
                     return new ResponseEntity<>(mapSuccess, HttpStatus.OK);
                 } else if (ticket.getUserEmail().equals(updateUserEmailDto.getEmail())) {
 
+
                     mapSuccess.put(MESSAGE, "thành công 2");
                     return new ResponseEntity<>(mapSuccess, HttpStatus.OK);
+
                 } else {
                     mapError.put(MESSAGE, "đã có người đang thao tác với vé");
                     return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
                 }
 
             } else {
-
                 mapError.put(MESSAGE, NOT_AUTHORIZE);
                 return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
             }
@@ -184,13 +169,11 @@ public class TicketController {
         if (updateUserEmailDto.getRole().contains(EMPLOYEE) || updateUserEmailDto.getRole().contains(ADMIN)) {
             Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
             if (ticket == null) {
-
                 mapError.put(MESSAGE, "vé đang được người khác thao tác không thể truy cập");
                 return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(ticket, HttpStatus.OK);
         } else {
-
             mapError.put(MESSAGE, NOT_AUTHORIZE);
             return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
         }
@@ -240,7 +223,7 @@ public class TicketController {
 
     @GetMapping("/floor")
     public ResponseEntity<List<Floor>> getAllFloor() {
-        List<Floor> floors = iFloorsService.findAllFloor();
+        List<Floor> floors = iFloorsService.findAll();
         if (floors.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

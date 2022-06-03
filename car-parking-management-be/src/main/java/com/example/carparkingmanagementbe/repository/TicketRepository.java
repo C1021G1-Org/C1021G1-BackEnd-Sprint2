@@ -1,17 +1,23 @@
 package com.example.carparkingmanagementbe.repository;
-
+import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.model.Ticket;
-
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import com.example.carparkingmanagementbe.model.Ticket;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
+import com.example.carparkingmanagementbe.model.Ticket;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Date;
 
 
@@ -41,8 +47,9 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "and ticket_type.name like %:ticketTypeName% " +
             "and ticket.end_date between :endDate and ticket.end_date " +
             "and customer.name like %:nameCustomer% " +
-            "and customer.phone like %:phoneCustomer% ", nativeQuery = true
-            , countQuery = "select count(*) from (select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date,ticket.user_email " +
+            "and customer.phone like %:phoneCustomer% " +
+            "order by ticket.id asc ", nativeQuery = true
+            , countQuery = "select count(*) from (select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date " +
             "                                ,ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type  " +
             "                       from ticket  " +
             "                      join ticket_type on ticket.id_ticket_type = ticket_type.id  " +
@@ -55,7 +62,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "                   and ticket_type.name like %:ticketTypeName% " +
             "                      and ticket.end_date between :endDate and ticket.end_date " +
             "                     and customer.name like %:nameCustomer% " +
-            "                      and customer.phone like %:phoneCustomer% ) as saeuawqik"
+            "                      and customer.phone like %:phoneCustomer% " +
+            "                      order by ticket.id asc ) as saeuawqik"
     )
     Page<Ticket> searchTicketPage(@Param("floor") String floor,
                                   @Param("ticketTypeName") String ticketTypeName,

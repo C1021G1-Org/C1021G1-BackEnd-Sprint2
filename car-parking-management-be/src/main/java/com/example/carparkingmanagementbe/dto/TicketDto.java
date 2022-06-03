@@ -14,6 +14,8 @@ import java.time.temporal.ChronoUnit;
 public class TicketDto implements Validator {
     private Long id;
 
+    private String floor;
+
     @NotNull(message = "Vui lòng không để trống")
     private Double sumPrice;
 
@@ -69,6 +71,14 @@ public class TicketDto implements Validator {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public String getFloor() {
+        return floor;
+    }
+
+    public void setFloor(String floor) {
+        this.floor = floor;
     }
 
     @Override

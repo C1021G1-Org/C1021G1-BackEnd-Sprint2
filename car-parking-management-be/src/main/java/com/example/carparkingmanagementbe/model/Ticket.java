@@ -1,6 +1,5 @@
 package com.example.carparkingmanagementbe.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +31,7 @@ public class Ticket {
     private Boolean delFlag;
     private String userEmail;
     private Boolean isDoing;
+
     private Double sumPrice;
     @ManyToOne
     @JoinColumn(name = "id_ticket_type", referencedColumnName = "id")
@@ -39,7 +39,6 @@ public class Ticket {
     @OneToOne
     @JoinColumn(name = "id_location", referencedColumnName = "id")
     private Location location;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_car", referencedColumnName = "id")
     private Car car;

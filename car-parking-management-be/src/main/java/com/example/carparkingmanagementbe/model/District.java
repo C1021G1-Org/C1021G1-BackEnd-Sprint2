@@ -27,5 +27,4 @@ public class District {
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "district")
     private Set<Ward> wardSet;
-
 }
