@@ -105,7 +105,7 @@ public class LocationController {
                                                              @RequestParam(defaultValue = "") String id,
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
-        if (locationPage.getTotalPages() <= page) {
+        if(locationPage.getTotalPages()<=page){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         if (locationPage.isEmpty()) {
