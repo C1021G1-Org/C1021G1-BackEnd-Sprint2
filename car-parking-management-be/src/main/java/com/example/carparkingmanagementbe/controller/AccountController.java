@@ -83,12 +83,12 @@ public class AccountController {
         accountService.save(account);
 
         customer.setAddress(signForm.getAddress());
-        customer.setBirthday(signForm.getDateOfBirth());
+        customer.setBirthday(signForm.getBirthday());
         customer.setName(signForm.getName());
         customer.setPhone(signForm.getPhone());
         customer.setGender(signForm.getGender());
         customer.setEmail(account.getEmail());
-        int code = (int) Math.floor((Math.random()*899) + 100);
+        int code = (int) Math.floor((Math.random() * 899) + 100);
         String codeRandom = String.valueOf(code);
         customer.setCode("KH-" + codeRandom);
 
@@ -98,7 +98,7 @@ public class AccountController {
         customer.setIdAccount(account.getId());
 
         System.out.println(account.getId());
-        customer.setWard(ward.getId());
+        customer.setWard(signForm.getIdWard());
         customerService.signUpCustomer(customer);
 
         return new ResponseEntity<>(account, HttpStatus.CREATED);
@@ -124,3 +124,4 @@ public class AccountController {
         return new ResponseEntity<>(new JwtReponse(token, accountPrinciple.getEmail(), accountPrinciple.getAuthorities()), HttpStatus.OK);
     }
 }
+

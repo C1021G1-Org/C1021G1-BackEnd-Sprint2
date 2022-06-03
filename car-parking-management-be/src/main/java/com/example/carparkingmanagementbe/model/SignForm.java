@@ -29,7 +29,7 @@ public class SignForm {
     private Boolean gender;
 
     @NotBlank(message = "Trường này không thể để trống.")
-    private String dateOfBirth;
+    private String birthday;
 
     @Size(min = 10,max = 12, message = "Tối đa 12 số!")
     @Pattern(regexp = REGEX_PHONE, message = "Vui lòng nhập đúng số điện thoại!")

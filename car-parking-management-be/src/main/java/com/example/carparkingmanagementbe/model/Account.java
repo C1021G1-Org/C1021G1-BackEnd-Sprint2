@@ -34,7 +34,6 @@ public class Account {
         // default constructor
     }
 
-  
     public Long getId() {
         return id;
     }

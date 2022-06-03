@@ -1,16 +1,12 @@
 package com.example.carparkingmanagementbe.repository;
-
 import com.example.carparkingmanagementbe.model.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
 
 @Repository
@@ -28,9 +24,9 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     //ThangDBX kiem tra customer id co ton tai hay khong
     @Query(value = "select id, address, birthday, `code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
-            "from customer\n" +
-            "where del_flag = true \n" +
-            "and id = ?", nativeQuery = true)
+            "from customer " +
+            "where id = ? " +
+            "and del_flag = 1", nativeQuery = true)
     Optional<Customer> findCustomerById(Long id);
 
 //    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
@@ -58,6 +54,54 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
                                   String id_card,
                                   Pageable page);
 
+
+    //ThangDBX search chi co startDate
+    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
+            "from customer \n" +
+            "where `del_flag` = true \n" +
+            "and birthday > ?1 \n" +
+            "and code like %?2% \n" +
+            "and phone like %?3% \n" +
+            "and id_card like %?4% " ,
+            countQuery = "SELECT count(*) FROM customer",
+            nativeQuery = true)
+    Page<Customer> searchStartDate(String date,
+                                   String code,
+                                   String phone,
+                                   String id_card,
+                                   Pageable page);
+
+    //ThangDBX search chi co endDate
+    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
+            "from customer \n" +
+            "where `del_flag` = true \n" +
+            "and birthday < ?1 \n" +
+            "and code like %?2% \n" +
+            "and phone like %?3% \n" +
+            "and id_card like %?4% " ,
+            countQuery = "SELECT count(*) FROM customer",
+            nativeQuery = true)
+    Page<Customer> searchEndDate(String date,
+                                   String code,
+                                   String phone,
+                                   String id_card,
+                                   Pageable page);
+
+
+    // Search trong truong hop khong ghi date
+    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
+            "from customer \n" +
+            "where `del_flag` = true \n" +
+            "and code like %?1% \n" +
+            "and phone like %?2% \n" +
+            "and id_card like %?3% " ,
+            countQuery = "SELECT count(*) FROM customer",
+            nativeQuery = true)
+    Page<Customer> searchCustomerNoDate(String code,
+                                   String phone,
+                                   String id_card,
+                                   Pageable page);
+
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO customer (`name`, email,`code`,gender,id_card,phone,birthday,del_flag,address,id_ward) " +
@@ -76,9 +120,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     //tronghd tạo câu lệnh query chỉnh sửa thông tin khách hàng
     @Transactional
     @Modifying
-    @Query(value = "UPDATE customer AS c SET c.code = ?1 , c.name = ?2, c.birthday = ?3, c.id_card = ?4," +
-            "c.email = ?5, c.phone = ?6, c.address = ?7, c.gender = ?8, c.del_flag = ?9, c.id_ward = ?10 WHERE id = ?11", nativeQuery = true)
-    void updateFlight(String code, String name, String birthday, String idCard,
+    @Query(value = "UPDATE customer AS c SET c.name = ?1, c.birthday = ?2, c.id_card = ?3," +
+            "c.email = ?4, c.phone = ?5, c.address = ?6, c.gender = ?7, c.del_flag = ?8, c.id_ward = ?9 WHERE id = ?10", nativeQuery = true)
+    void updateCustomer(String name, String birthday, String idCard,
                       String email, String phone, String address, Boolean gender, Boolean delFlag,Long ward, Long id);
+
+
 
 }

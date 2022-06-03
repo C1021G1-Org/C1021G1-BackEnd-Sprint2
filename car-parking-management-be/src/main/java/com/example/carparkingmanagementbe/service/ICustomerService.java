@@ -22,6 +22,26 @@ public interface ICustomerService {
                                   Pageable page);
 
 
+    //ThangDBX search chi voi end Date
+    Page<Customer> searchEndDate(String date,
+                                 String code,
+                                 String phone,
+                                 String id_card,
+                                 Pageable page);
+
+    //ThangDBX search chi voi start date
+    Page<Customer> searchStartDate(String date,
+                                   String code,
+                                   String phone,
+                                   String id_card,
+                                   Pageable page);
+
+    //ThangDBX search khong co date
+    Page<Customer> searchCustomerNoDate(String code,
+                                        String phone,
+                                        String id_card,
+                                        Pageable page);
+
     //ThangDBX delete customer
     void deleteCustomer(Long id);
 
@@ -30,8 +50,12 @@ public interface ICustomerService {
 
 
 
+    void signUpCustomer(CustomerDto customer);
+
+    //BaoND tạo mới khách hàng
     void createCustomer(CustomerDto customerDto);
     void updateCustomer(CustomerDtoCheck customerDtoCheck);
 
-    void signUpCustomer(CustomerDto customer);
+    Customer save(Customer customer);
+
 }
