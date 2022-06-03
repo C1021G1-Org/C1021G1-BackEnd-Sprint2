@@ -58,7 +58,8 @@ public class LocationService implements ILocationService {
     public List<Location> findAll() {
         return locationRepository.findAll();
     }
-  
+
+
     //Trong tim id detail
     @Override
     public LocationDetailDto findById(Long id) {
@@ -132,6 +133,11 @@ public class LocationService implements ILocationService {
     @Override
     public Page<Location> findAllLocation(Pageable pageable) {
         return locationRepository.findAll(pageable);
+    }
+
+    @Override
+    public Location findByTicket(Long id) {
+        return locationRepository.findByTicket(id);
     }
 
 
