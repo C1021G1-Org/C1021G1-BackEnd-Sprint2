@@ -26,7 +26,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select id, address, birthday, `code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
             "from customer " +
             "where id = ? " +
-            "and del_flag = 1", nativeQuery = true)
+            "and del_flag = 1;",countQuery ="select * from customer;" ,nativeQuery = true)
     Optional<Customer> findCustomerById(Long id);
 
 //    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
