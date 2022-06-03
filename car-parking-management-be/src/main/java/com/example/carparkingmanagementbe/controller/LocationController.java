@@ -105,7 +105,6 @@ public class LocationController {
                                                              @RequestParam(defaultValue = "") String id,
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
-        System.out.println(locationPage.getTotalPages());
         if (locationPage.getTotalPages() <= page) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -114,9 +113,6 @@ public class LocationController {
         }
         return new ResponseEntity<>(locationPage, HttpStatus.OK);
     }
-
-
-    /*DatNVNCoding*/
 
     // dat code
     @GetMapping("/map-parking")
@@ -183,7 +179,10 @@ public class LocationController {
                                                            @RequestParam(defaultValue = "0") int page) {
         Page<Location> locationPage = null;
         locationPage = iLocationService.searchLocationCode(code, PageRequest.of(page, 84));
-        if (locationPage == null) {
+        if (locationPage.getTotalPages() <= page) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (locationPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(locationPage, HttpStatus.OK);
