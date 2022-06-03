@@ -1,5 +1,6 @@
 package com.example.carparkingmanagementbe.controller;
 
+import com.asprise.ocr.Ocr;
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
 
 import com.example.carparkingmanagementbe.dto.ticket.UpdateUserEmailDto;
@@ -17,6 +18,7 @@ import com.example.carparkingmanagementbe.service.ILocationService;
 import com.example.carparkingmanagementbe.service.ITicketService;
 import com.example.carparkingmanagementbe.service.ITicketTypeService;
 
+import net.sourceforge.tess4j.Tesseract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,21 +27,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
-
-
 import com.example.carparkingmanagementbe.dto.TicketDto;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-
-
+import org.springframework.web.multipart.MultipartFile;
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
-
-
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -73,10 +73,11 @@ public class TicketController {
 
     private Map<String, String> mapError = new HashMap<>();
     private Map<String, String> mapSuccess = new HashMap<>();
-    private  static final String MESSAGE = "message";
-    private  static final String EMPLOYEE = "ROLE_EMPLOYEE";
-    private  static final String ADMIN = "ROLE_ADMIN";
-    private  static final String NOT_AUTHORIZE = "không đủ thẩm quyền để làm việc";
+    private static final String MESSAGE = "message";
+    private static final String EMPLOYEE = "ROLE_EMPLOYEE";
+    private static final String ADMIN = "ROLE_ADMIN";
+    private static final String NOT_AUTHORIZE = "không đủ thẩm quyền để làm việc";
+    private static final String FILE7 = "D:\\codegym\\duan2\\C1021G1-BackEnd-Sprint2\\car-parking-management-be\\src\\main\\resources\\static\\1111.jpg";
 
     @GetMapping("/check")
     public ResponseEntity<Page<Ticket>> getAllTicket(@RequestParam(defaultValue = "0") int page) {
@@ -219,7 +220,6 @@ public class TicketController {
         }
     }
 
-
     @GetMapping("/ticketType")
     public ResponseEntity<List<TicketType>> getAllTicketType() {
         List<TicketType> ticketTypeList = iTicketTypeService.findAllTicket();
@@ -257,7 +257,7 @@ public class TicketController {
     }
 
     @GetMapping("/edit/{id}")
-    public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
+    public ResponseEntity<Object> getTicketById(@PathVariable Long id) {
         Ticket ticket = ticketService.findTicketById(id);
         if (ticket == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -308,6 +308,7 @@ public class TicketController {
         }
         return new ResponseEntity<>(locationList, HttpStatus.OK);
     }
+
 
 
 }
