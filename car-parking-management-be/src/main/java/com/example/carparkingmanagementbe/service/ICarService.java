@@ -14,12 +14,14 @@ public interface ICarService {
 
     void createCar(CarDto carDto);
 
+
+
     List<Car> findAll();
 
     Integer findByCodeCar(String code);
 
     Integer findByCarPlate(String carPlate);
 
-    List<Car> findByIdCustomer(Long id);
+    List<Car> findCarByIdCustomer(Long id);
 
 }
