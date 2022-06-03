@@ -196,7 +196,6 @@ public class CustomerController {
 //    Validate thêm mới
 
     // tronghd validate dữ liệu thêm mới
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleValidationExceptions(
