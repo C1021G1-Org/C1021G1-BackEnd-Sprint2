@@ -110,14 +110,14 @@ public class LocationService implements ILocationService {
     }
 
     //dat code
-    @Override
+
 
 
     //Datnvn
     @Override
     public Page<Location> searchLocationCode(String code, Pageable pageable) {
         return locationRepository.searchLocationCode(code, pageable);
-
+    }
     public Location findByIdLocation(Long id) {
         return locationRepository.findByIdLocation(id);
     }

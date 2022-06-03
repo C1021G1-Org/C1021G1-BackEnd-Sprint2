@@ -1,45 +1,30 @@
 package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
-
 import com.example.carparkingmanagementbe.dto.ticket.UpdateUserEmailDto;
 import com.example.carparkingmanagementbe.model.*;
-
 import com.example.carparkingmanagementbe.service.*;
-
 import com.example.carparkingmanagementbe.model.Floor;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.model.Ticket;
-
 import com.example.carparkingmanagementbe.model.TicketType;
 import com.example.carparkingmanagementbe.service.IFloorsService;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import com.example.carparkingmanagementbe.service.ITicketService;
 import com.example.carparkingmanagementbe.service.ITicketTypeService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-
 import java.time.LocalDate;
-
-
 import com.example.carparkingmanagementbe.dto.TicketDto;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-
-
 import javax.validation.Valid;
-
-
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -126,7 +111,8 @@ public class TicketController {
                 int check = changeTimeIn.compareTo(changeTimeOut);
                 if (check < 0) {
                     ticketService.deleteTicketByDel(ticket.getId());
-                    return new ResponseEntity<>(check, HttpStatus.OK);
+                    mapSuccess.put(MESSAGE,"Đã xóa thành công");
+                    return new ResponseEntity<>(mapSuccess, HttpStatus.OK);
                 } else {
                     mapError.put(MESSAGE, "xe vẫn còn bên trong nên không thể xóa");
                     return new ResponseEntity<>(mapError, HttpStatus.BAD_REQUEST);
@@ -169,7 +155,6 @@ public class TicketController {
                 }
 
             } else {
-
                 mapError.put(MESSAGE, NOT_AUTHORIZE);
                 return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
             }
@@ -184,13 +169,11 @@ public class TicketController {
         if (updateUserEmailDto.getRole().contains(EMPLOYEE) || updateUserEmailDto.getRole().contains(ADMIN)) {
             Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
             if (ticket == null) {
-
                 mapError.put(MESSAGE, "vé đang được người khác thao tác không thể truy cập");
                 return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(ticket, HttpStatus.OK);
         } else {
-
             mapError.put(MESSAGE, NOT_AUTHORIZE);
             return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
         }
@@ -219,7 +202,6 @@ public class TicketController {
             return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
         }
     }
-
 
     @GetMapping("/ticketType")
     public ResponseEntity<List<TicketType>> getAllTicketType() {
@@ -258,7 +240,7 @@ public class TicketController {
     }
 
     @GetMapping("/edit/{id}")
-    public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
+    public ResponseEntity<Object> getTicketById(@PathVariable Long id) {
         Ticket ticket = ticketService.findTicketById(id);
         if (ticket == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -309,6 +291,7 @@ public class TicketController {
         }
         return new ResponseEntity<>(locationList, HttpStatus.OK);
     }
+
 
 
 }
