@@ -67,7 +67,6 @@ public class TicketController {
     @Autowired
     private ICarService iCarService;
 
-
     @Autowired
     private ITicketTypeService ticketTypeService;
 
@@ -242,7 +241,7 @@ public class TicketController {
 
     @GetMapping("/floor")
     public ResponseEntity<List<Floor>> getAllFloor() {
-        List<Floor> floors = iFloorsService.findAllFloor();
+        List<Floor> floors = iFloorsService.findAll();
         if (floors.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
