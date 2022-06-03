@@ -4,7 +4,7 @@ import com.example.carparkingmanagementbe.dto.NewsDto;
 import com.example.carparkingmanagementbe.model.News;
 
 import java.util.List;
-import java.util.Optional;
+
 
 public interface INewsService {
     News findNewsById(Long id);

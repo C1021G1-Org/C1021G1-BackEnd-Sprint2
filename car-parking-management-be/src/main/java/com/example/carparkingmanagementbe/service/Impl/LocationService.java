@@ -1,29 +1,16 @@
 package com.example.carparkingmanagementbe.service.Impl;
 
-
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.repository.LocationRepository;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.carparkingmanagementbe.dto.LocationList;
-
-import com.example.carparkingmanagementbe.dto.LocationDto;
-import com.example.carparkingmanagementbe.model.AllowedCarParking;
-
-import com.example.carparkingmanagementbe.model.Location;
-import com.example.carparkingmanagementbe.repository.LocationRepository;
-import com.example.carparkingmanagementbe.service.ILocationService;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.example.carparkingmanagementbe.dto.LocationList;
-import com.example.carparkingmanagementbe.repository.FloorsRepository;
 import org.springframework.data.domain.*;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
+
 
 @Service
 public class LocationService implements ILocationService {
@@ -31,9 +18,6 @@ public class LocationService implements ILocationService {
 
     @Autowired
     private LocationRepository locationRepository;
-
-    @Autowired
-    private FloorsRepository floorsRepository;
 
 
     //Trong tim id detail
@@ -88,20 +72,21 @@ public class LocationService implements ILocationService {
 
     //dat code
     @Override
-    public Location findByIdLocation(Long id) {
-        return locationRepository.findByIdLocation(id);
-    }
-
-    //dat code
-    @Override
     public void updateColorLocation(Long id) {
         locationRepository.updateIsEmpty(id);
+    }
+
+    //Datnvn
+    @Override
+    public Page<Location> searchLocationCode(String code, Pageable pageable) {
+        return locationRepository.searchLocationCode(code, pageable);
     }
 
     @Override
     public Page<Location> findAllLocation(Pageable pageable) {
         return locationRepository.findAll(pageable);
     }
+
 
 }
 
