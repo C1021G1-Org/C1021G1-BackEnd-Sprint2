@@ -90,7 +90,7 @@ public class TicketController {
                 ticketDtoSearch.getPhoneCustomer(), pageRequest);
         if (ticketPage.isEmpty()) {
             Map<String, String> map = new HashMap<>();
-            map.put("messageEros", "hien tai trong da ta chua co");
+            map.put("messageEros", "không tìm thấy");
             return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(ticketPage, HttpStatus.OK);
