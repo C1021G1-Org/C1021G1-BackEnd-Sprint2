@@ -16,13 +16,17 @@ public interface ICarService {
 
     void createCar(CarDto carDto);
 
+
+
     List<Car> findAll();
 
     Integer findByCodeCar(String code);
 
     Integer findByCarPlate(String carPlate);
 
+
     List<Car> findByIdCustomer(Long id);
     List<CarPlateDto> findCarModal(String name, String phone, String plate);
     List<CarTicketDto> chooseCar(String plate);
+    List<Car> findCarByIdCustomer(Long id);
 }

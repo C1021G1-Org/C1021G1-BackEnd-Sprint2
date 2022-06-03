@@ -1,12 +1,9 @@
 package com.example.carparkingmanagementbe.repository;
 import com.example.carparkingmanagementbe.dto.CarPlateDto;
 import com.example.carparkingmanagementbe.dto.CarTicketDto;
+import com.example.carparkingmanagementbe.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.carparkingmanagementbe.model.Car;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import com.example.carparkingmanagementbe.model.Car;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
@@ -14,11 +11,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
-import java.util.List;
-
 @Repository
 public interface CarRepository extends JpaRepository<Car,Long> {
-
 
     //TrongHD thêm mới xe
     @Transactional
@@ -36,7 +30,7 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     @Query(value = "select count(car_plate) from car where car_plate = ?", nativeQuery = true)
     Integer finByCarPlate(String carPlate);
 
-    //BaoND lấy thông tin khách hàng
+    //BaoND lấy thông tin xe
     @Query(value = "select car.id," +
             "car.car_company," +
             "car.car_plate," +
@@ -59,7 +53,7 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "from car " +
             "join customer " +
             "on car.id_customer = customer.id " +
-            "where customer.id = ?;",nativeQuery = true)
+            "where customer.id = ? and car.del_flag = 1;",nativeQuery = true)
     List<Car> selectCustomerAndCar(Long id);
 
     //TrongHD lấy thông tin khách hàng
@@ -74,7 +68,6 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "customer.address," +
             "customer.account_id," +
             "customer.birthday," +
-            "customer.`code`," +
             "customer.email," +
             "customer.gender," +
             "customer.id_card," +

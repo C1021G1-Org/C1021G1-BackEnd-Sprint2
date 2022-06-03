@@ -3,6 +3,7 @@ import com.example.carparkingmanagementbe.dto.CarDto;
 import com.example.carparkingmanagementbe.dto.CarPlateDto;
 import com.example.carparkingmanagementbe.dto.CarTicketDto;
 import com.example.carparkingmanagementbe.model.Car;
+import com.example.carparkingmanagementbe.model.CarType;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.service.ICarTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class CarController {
             return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
         }
     }
+
     //SonDCM findCardModal
     @GetMapping("/findModal")
     public ResponseEntity<List<CarPlateDto>> findCarModal(@RequestParam(required = false, value = "") String name,
@@ -68,5 +70,23 @@ public class CarController {
     @GetMapping("/chooseCar")
     public ResponseEntity<List<CarTicketDto>> chooseCar(@RequestParam(required = false, value = "") String plate){
         return new ResponseEntity<>(carService.chooseCar(plate),HttpStatus.OK);
+    }
+    @GetMapping("/carType-list")
+    public ResponseEntity<List<CarType>> getAllCarType() {
+        if (carTypeService.findAll().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(carTypeService.findAll(), HttpStatus.OK);
+        }
+    }
+
+//    Bảo hiển thị xe theo id customer
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<List<Car>> findCarByCustomerId(@PathVariable Long id) {
+        List<Car> carList = carService.selectCar(id);
+        if (carList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(carList, HttpStatus.OK);
     }
 }

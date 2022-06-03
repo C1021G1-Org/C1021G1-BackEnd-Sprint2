@@ -24,6 +24,10 @@ public class CarService implements ICarService {
 
     }
     @Override
+    public List<Car> findCarByIdCustomer(Long id) {
+        return carRepository.selectCustomerAndCar(id);
+    }
+    @Override
     public void createCar(CarDto carDto) {
         carRepository.createCar(carDto.getCode(), carDto.getName(), carDto.getCarPlate(), carDto.getCarCompany(),
                 carDto.getCustomer(), carDto.getCarType(), true);
@@ -43,12 +47,12 @@ public class CarService implements ICarService {
     public Integer findByCarPlate(String carPlate) {
         return carRepository.finByCarPlate(carPlate);
     }
-
+  
     @Override
     public List<Car> findByIdCustomer(Long id) {
         return carRepository.findByIdCustomer(id);
     }
-
+  
     @Override
     public List<CarPlateDto> findCarModal(String name, String phone, String plate) {
         return carRepository.findCarModal(name, phone, plate);
@@ -58,5 +62,4 @@ public class CarService implements ICarService {
     public List<CarTicketDto> chooseCar(String plate) {
         return carRepository.chooseCar(plate);
     }
-
 }

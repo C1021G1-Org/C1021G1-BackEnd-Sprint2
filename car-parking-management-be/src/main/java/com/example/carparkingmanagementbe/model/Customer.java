@@ -41,5 +41,12 @@ public class Customer {
     @JoinColumn(name = "id_ward", referencedColumnName = "id")
     private Ward ward;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Ward getWard() {
+        return ward;
+    }
 }
 

@@ -13,6 +13,9 @@
       <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/CarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/CarRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ICarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ICarService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/CarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/CarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/FloorsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/FloorsService.java" afterDir="false" />
+
       <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +94,18 @@
       </method>
     </configuration>
   </component>
+
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="RunManager">
+    <configuration name="CarParkingManagementBeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="car-parking-management-be.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.carparkingmanagementbe.CarParkingManagementBeApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -120,5 +134,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
