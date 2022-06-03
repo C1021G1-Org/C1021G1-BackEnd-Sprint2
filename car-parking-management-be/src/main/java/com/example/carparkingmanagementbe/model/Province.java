@@ -22,10 +22,10 @@ public class Province {
     private String name;
     private String prefix;
     @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "province")
+    @OneToMany(mappedBy = "province")
     private Set<District> districtSet;
 
-    @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "province")
-    private Set<Ward> wardSet;
+//    @JsonBackReference
+//    @OneToMany(mappedBy = "province")
+//    private Set<Ward> wardSet;
 }

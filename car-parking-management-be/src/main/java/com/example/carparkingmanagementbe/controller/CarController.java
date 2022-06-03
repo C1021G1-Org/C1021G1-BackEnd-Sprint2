@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/car")
 public class CarController {
@@ -26,6 +27,9 @@ public class CarController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createCar(@Valid @RequestBody CarDto carDto) {
+        int code = (int) Math.floor((Math.random()*899) + 100);
+        String codeRandom = String.valueOf(code);
+        carDto.setCode("XE-" + codeRandom);
         carService.createCar(carDto);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
@@ -36,7 +40,7 @@ public class CarController {
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
