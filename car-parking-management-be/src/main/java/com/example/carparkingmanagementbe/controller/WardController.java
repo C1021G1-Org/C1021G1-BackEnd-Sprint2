@@ -27,9 +27,9 @@ public class WardController {
   
     //PhuHDQ
     @GetMapping("/ward/{id}")
-    public ResponseEntity<Optional<Ward>> findWardById(@PathVariable Long id) {
-        Optional<Ward> ward = wardService.findWardById(id);
-        if (!ward.isPresent()) {
+    public ResponseEntity<Ward> findWardById(@PathVariable Long id) {
+       Ward ward = wardService.findWardById(id);
+        if (ward == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(ward, HttpStatus.OK);
