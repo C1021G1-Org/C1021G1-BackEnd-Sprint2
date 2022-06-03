@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c35411ad-9bea-4ef1-947f-706e3d5f7141" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/LocationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/LocationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/NewsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/NewsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Location.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +46,10 @@
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -53,6 +61,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager">
     <configuration name="CarParkingManagementBeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -63,6 +72,7 @@
       </method>
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -74,11 +84,18 @@
       <option name="presentableId" value="Default" />
       <updated>1653528922265</updated>
       <workItem from="1653528964276" duration="253000" />
+      <workItem from="1653983641873" duration="638000" />
+      <workItem from="1654045984125" duration="6266000" />
+      <workItem from="1654135977796" duration="604000" />
+      <workItem from="1654138149702" duration="3311000" />
+      <workItem from="1654142776155" duration="84000" />
+      <workItem from="1654144757145" duration="1746000" />
+      <workItem from="1654221496787" duration="5112000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="oldMeFiltersMigrated" value="true" />

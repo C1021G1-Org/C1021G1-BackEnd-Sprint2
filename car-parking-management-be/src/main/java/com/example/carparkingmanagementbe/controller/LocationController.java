@@ -177,14 +177,14 @@ public class LocationController {
 
     //xóa location trongTa
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteNews(@PathVariable Long id) {
+    public ResponseEntity<Object> deleteNews(@PathVariable Long id) {
         Location location = iLocationService.findLocationById(id);
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         if (location.getIsEmpty()) {
             Map<String, String> error = new HashMap<>();
-            error.put("isEmpty", "vi tri nay dang co nguoi dau xe khong the xoa");
+            error.put("isEmpty", "Vi tri nay dang co nguoi dau xe khong the xoa");
             return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
         }
         iLocationService.deleteLocationById(id);
