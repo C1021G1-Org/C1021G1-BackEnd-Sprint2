@@ -109,6 +109,13 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     void createCustomer(String name,String email,String code,Boolean gender,String idCard,String phone,String birthday,
                         Boolean delFlag,String address,Long idWard);
 
+    // LinhDD
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO customer (`name`, email,`code`,gender,id_card,phone,birthday,del_flag,address,id_ward, account_id) " +
+            "VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10, ?11);", nativeQuery = true)
+    void signUpCustomer(String name,String email,String code,Boolean gender,String idCard,String phone,String birthday,
+                        Boolean delFlag,String address,Long idWard, Long id);
 
     //tronghd tạo câu lệnh query chỉnh sửa thông tin khách hàng
     @Transactional
