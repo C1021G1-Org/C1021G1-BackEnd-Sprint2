@@ -1,5 +1,7 @@
 package com.example.carparkingmanagementbe.dto;
+
 import javax.persistence.Column;
+
 public interface LocationDetailDto {
     Long getId();
 
@@ -23,3 +25,4 @@ public interface LocationDetailDto {
 
     String getCarPlate();
 }
+

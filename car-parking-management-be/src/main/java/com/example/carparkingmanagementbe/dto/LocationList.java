@@ -6,3 +6,4 @@ public interface LocationList {
     Integer getFloorId();
     String getFloorName();
 }
+
