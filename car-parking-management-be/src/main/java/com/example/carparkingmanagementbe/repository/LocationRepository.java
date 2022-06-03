@@ -1,10 +1,4 @@
 package com.example.carparkingmanagementbe.repository;
-
-
-
-
-
-
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
 import com.example.carparkingmanagementbe.dto.LocationList;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
