@@ -1,13 +1,11 @@
 package com.example.carparkingmanagementbe.controller;
 
-import com.example.carparkingmanagementbe.dto.CarDto;
 import com.example.carparkingmanagementbe.dto.CustomerDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.service.ICustomerService;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -65,6 +63,7 @@ public class CustomerController {
         if ("".equals(startDate) && "".equals(endDate)) {
             customerList = customerService.searchCustomerNoDate(code, phone, idCard, PageRequest.of(page, 5));
         }
+
         if ("".equals(startDate) && !"".equals(endDate)) {
             customerList = customerService.searchEndDate(endDate, code, phone, idCard, PageRequest.of(page, 5));
         }
@@ -96,7 +95,8 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(customers, HttpStatus.OK);
-    }
+    };
+
 
     //ThangDBX delete customer
     @DeleteMapping("/delete/{id}")
@@ -128,7 +128,8 @@ public class CustomerController {
     public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
         char[] charArray = customerDto.getName().toCharArray();
         boolean foundSpace = true;
-        for (int i = 0; i < charArray.length; i++) {
+
+    for (int i = 0; i < charArray.length; i++) {
             if (Character.isLetter(charArray[i])) {
                 if (foundSpace) {
                     charArray[i] = Character.toUpperCase(charArray[i]);
@@ -160,6 +161,7 @@ public class CustomerController {
 //        carDto.setCustomer(customer.getId());
 //        carService.createCar(carDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
 
 
@@ -191,6 +193,7 @@ public class CustomerController {
         customerService.updateCustomer(customerDtoCheck);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
+
 
 
 //    Validate thêm mới

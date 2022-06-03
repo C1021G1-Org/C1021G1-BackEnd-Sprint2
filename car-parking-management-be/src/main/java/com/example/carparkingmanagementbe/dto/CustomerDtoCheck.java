@@ -16,10 +16,6 @@ public class CustomerDtoCheck implements Validator {
 
     private Long id;
 
-    @NotNull(message = "Trường này không thể để trống")
-    @Pattern(regexp = "((KH-|kh-)\\d{3})", message = "Mã khách hàng phải là KH-XXX")
-    private String code;
-
     @Size(min = 5, max = 40, message = "Tối thiểu là 5 ký tự và tối đa 40 kí tự!")
     @Pattern(regexp = REGEX_NAME, message = "Vui lòng nhập đúng tên của bạn!")
     @NotEmpty(message = "Trường này không thể để trống.")
@@ -61,13 +57,6 @@ public class CustomerDtoCheck implements Validator {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
     public String getName() {
         return name;
