@@ -1,6 +1,4 @@
 package com.example.carparkingmanagementbe.dto;
-
-import com.example.carparkingmanagementbe.model.Ward;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -15,9 +13,6 @@ public class CustomerDtoCheck implements Validator {
     private static final String REGEX_PHONE = "^(0[3|7|8|5|9])+([0-9]{8})$";
 
     private Long id;
-
-    @NotNull(message = "Trường này không thể để trống")
-    @Pattern(regexp = "((KH-|kh-)\\d{3})", message = "Mã khách hàng phải là KH-XXX")
     private String code;
 
     @Size(min = 5, max = 40, message = "Tối thiểu là 5 ký tự và tối đa 40 kí tự!")
@@ -47,10 +42,23 @@ public class CustomerDtoCheck implements Validator {
     private Boolean gender;
     private Boolean delFlag;
 
-    @NotNull(message = "Trường này không thể để trống.")
     private Long ward;
 
     public CustomerDtoCheck() {
+    }
+
+    public CustomerDtoCheck(Long id, String code, String name, String birthday, String idCard, String email, String phone, String address, Boolean gender, Boolean delFlag, Long ward) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.birthday = birthday;
+        this.idCard = idCard;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.gender = gender;
+        this.delFlag = delFlag;
+        this.ward = ward;
     }
 
     public Long getId() {
@@ -153,7 +161,6 @@ public class CustomerDtoCheck implements Validator {
         String inputBirthday = customerDtoCheck.getBirthday();
         if (inputBirthday != null) {
             LocalDate birthDay = LocalDate.parse(inputBirthday, formatter);
-            //  LocalDate birthdayToLocalDate = LocalDate.of(birthDay.getYear(),birthDay.getMonth(), birthDay.getDayOfMonth());
             LocalDate current = LocalDate.now();
             int betweenDate =  Period.between(birthDay, current).getYears();
             if(betweenDate<18){

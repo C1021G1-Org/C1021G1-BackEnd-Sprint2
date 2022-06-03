@@ -1,6 +1,5 @@
 package com.example.carparkingmanagementbe.repository;
 
-import com.example.carparkingmanagementbe.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.carparkingmanagementbe.model.Car;
 import org.springframework.data.jpa.repository.Modifying;

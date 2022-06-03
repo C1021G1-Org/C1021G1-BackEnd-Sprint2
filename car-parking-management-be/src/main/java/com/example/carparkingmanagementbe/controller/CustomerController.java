@@ -113,17 +113,16 @@ public class CustomerController {
         if (bindingResult.hasFieldErrors()) {
             Map<String, String> errorMap = new HashMap<>();
             Map<String, Object> response = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error -> {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            });
+            bindingResult.getFieldErrors().forEach(error ->
+                errorMap.put(error.getField(), error.getDefaultMessage())
+            );
             response.put("error", errorMap);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         customerDto.setName(String.valueOf(charArray));
         int code = (int) Math.floor((Math.random()*899) + 100);
         String codeRandom = String.valueOf(code);
         customerDto.setCode("KH-" + codeRandom);
-//        customerService.createCustomer(customerDto);
         Customer customer = new Customer();
         BeanUtils.copyProperties(customerDto,customer);
         customerService.save(customer);
@@ -145,27 +144,25 @@ public class CustomerController {
     }
 
 
-    @PatchMapping("/update/{id}")
-    public ResponseEntity<?> updateFlight(@PathVariable Long id, @Valid @RequestBody CustomerDtoCheck customerDtoCheck,
-                                          BindingResult bindingResult) {
+    @PatchMapping(value = "/update/{id}")
+    public ResponseEntity<?> updateFlight(@Valid @RequestBody CustomerDtoCheck customerDtoCheck, BindingResult
+                                          bindingResult,@PathVariable Long id) {
         customerDtoCheck.setId(id);
         new CustomerDtoCheck().validate(customerDtoCheck, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             Map<String, String> errorMap = new HashMap<>();
             Map<String, Object> response = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error -> {
-                errorMap.put(error.getField(), error.getDefaultMessage());
-            });
+            bindingResult.getFieldErrors().forEach(error ->
+                errorMap.put(error.getField(), error.getDefaultMessage())
+            );
             response.put("error", errorMap);
-            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
         customerService.updateCustomer(customerDtoCheck);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
 
-
-//    Validate thêm mới
 
     // tronghd validate dữ liệu thêm mới
 
@@ -174,7 +171,7 @@ public class CustomerController {
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
