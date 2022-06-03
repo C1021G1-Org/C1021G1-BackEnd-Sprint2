@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface IFloorsService {
 
+    Floor findById(Long id);
 
-    List<Floor> findAllFloor();
-
+    List<Floor> findAll();
 }
+
