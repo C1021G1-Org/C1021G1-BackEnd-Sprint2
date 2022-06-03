@@ -45,5 +45,8 @@ public class Customer {
         return id;
     }
 
+    public Ward getWard() {
+        return ward;
+    }
 }
 
