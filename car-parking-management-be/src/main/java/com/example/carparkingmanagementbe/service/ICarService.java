@@ -14,8 +14,6 @@ public interface ICarService {
 
     void createCar(CarDto carDto);
 
-
-
     List<Car> findAll();
 
     Integer findByCodeCar(String code);
