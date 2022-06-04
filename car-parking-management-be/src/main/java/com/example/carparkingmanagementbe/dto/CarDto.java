@@ -31,7 +31,6 @@ public class CarDto {
 
     private Boolean delFlag;
 
-    @NotNull(message = "Khách hàng phải bắt buộc nhập.")
     private Long customer;
 
     @NotNull(message = "Loại xe phải bắt buộc nhập.")
