@@ -27,7 +27,8 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "location.id_floor " +
             "from location " +
             "join floor on floor.id = location.id_floor " +
-            "where location.id_floor = :idFloor ", nativeQuery = true)
+            "where location.id_floor = :idFloor " +
+            "and location.is_empty = 0 ", nativeQuery = true)
     List<Location> getListLocation(@Param("idFloor") Long idFloor);
 
 
@@ -59,6 +60,7 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "FROM location WHERE location.id = ? " +
             "AND del_flag = 1 ", nativeQuery = true)
     Location findLocationById(Long id);
+
 
     /*TuanPDCoding*/
     @Modifying
@@ -153,10 +155,26 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "location.id_floor " +
             "FROM location " +
             "WHERE location.id = ? " +
-            "AND location.is_empty = 0 ",
+            "AND location.is_empty = 0",
             nativeQuery = true)
     Location findByIdLocation(Long id);
 
+    @Query(value = "SELECT " +
+            "location.id, " +
+            "location.code, " +
+            "location.del_flag, " +
+            "location.description, " +
+            "location.height, " +
+            "location.is_empty, " +
+            "location.length, " +
+            "location.number, " +
+            "location.width, " +
+            "location.id_floor " +
+            "FROM location " +
+            "WHERE location.id = ? " +
+            "AND location.del_flag = 1",
+            nativeQuery = true)
+    Location findByTicket(Long id);
 
 }
 

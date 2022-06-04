@@ -19,11 +19,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
+
 import com.example.carparkingmanagementbe.dto.TicketDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+
 import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -73,22 +76,29 @@ public class TicketController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<Object> getSearchTicketPage(@RequestBody TicketDtoSearch ticketDtoSearch, @RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<Object> getSearchTicketPage(@Valid @RequestBody TicketDtoSearch ticketDtoSearch, BindingResult bindingResult, @RequestParam(defaultValue = "0") int page) {
+        new TicketDtoSearch().validate(ticketDtoSearch, bindingResult);
+
         PageRequest pageRequest = PageRequest.of(page, 5);
         Page<Ticket> ticketPage = ticketService.searchTicketPage(ticketDtoSearch.getFloor(),
                 ticketDtoSearch.getTicketTypeName(), ticketDtoSearch.getEndDate(), ticketDtoSearch.getNameCustomer(),
                 ticketDtoSearch.getPhoneCustomer(), pageRequest);
-        if (ticketPage.isEmpty()) {
-            mapError.put(MESSAGE, "không tìm thấy");
-            return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
+        if (bindingResult.hasFieldErrors()) {
+            mapError.clear();
+            bindingResult.getFieldErrors().forEach(error -> {
+                mapError.put(error.getField(), error.getDefaultMessage());
+            });
+
+            return new ResponseEntity<>(mapError, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(ticketPage, HttpStatus.OK);
+
 
     }
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> deleteTicket(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
-
+        mapError.clear();
         Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
         if (ticket == null) {
             mapError.put(MESSAGE, "email không phù hợp để xóa vé");
@@ -111,7 +121,7 @@ public class TicketController {
                 int check = changeTimeIn.compareTo(changeTimeOut);
                 if (check < 0) {
                     ticketService.deleteTicketByDel(ticket.getId());
-                    mapSuccess.put(MESSAGE,"Đã xóa thành công");
+                    mapSuccess.put(MESSAGE, "Đã xóa thành công");
                     return new ResponseEntity<>(mapSuccess, HttpStatus.OK);
                 } else {
                     mapError.put(MESSAGE, "xe vẫn còn bên trong nên không thể xóa");
@@ -130,6 +140,8 @@ public class TicketController {
 
     @PatchMapping("/updateUserEmail/{id}")
     public ResponseEntity<Object> updateUserEmail(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
+        mapError.clear();
+        mapSuccess.clear();
         Ticket ticket = ticketService.getTicketById(id);
 
         if (ticket == null) {
@@ -166,6 +178,9 @@ public class TicketController {
 
     @PostMapping("/getTicketAction/{id}")
     public ResponseEntity<Object> getTicketAction(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
+        mapError.clear();
+        mapSuccess.clear();
+
         if (updateUserEmailDto.getRole().contains(EMPLOYEE) || updateUserEmailDto.getRole().contains(ADMIN)) {
             Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
             if (ticket == null) {
@@ -183,6 +198,9 @@ public class TicketController {
 
     @PatchMapping("/updateUserNull/{id}")
     public ResponseEntity<Object> updateUserNull(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
+        mapError.clear();
+        mapSuccess.clear();
+
         if (updateUserEmailDto.getRole().contains(EMPLOYEE) || updateUserEmailDto.getRole().contains(ADMIN)) {
             Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
             if (ticket == null) {
@@ -250,6 +268,9 @@ public class TicketController {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> updateTicket(@Valid @RequestBody TicketDto ticketDto, BindingResult bindingResult) {
+        mapError.clear();
+        mapSuccess.clear();
+
         new TicketDto().validate(ticketDto, bindingResult);
         Map<String, String> errorList = new HashMap<>();
         if (bindingResult.hasErrors()) {
@@ -283,15 +304,18 @@ public class TicketController {
     }
 
 
-    @GetMapping("/getByFloor/{id}")
-    public ResponseEntity<List<Location>> getAllLocationByFloor(@PathVariable Long id) {
+    @GetMapping("/getByFloor/{id}/{idLocation}")
+    public ResponseEntity<List<Location>> getAllLocationByFloor(@PathVariable Long id, @PathVariable Long idLocation) {
+        Location location = iLocationService.findByTicket(idLocation);
         List<Location> locationList = iLocationService.getListLocation(id);
         if (locationList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        if (location != null) {
+            locationList.add(location);
+        }
         return new ResponseEntity<>(locationList, HttpStatus.OK);
     }
-
 
 
 }
