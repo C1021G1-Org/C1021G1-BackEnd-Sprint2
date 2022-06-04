@@ -14,19 +14,21 @@ public class FloorsService implements IFloorsService {
     @Autowired
     private FloorsRepository floorsRepository;
 
+
     @Override
     public Floor findById(Long id) {
         return floorsRepository.findById(id).orElse(null);
     }
 
     @Override
+
+    public List<Floor> findAll() {
+        return floorsRepository.findAll();
+    }
+
     public Floor findFloorsById(Long id) {
         return floorsRepository.findById(id).orElse(null);
     }
 
-    @Override
-    public List<Floor> findAll() {
-        return floorsRepository.findAll();
-    }
 
 }

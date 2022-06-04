@@ -25,4 +25,6 @@ public interface ICarService {
 
     List<Car> findCarByIdCustomer(Long id);
 
+    List<Car> findCarByIdCustomerNull();
+
 }

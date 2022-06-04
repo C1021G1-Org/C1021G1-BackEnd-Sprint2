@@ -27,10 +27,10 @@ public class Ward {
 
 
     @JsonBackReference
-    @OneToMany(mappedBy = "ward")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ward")
     private Set<Customer> customerSet;
     @JsonBackReference
-    @OneToMany(mappedBy = "ward")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ward")
     private Set<Employee> employeeSet;
 
     public void setId(Long id) {

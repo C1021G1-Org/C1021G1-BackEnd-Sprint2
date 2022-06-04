@@ -86,4 +86,6 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "where customer.id = ?;",nativeQuery = true)
     List<Car> findByIdCustomer(Long id);
 
+    @Query(value = "SELECT id,car_company,car_plate,`code`,del_flag,`name`,id_car_type,id_customer,id_employee FROM car where id_customer is null;",nativeQuery = true)
+    List<Car> findCarByIdCustomerNull();
 }

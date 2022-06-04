@@ -44,11 +44,102 @@ public class Location {
     @JoinColumn(name = "id_floor", referencedColumnName = "id")
     private Floor floor;
 
-    public static void main(String[] args) {
-        Location location =new Location();
 
-        System.out.println(location.ticket.getCar().getCustomer().getName());
+
+    public Long getId() {
+        return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
+    public Double getLength() {
+        return length;
+    }
+
+    public void setLength(Double length) {
+        this.length = length;
+    }
+
+    public Double getWidth() {
+        return width;
+    }
+
+    public void setWidth(Double width) {
+        this.width = width;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public Boolean getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public Boolean getEmpty() {
+        return isEmpty;
+    }
+
+    public void setEmpty(Boolean empty) {
+        isEmpty = empty;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public Set<AllowedCarParking> getAllowedCarParkingSet() {
+        return allowedCarParkingSet;
+    }
+
+    public void setAllowedCarParkingSet(Set<AllowedCarParking> allowedCarParkingSet) {
+        this.allowedCarParkingSet = allowedCarParkingSet;
+    }
+
+    public Floor getFloor() {
+        return floor;
+    }
+
+    public void setFloor(Floor floor) {
+        this.floor = floor;
+    }
 }
 

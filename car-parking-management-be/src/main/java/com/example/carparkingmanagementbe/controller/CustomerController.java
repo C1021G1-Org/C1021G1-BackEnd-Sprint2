@@ -1,9 +1,11 @@
 package com.example.carparkingmanagementbe.controller;
+
 import com.example.carparkingmanagementbe.dto.CustomerDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.service.ICustomerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -61,6 +63,7 @@ public class CustomerController {
         if ("".equals(startDate) && "".equals(endDate)) {
             customerList = customerService.searchCustomerNoDate(code, phone, idCard, PageRequest.of(page, 5));
         }
+
         if ("".equals(startDate) && !"".equals(endDate)) {
             customerList = customerService.searchEndDate(endDate, code, phone, idCard, PageRequest.of(page, 5));
         }
@@ -92,7 +95,8 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(customers, HttpStatus.OK);
-    }
+    };
+
 
     //ThangDBX delete customer
     @DeleteMapping("/delete/{id}")
@@ -124,7 +128,8 @@ public class CustomerController {
     public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult bindingResult) {
         char[] charArray = customerDto.getName().toCharArray();
         boolean foundSpace = true;
-        for (int i = 0; i < charArray.length; i++) {
+
+    for (int i = 0; i < charArray.length; i++) {
             if (Character.isLetter(charArray[i])) {
                 if (foundSpace) {
                     charArray[i] = Character.toUpperCase(charArray[i]);
@@ -138,11 +143,11 @@ public class CustomerController {
         if (bindingResult.hasFieldErrors()) {
             Map<String, String> errorMap = new HashMap<>();
             Map<String, Object> response = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error ->
-                errorMap.put(error.getField(), error.getDefaultMessage())
-            );
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
             response.put("error", errorMap);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         customerDto.setName(String.valueOf(charArray));
         int code = (int) Math.floor((Math.random() * 899) + 100);
@@ -156,6 +161,7 @@ public class CustomerController {
 //        carDto.setCustomer(customer.getId());
 //        carService.createCar(carDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
 
 
@@ -170,24 +176,27 @@ public class CustomerController {
     }
 
 
-    @PatchMapping(value = "/update/{id}")
-    public ResponseEntity<?> updateCustomer(@Valid @RequestBody CustomerDtoCheck customerDtoCheck, BindingResult
-                                          bindingResult, @PathVariable Long id) {
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<?> updateFlight(@PathVariable Long id, @Valid @RequestBody CustomerDtoCheck customerDtoCheck,
+                                          BindingResult bindingResult) {
         customerDtoCheck.setId(id);
         new CustomerDtoCheck().validate(customerDtoCheck, bindingResult);
         if (bindingResult.hasFieldErrors()) {
             Map<String, String> errorMap = new HashMap<>();
             Map<String, Object> response = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error ->
-                errorMap.put(error.getField(), error.getDefaultMessage())
-            );
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
             response.put("error", errorMap);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
         }
         customerService.updateCustomer(customerDtoCheck);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
+
+
+//    Validate thêm mới
 
     // tronghd validate dữ liệu thêm mới
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -195,7 +204,7 @@ public class CustomerController {
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach(error -> {
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
