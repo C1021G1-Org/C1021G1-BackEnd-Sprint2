@@ -76,4 +76,13 @@ public class CarController {
         return new ResponseEntity<>(carList, HttpStatus.OK);
 
     }
+//    Bảo lấy xe nếu null id_customer
+    @GetMapping("/list-car")
+    public ResponseEntity<List<Car>> findCarByIdCustomerNull(){
+        List<Car> carLists = carService.findCarByIdCustomerNull();
+        if (carLists == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(carLists,HttpStatus.OK);
+    }
 }
