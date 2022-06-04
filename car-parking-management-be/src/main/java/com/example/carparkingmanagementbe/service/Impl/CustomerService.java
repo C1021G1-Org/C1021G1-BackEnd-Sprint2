@@ -1,7 +1,5 @@
 package com.example.carparkingmanagementbe.service.Impl;
 import com.example.carparkingmanagementbe.dto.CustomerDto;
-
-
 import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
 import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.repository.CustomerRepository;
@@ -18,6 +16,7 @@ public class CustomerService implements ICustomerService {
     @Autowired
    private CustomerRepository customerRepository;
 
+    //ThangDBX danh sach khach hang + xoa khach hàng
     @Override
     public Page<Customer> findAllCustomer(Pageable pageable) {
         return customerRepository.findAllCustomer(pageable);
@@ -26,6 +25,22 @@ public class CustomerService implements ICustomerService {
     @Override
     public Page<Customer> searchFullDate(String datestart, String enddate, String code, String phone, String id_card, Pageable page) {
         return customerRepository.searchfullDate(datestart, enddate, code,phone,id_card ,page);
+    }
+
+
+    @Override
+    public Page<Customer> searchEndDate(String date, String code, String phone, String id_card, Pageable page) {
+        return customerRepository.searchEndDate(date,code,phone,id_card,page);
+    }
+
+    @Override
+    public Page<Customer> searchStartDate(String date, String code, String phone, String id_card,Pageable page) {
+        return customerRepository.searchStartDate(date,code,phone, id_card,page);
+    }
+
+    @Override
+    public Page<Customer> searchCustomerNoDate(String code, String phone, String id_card, Pageable page) {
+        return customerRepository.searchCustomerNoDate(code,phone,id_card,page);
     }
 
 
@@ -58,10 +73,16 @@ public class CustomerService implements ICustomerService {
 
     @Override
     public void updateCustomer(CustomerDtoCheck customerDtoCheck) {
-        customerRepository.updateFlight(customerDtoCheck.getCode(), customerDtoCheck.getName(), customerDtoCheck.getBirthday(),
+        customerRepository.updateCustomer(customerDtoCheck.getName(), customerDtoCheck.getBirthday(),
                 customerDtoCheck.getIdCard(),customerDtoCheck.getEmail(), customerDtoCheck.getPhone(),
                 customerDtoCheck.getAddress(), customerDtoCheck.getGender(), true, customerDtoCheck.getWard(),
                 customerDtoCheck.getId());
     }
+
+    @Override
+    public Customer save(Customer customer) {
+         return customerRepository.save(customer);
+    }
+
 
 }

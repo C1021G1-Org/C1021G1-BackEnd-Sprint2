@@ -11,8 +11,11 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
-
 public class EmployeeDtoCheck implements Validator {
+
+    @Autowired
+    IEmployeeService iEmployeeService;
+
     private static final String REGEX_NAME = "^([a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+(\\s[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+)*){6,40}$";
     private static final String REGEX_ADDRESS = "^([0-9a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+(\\s[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+)*){4,40}$";
     private Long id;
@@ -160,6 +163,15 @@ public class EmployeeDtoCheck implements Validator {
             if(betweenDate<18){
                 errors.rejectValue("birthday","","Nhân viên phải lớn hơn 18 tuổi.");
             }
+        }
+        if (iEmployeeService.findByEmailNot(employeeDto.getId(), employeeDto.getEmail()) > 0) {
+            errors.rejectValue("email","","Email đã tồn tại.");
+        }
+        if (iEmployeeService.findByCodeNot(employeeDto.getId(), employeeDto.getCode()) > 0) {
+            errors.rejectValue("code","","Mã nhân viên đã tồn tại.");
+        }
+        if (iEmployeeService.findByPhoneNot(employeeDto.getId(), employeeDto.getPhone()) > 0) {
+            errors.rejectValue("phone","","Số điện thoại đã tồn tại.");
         }
     }
 }
