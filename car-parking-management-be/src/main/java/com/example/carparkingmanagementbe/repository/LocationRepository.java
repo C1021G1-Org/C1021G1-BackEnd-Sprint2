@@ -129,8 +129,6 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     Page<Location> getAllLocation(Pageable pageable);
 
 
-
-
     //datNVN code update
     @Modifying
     @Query(value = "UPDATE location " +

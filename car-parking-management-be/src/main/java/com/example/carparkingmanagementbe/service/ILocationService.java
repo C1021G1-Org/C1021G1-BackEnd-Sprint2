@@ -38,4 +38,6 @@ public interface ILocationService {
     Page<Location> searchLocationCode(String code, Pageable pageable);
 
     Page<Location> findAllLocation(Pageable pageable);
+
+
 }

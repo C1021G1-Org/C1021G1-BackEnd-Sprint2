@@ -1,10 +1,12 @@
 package com.example.carparkingmanagementbe.controller;
 import com.example.carparkingmanagementbe.dto.LocationDto;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
+import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.model.Floor;
 
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
 import com.example.carparkingmanagementbe.model.Location;
+import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.service.IFloorsService;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import com.example.carparkingmanagementbe.service.Impl.AllowedCarParkingService;
@@ -20,10 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
@@ -38,6 +37,9 @@ public class LocationController {
 
     @Autowired
     private IFloorsService floorsService;
+
+    @Autowired
+    private ICarService iCarService;
 
     /*TuanPDCoding*/
     @GetMapping("/{id}")
@@ -188,6 +190,16 @@ public class LocationController {
             }
             return new ResponseEntity<>(locationPage, HttpStatus.OK);
         }
+    //dat code task tim car
+        @GetMapping("/carEmailCustomer")
+        public ResponseEntity<List<Car>> getListCarByEmail(@RequestParam(defaultValue = "", required = false) String email) {
+            List<Car> carList = iCarService.getListCarByEmail(email);
+            if (carList.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(carList, HttpStatus.OK);
+        }
+
     }
 
 

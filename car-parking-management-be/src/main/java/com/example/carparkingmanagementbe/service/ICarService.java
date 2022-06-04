@@ -11,10 +11,7 @@ public interface ICarService {
 
     List<Car> selectCar(Long id);
 
-
     void createCar(CarDto carDto);
-
-
 
     List<Car> findAll();
 
@@ -23,5 +20,7 @@ public interface ICarService {
     Integer findByCarPlate(String carPlate);
 
     List<Car> findCarByIdCustomer(Long id);
+
+    List<Car> getListCarByEmail(String email);
 
 }
