@@ -1,6 +1,9 @@
 package com.example.carparkingmanagementbe.controller;
 
-;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.carparkingmanagementbe.dto.LocationList;
 import com.example.carparkingmanagementbe.model.Floor;
 import com.example.carparkingmanagementbe.service.IFloorsService;
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/floor")
 public class FloorController {
+
     @Autowired
     private IFloorsService iFloorsService;
 
@@ -31,5 +36,6 @@ public class FloorController {
         }
         return new ResponseEntity<>(floorList, HttpStatus.OK);
     }
+
 
 }
