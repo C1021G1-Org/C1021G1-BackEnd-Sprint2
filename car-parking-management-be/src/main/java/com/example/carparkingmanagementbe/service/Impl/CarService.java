@@ -27,6 +27,12 @@ public class CarService implements ICarService {
     public List<Car> findCarByIdCustomer(Long id) {
         return carRepository.selectCustomerAndCar(id);
     }
+
+    @Override
+    public List<Car> getListCarByEmail(String email) {
+        return carRepository.getListCarByEmail(email);
+    }
+
     @Override
     public void createCar(CarDto carDto) {
         carRepository.createCar(carDto.getCode(), carDto.getName(), carDto.getCarPlate(), carDto.getCarCompany(),

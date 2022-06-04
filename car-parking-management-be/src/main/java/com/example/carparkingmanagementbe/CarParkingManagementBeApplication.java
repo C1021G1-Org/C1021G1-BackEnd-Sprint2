@@ -10,9 +10,6 @@ public class CarParkingManagementBeApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(CarParkingManagementBeApplication.class, args);
-//        String str = "hello";
-//        System.out.println(str);
-
     }
 
 }
