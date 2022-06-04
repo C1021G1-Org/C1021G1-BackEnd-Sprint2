@@ -31,4 +31,8 @@ public class Ward {
     @JsonBackReference
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ward")
     private Set<Employee> employeeSet;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

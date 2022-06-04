@@ -1,11 +1,13 @@
 package com.example.carparkingmanagementbe.repository;
-
+import com.example.carparkingmanagementbe.dto.CarPlateDto;
+import com.example.carparkingmanagementbe.dto.CarTicketDto;
 import com.example.carparkingmanagementbe.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.carparkingmanagementbe.model.Car;
 import org.springframework.data.jpa.repository.Modifying;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -103,4 +105,30 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "where customer.email = ?;",nativeQuery = true)
     List<Car> getListCarByEmail(String email);
 
+    // SonDCM tim xe modal
+    @Query(value = "SELECT c.car_plate carPlate,cs.name customerName,cs.id_card idCard " +
+            "FROM car AS c " +
+            "   JOIN customer AS cs " +
+            "       ON c.id_customer = cs.id " +
+            "WHERE cs.name like %:name% OR  cs.phone like %:phone% OR c.car_plate like %:plate%", nativeQuery = true)
+    List<CarPlateDto> findCarModal(@Param("name") String name, @Param("phone") String phone, @Param("plate") String plate);
+   // SonDCM chon xe
+    @Query(value = "select c.car_plate carPlate," +
+            "c.name carName," +
+            "cs.name customerName," +
+            "t.id_ticket_type idTicketType," +
+            "c.car_company carCompany," +
+            "cs.phone customerPhone," +
+            "c.start_date startDate," +
+            "c.end_date endDate," +
+            "l.id_floor idFloor," +
+            "l.code code," +
+            "t.img_car_in imgCarIn," +
+            "t.img_car_out imgCarOut" +
+            " from car as c" +
+            " join ticket as t on c.id = t.id_car " +
+            " join location as l on t.id_location = l.id " +
+            " join customer as cs on cs.id = c.id_customer " +
+            " where car_plate = ?1", nativeQuery = true)
+    List<CarTicketDto> chooseCar( String plate);
 }

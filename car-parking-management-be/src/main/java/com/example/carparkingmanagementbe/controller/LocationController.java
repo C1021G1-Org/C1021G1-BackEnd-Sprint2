@@ -1,4 +1,5 @@
 package com.example.carparkingmanagementbe.controller;
+
 import com.example.carparkingmanagementbe.dto.LocationDto;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Car;
@@ -38,8 +39,10 @@ public class LocationController {
     @Autowired
     private IFloorsService floorsService;
 
+
     @Autowired
     private ICarService iCarService;
+
 
     /*TuanPDCoding*/
     @GetMapping("/{id}")
@@ -107,37 +110,39 @@ public class LocationController {
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
 
-            if (locationPage.getTotalPages() <= page) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            if (locationPage.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            return new ResponseEntity<>(locationPage, HttpStatus.OK);
+        if(locationPage.getTotalPages()<=page){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-
-        // dat code
-        @GetMapping("/map-parking")
-        public ResponseEntity<Page<Location>> getAllLocation ( @RequestParam(defaultValue = "0") int page){
-            Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 84));
-            if (getAllLocation.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(getAllLocation, HttpStatus.OK);
+        if (locationPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(locationPage, HttpStatus.OK);
+    }
 
 
 
-        /*DatNVNCoding*/
-        @GetMapping("/listMapParking")
-        public ResponseEntity<Page<Location>> listAllLocation (Pageable pageable){
-            Page<Location> location = iLocationService.findAllLocation(pageable);
-            if (location == null) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(location, HttpStatus.OK);
+    // dat code
+    @GetMapping("/map-parking")
+    public ResponseEntity<Page<Location>> getAllLocation ( @RequestParam(defaultValue = "0") int page){
+        Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 84));
+        if (getAllLocation.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(getAllLocation, HttpStatus.OK);
+    }
+
+
+
+    /*DatNVNCoding*/
+    @GetMapping("/listMapParking")
+    public ResponseEntity<Page<Location>> listAllLocation(Pageable pageable) {
+        Page<Location> location = iLocationService.findAllLocation(pageable);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(location, HttpStatus.OK);
+    }
+
 
         // dat code update
         @DeleteMapping("/update-map-parking/{id}")
@@ -199,8 +204,5 @@ public class LocationController {
             }
             return new ResponseEntity<>(carList, HttpStatus.OK);
         }
-    }
-
-
-
+}
 
