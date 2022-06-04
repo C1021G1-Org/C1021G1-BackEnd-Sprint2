@@ -25,7 +25,4 @@ public class Province {
     @OneToMany(mappedBy = "province")
     private Set<District> districtSet;
 
-//    @JsonBackReference
-//    @OneToMany(mappedBy = "province")
-//    private Set<Ward> wardSet;
 }

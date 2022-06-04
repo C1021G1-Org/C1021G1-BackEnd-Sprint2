@@ -48,6 +48,15 @@ public class CarController {
         return errors;
     }
 
+    @PostMapping("/create-customer-null")
+    public ResponseEntity<?> createCarCustomerNull(@Valid @RequestBody CarDto carDto) {
+        int code = (int) Math.floor((Math.random()*899) + 100);
+        String codeRandom = String.valueOf(code);
+        carDto.setCode("XE-" + codeRandom);
+        carService.createCarCustomerNull(carDto);
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+
     @GetMapping("/list")
     public ResponseEntity<List<Car>> getAll() {
         if (carService.findAll().isEmpty()) {

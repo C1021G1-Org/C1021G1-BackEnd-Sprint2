@@ -14,10 +14,18 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     //TrongHD thêm mới xe
     @Transactional
     @Modifying
+    @Query(value = "INSERT INTO Car(code,name,car_plate,car_company,id_car_type,del_flag)" +
+            " VALUES(?1,?2,?3,?4,?5,?6) ", nativeQuery = true)
+    void createCarCustomerNull(String code, String name, String carPlate, String carCompany,
+                      Long idCarType, Boolean delFlag);
+
+    //TrongHD thêm mới xe
+    @Transactional
+    @Modifying
     @Query(value = "INSERT INTO Car(code,name,car_plate,car_company,id_customer,id_car_type,del_flag)" +
             " VALUES(?1,?2,?3,?4,?5,?6, ?7) ", nativeQuery = true)
     void createCar(String code, String name, String carPlate, String carCompany,
-                      Long idCustomer, Long idCarType, Boolean delFlag);
+                   Long idCustomer, Long idCarType, Boolean delFlag);
 
     //    tronghd lấy giá trị validate trùng nhau
     @Query(value = "select count(code) from car where code = ?", nativeQuery = true)

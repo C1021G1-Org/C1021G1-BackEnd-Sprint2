@@ -30,6 +30,12 @@ public class CarService implements ICarService {
     }
 
     @Override
+    public void createCarCustomerNull(CarDto carDto) {
+        carRepository.createCarCustomerNull(carDto.getCode(), carDto.getName(), carDto.getCarPlate(), carDto.getCarCompany(),
+                 carDto.getCarType(), true);
+    }
+
+    @Override
     public List<Car> findAll() {
         return carRepository.findAll();
     }

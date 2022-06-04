@@ -14,6 +14,9 @@ public interface ICarService {
 
     void createCar(CarDto carDto);
 
+    void createCarCustomerNull(CarDto carDto);
+
+
     List<Car> findAll();
 
     Integer findByCodeCar(String code);
