@@ -102,9 +102,8 @@ public class LocationService implements ILocationService {
     @Override
     public void updateColorLocation(Long id) {
         locationRepository.updateIsEmpty(id);
-    public Page<Location> searchLocationCode(String code, Pageable pageable) {
-        return locationRepository.searchLocationCode(code, pageable);
     }
+
     public Location findByIdLocation(Long id) {
         return locationRepository.findByIdLocation(id);
     }
@@ -113,9 +112,6 @@ public class LocationService implements ILocationService {
     @Override
     public Page<Location> searchLocationCode(String code, Pageable pageable) {
         return locationRepository.searchLocationCode(code, pageable);
-    public void updateColorLocation(Long id) {
-        locationRepository.updateIsEmpty(id);
-
     }
 
     @Override
@@ -127,7 +123,6 @@ public class LocationService implements ILocationService {
     public Location findByTicket(Long id) {
         return locationRepository.findByTicket(id);
     }
-
 
 }
 

@@ -51,12 +51,7 @@ public interface ILocationService {
 
     //DatNVN search
     Page<Location> searchLocationCode(String code, Pageable pageable);
-
-
-    Page<Location> findAllLocation(Pageable pageable);
-
-
-
+    
     //DatNVN code tim id
     Location findByIdLocation(Long id);
 
@@ -64,4 +59,5 @@ public interface ILocationService {
     Page<Location> findAllLocation(Pageable pageable);
 
 
+    Location findByTicket(Long idLocation);
 }

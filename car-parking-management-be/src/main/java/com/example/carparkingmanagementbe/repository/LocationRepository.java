@@ -61,24 +61,24 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             "FROM location WHERE location.id = ? " +
             "AND del_flag = 1 ", nativeQuery = true)
     Location findLocationById(Long id);
-
-    //datNVN code tim id
-    @Query(value = "SELECT " +
-            "location.id, " +
-            "location.code, " +
-            "location.del_flag, " +
-            "location.description, " +
-            "location.height, " +
-            "location.is_empty, " +
-            "location.length, " +
-            "location.number, " +
-            "location.width, " +
-            "location.id_floor " +
-            "FROM location " +
-            "WHERE location.id = ? " +
-            "AND location.is_empty = 0 ",
-            nativeQuery = true)
-    Location findByIdLocation(Long id);
+//
+//    //datNVN code tim id
+//    @Query(value = "SELECT " +
+//            "location.id, " +
+//            "location.code, " +
+//            "location.del_flag, " +
+//            "location.description, " +
+//            "location.height, " +
+//            "location.is_empty, " +
+//            "location.length, " +
+//            "location.number, " +
+//            "location.width, " +
+//            "location.id_floor " +
+//            "FROM location " +
+//            "WHERE location.id = ? " +
+//            "AND location.is_empty = 0 ",
+//            nativeQuery = true)
+//    Location findByIdLocation(Long id);
     /*TuanPDCoding*/
     @Modifying
     @Query(value = "UPDATE location SET\n" +
@@ -148,26 +148,26 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             nativeQuery = true)
     void updateIsEmpty(Long id);
 
-    @Transactional
-    @Query(value = "SELECT * " +
-            "FROM location " +
-            "WHERE location.code " +
-            "LIKE :code " +
-            "AND location.del_flag = 1",
-            nativeQuery = true,
-            countQuery = "SELECT COUNT(*) FROM location WHERE location.del_flag = 1")
-    Page<Location> searchLocationCode(@Param("code") String code, Pageable pageable);
+//    @Transactional
+//    @Query(value = "SELECT * " +
+//            "FROM location " +
+//            "WHERE location.code " +
+//            "LIKE :code " +
+//            "AND location.del_flag = 1",
+//            nativeQuery = true,
+//            countQuery = "SELECT COUNT(*) FROM location WHERE location.del_flag = 1")
+//    Page<Location> searchLocationCode(@Param("code") String code, Pageable pageable);
 
 
 
 
-    //datNVN code updatee
-    @Modifying
-    @Query(value = "UPDATE location " +
-            "SET is_empty = 1 " +
-            "WHERE id = ? ",
-            nativeQuery = true)
-    void updateIsEmpty(Long id);
+//    //datNVN code updatee
+//    @Modifying
+//    @Query(value = "UPDATE location " +
+//            "SET is_empty = 1 " +
+//            "WHERE id = ? ",
+//            nativeQuery = true)
+//    void updateIsEmpty(Long id);
 
     //datNVN code tim id
     @Query(value = "SELECT " +
