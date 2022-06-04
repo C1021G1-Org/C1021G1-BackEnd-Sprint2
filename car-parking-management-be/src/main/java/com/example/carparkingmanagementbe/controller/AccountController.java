@@ -91,14 +91,10 @@ public class AccountController {
         int code = (int) Math.floor((Math.random() * 899) + 100);
         String codeRandom = String.valueOf(code);
         customer.setCode("KH-" + codeRandom);
-
-        System.out.println(customer.getCode());
-
         customer.setIdCard(signForm.getIdCard());
         customer.setIdAccount(account.getId());
-
-        System.out.println(account.getId());
         customer.setWard(signForm.getIdWard());
+        System.out.println(signForm.getIdWard());
         customerService.signUpCustomer(customer);
 
         return new ResponseEntity<>(account, HttpStatus.CREATED);
