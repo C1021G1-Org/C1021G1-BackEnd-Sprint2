@@ -199,7 +199,6 @@ public class LocationController {
             }
             return new ResponseEntity<>(carList, HttpStatus.OK);
         }
-
     }
 
 
