@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
@@ -32,11 +33,20 @@ public class EmployeeService implements IEmployeeService {
         employeeRepository.deleteEmployee(id);
     }
 
-
     @Override
-    public Page<Employee> findEmployeeByElemetContaining(String fromDate,String toDate, String name, String code, String address, Pageable pageable) {
-        return employeeRepository.findEmployeeByElemetContaining(fromDate,toDate,name,code,address,pageable);
+    public Page<Employee> findEmployeeByElemetContaining(String fromDate, String toDate, String name, String code, String address, Pageable pageable) {
+        Long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateFormat = simpleDateFormat.format(date);
+        if (toDate.length() == 0) {
+            toDate = dateFormat;
+            System.out.println(toDate);
+        }
+        return employeeRepository.findEmployeeByElemetContaining(fromDate, toDate, name, code, address, pageable);
     }
+
+
 
 
     @Override
