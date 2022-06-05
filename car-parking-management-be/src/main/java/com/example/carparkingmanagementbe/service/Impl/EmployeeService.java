@@ -2,6 +2,7 @@ package com.example.carparkingmanagementbe.service.Impl;
 
 import com.example.carparkingmanagementbe.dto.EmployeeDto;
 import com.example.carparkingmanagementbe.model.Employee;
+import com.example.carparkingmanagementbe.model.Position;
 import com.example.carparkingmanagementbe.repository.EmployeeRepository;
 import com.example.carparkingmanagementbe.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,4 +79,8 @@ public class EmployeeService implements IEmployeeService {
         return employeeRepository.findByPhoneNot(id, phone);
     }
 
+    @Override
+    public Integer findByCodeNot(Long id, String code) {
+        return employeeRepository.findByCodeNot(id, code);
+    }
 }

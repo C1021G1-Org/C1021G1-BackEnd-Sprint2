@@ -1,48 +1,59 @@
 package com.example.carparkingmanagementbe.dto;
-
-import com.example.carparkingmanagementbe.model.Ward;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-
 import javax.validation.constraints.*;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 
 public class CustomerDto implements Validator {
     private static final String REGEX_NAME = "^[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+(\\s[a-zA-ZàáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđÀÁẠẢÃÂẦẤẬẨẪĂẰẮẶẲẴÈÉẸẺẼÊỀẾỆỂỄÌÍỊỈĨÒÓỌỎÕÔỒỐỘỔỖƠỜỚỢỞỠÙÚỤỦŨƯỪỨỰỬỮỲÝỴỶỸĐ]+)*$";
-    private static final String REGEX_PHONE = "^([0-9])*$";
-    @NotNull(message = "Trường này không thể để trống")
-    @Pattern(regexp = "((KH-|kh-)\\d{3})", message = "Mã khách hàng phải là KH-XXX")
+    private static final String REGEX_PHONE = "^(0[3|7|8|5|9])+([0-9]{8,9})$";
     private String code;
-    @Size(max = 40, message = "Tối đa 40 kí tự!")
+    private Long id;
+    @Size(min = 5,max = 40,message = "Tên phải từ 5-40 kí tự.")
     @Pattern(regexp = REGEX_NAME, message = "Vui lòng nhập đúng tên của bạn!")
     @NotEmpty(message = "Trường này không thể để trống.")
+    @NotNull(message = "Trường này không thể để trống.")
     private String name;
+
     @NotBlank(message = "Trường này không thể để trống.")
     private String birthday;
+
     @Size(min = 9,max = 12, message = "Nhập tối đa 9 đến 12 số.")
     @NotBlank(message = "Vui lòng nhập CMND/CCCD")
+    @Pattern(regexp = "^[0-9]{9,12}$", message = "CMND/CCCD phải đúng quy định.")
     private String idCard;
     @Size(max = 40, message = "Tối đa 40 kí tự!")
     @NotBlank(message = "Trường này không thể để trống.")
-    @Email(message = "Phải đúng định dạng email ví dụ: abc@gmail.com")
+    @Email(message = "Phải đúng định dạng email.Ví dụ: abc@gmail.com")
     private String email;
-    @Size(min = 10,max = 13, message = "Tối đa 13 số!")
+
+    @Size(min = 9,max = 10, message = "Số điện thoại từ 9 tới 10 số.")
     @Pattern(regexp = REGEX_PHONE, message = "Vui lòng nhập đúng số điện thoại!")
     @NotBlank(message = "Trường này không thể để trống.")
     private String phone;
+    @Size(max = 40,message = "Tối đa 40 kí tự.")
     @NotBlank(message = "Trường này không thể để trống.")
     private String address;
+
     private Boolean gender;
+
     private Boolean delFlag;
+
     private Long ward;
 
     public CustomerDto() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCode() {
         return code;
@@ -131,6 +142,17 @@ public class CustomerDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        CustomerDto customerDto = (CustomerDto) target;
+        String inputBirthday = customerDto.getBirthday();
+        if (inputBirthday != null) {
+            LocalDate birthDay = LocalDate.parse(inputBirthday, formatter);
+            LocalDate current = LocalDate.now();
+            int betweenDate =  Period.between(birthDay, current).getYears();
+            if(betweenDate<18){
+                errors.rejectValue("birthday","","Khách hàng phải lớn hơn 18 tuổi.");
+            }
+        }
 
     }
 }

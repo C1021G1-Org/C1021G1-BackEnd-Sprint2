@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api/customer")
+@RequestMapping("/api/province")
 public class ProvinceController {
     @Autowired
     private IProvinceService provinceService;

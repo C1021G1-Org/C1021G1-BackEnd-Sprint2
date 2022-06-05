@@ -1,25 +1,23 @@
 package com.example.carparkingmanagementbe.controller;
-
-
-import com.example.carparkingmanagementbe.model.Customer;
-import com.example.carparkingmanagementbe.service.ICustomerService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
+import com.example.carparkingmanagementbe.dto.CarDto;
 import com.example.carparkingmanagementbe.dto.CustomerDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.service.ICarService;
-
+import com.example.carparkingmanagementbe.model.Customer;
+import com.example.carparkingmanagementbe.service.ICustomerService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import java.util.Optional;
 import com.example.carparkingmanagementbe.dto.CustomerDtoCheck;
-
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +28,7 @@ import java.util.Map;
 @CrossOrigin("*")
 @RequestMapping("/api/customer")
 public class CustomerController {
+
 
     @Autowired
    private ICustomerService customerService;
@@ -56,7 +55,19 @@ public class CustomerController {
                                                      @RequestParam(defaultValue = "",required = false) String id_card,
                                                         @RequestParam(defaultValue = "0") int page){
         Page<Customer> customerList = null;
-        customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,2));
+
+        if ("".equals(startDate) && "".equals(endDate)){
+            customerList = customerService.searchCustomerNoDate(code,phone,id_card, PageRequest.of(page,5));
+        }
+        if ("".equals(startDate) && !"".equals(endDate)){
+            customerList = customerService.searchEndDate(endDate,code,phone,id_card,PageRequest.of(page,5));
+        }
+        if (!"".equals(startDate) && "".equals(endDate)){
+            customerList = customerService.searchStartDate(startDate,code,phone,id_card,PageRequest.of(page,5));
+        }
+        if (!"".equals(startDate) && !"".equals(endDate)){
+            customerList = customerService.searchFullDate(startDate,endDate,code,phone,id_card, PageRequest.of(page,5));
+        }
 
         if (customerList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -64,6 +75,15 @@ public class CustomerController {
             return new ResponseEntity<>(customerList,HttpStatus.OK);
         }
 
+    }
+
+    @GetMapping("/not-pagination")
+    public ResponseEntity<Page<Customer>> getAllCustomerNotPagination(){
+        Page<Customer> customers = this.customerService.findAllCustomer(Pageable.unpaged());
+        if (customers.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 
     //ThangDBX delete customer
@@ -79,10 +99,21 @@ public class CustomerController {
 
     }
 
+    //ThangDBX tim customer theo ID
+    @GetMapping("find/{id}")
+    public ResponseEntity<?> findCustomerByIdToDelte(@PathVariable("id") Long id){
+        Optional<Customer> customer = customerService.findCustomerById(id);
+        if (!customer.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(customer ,HttpStatus.OK);
+        }
+    }
+
 
 //    Bảo thêm mới
     @PostMapping("/create")
-    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto){
+    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto, @Valid @RequestBody CarDto carDto, BindingResult bindingResult){
         char[] charArray = customerDto.getName().toCharArray();
         boolean foundSpace = true;
         for (int i = 0; i < charArray.length; i++) {
@@ -95,15 +126,35 @@ public class CustomerController {
                 foundSpace = true;
             }
         }
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            response.put("error", errorMap);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
         customerDto.setName(String.valueOf(charArray));
-        customerService.createCustomer(customerDto);
+        int code = (int) Math.floor((Math.random()*899) + 100);
+        String codeRandom = String.valueOf(code);
+        customerDto.setCode("KH-" + codeRandom);
+//        customerService.createCustomer(customerDto);
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDto,customer);
+        customerService.save(customer);
+        carDto.setCustomer(customer.getId());
+        carService.createCar(carDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
 
     //TrongHD lấy thông tin khách hàng
     @GetMapping("/{id}")
     public ResponseEntity<List<Car>> findByIdCustomer(@PathVariable Long id) {
-        List<Car> carList = carService.findByIdCustomer(id);
+        List<Car> carList = carService.findCarByIdCustomer(id);
         if (carList == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -112,11 +163,26 @@ public class CustomerController {
 
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<?> updateFlight(@PathVariable Long id,@Valid @RequestBody CustomerDtoCheck customerDtoCheck) {
+    public ResponseEntity<?> updateFlight(@PathVariable Long id, @Valid @RequestBody CustomerDtoCheck customerDtoCheck,
+                                          BindingResult bindingResult) {
         customerDtoCheck.setId(id);
+        new CustomerDtoCheck().validate(customerDtoCheck, bindingResult);
+        if (bindingResult.hasFieldErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+            Map<String, Object> response = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                errorMap.put(error.getField(), error.getDefaultMessage());
+            });
+            response.put("error", errorMap);
+            return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+        }
         customerService.updateCustomer(customerDtoCheck);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
+
+
+
+//    Validate thêm mới
 
     // tronghd validate dữ liệu thêm mới
 
@@ -135,12 +201,12 @@ public class CustomerController {
 
 //    Bảo hiển thị
     @GetMapping("/detail/{id}")
-    public ResponseEntity<List<Car>> findCustomerById(@PathVariable Long id) {
-        List<Car> carList = carService.selectCar(id);
-        if (carList == null) {
+    public ResponseEntity<Optional<Customer>> findCustomerWithId(@PathVariable Long id) {
+        Optional<Customer> customerOptional = customerService.findCustomerById(id);
+        if (customerOptional == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(carList, HttpStatus.OK);
+        return new ResponseEntity<>(customerOptional, HttpStatus.OK);
     }
 
 }

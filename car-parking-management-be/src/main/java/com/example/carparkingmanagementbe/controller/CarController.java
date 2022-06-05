@@ -1,7 +1,7 @@
 package com.example.carparkingmanagementbe.controller;
-
 import com.example.carparkingmanagementbe.dto.CarDto;
 import com.example.carparkingmanagementbe.model.Car;
+import com.example.carparkingmanagementbe.model.CarType;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.service.ICarTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +18,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/car")
 public class CarController {
-
     @Autowired
     private ICarService carService;
 
@@ -53,5 +51,25 @@ public class CarController {
         } else {
             return new ResponseEntity<>(carService.findAll(), HttpStatus.OK);
         }
+    }
+
+    @GetMapping("/carType-list")
+    public ResponseEntity<List<CarType>> getAllCarType() {
+        if (carTypeService.findAll().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(carTypeService.findAll(), HttpStatus.OK);
+        }
+    }
+
+//    Bảo hiển thị xe theo id customer
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<List<Car>> findCarByCustomerId(@PathVariable Long id) {
+        List<Car> carList = carService.selectCar(id);
+        if (carList == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(carList, HttpStatus.OK);
+
     }
 }

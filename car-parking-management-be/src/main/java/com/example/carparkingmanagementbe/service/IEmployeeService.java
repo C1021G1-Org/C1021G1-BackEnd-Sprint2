@@ -1,11 +1,14 @@
 package com.example.carparkingmanagementbe.service;
 
 import com.example.carparkingmanagementbe.model.Employee;
+import com.example.carparkingmanagementbe.model.Position;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.example.carparkingmanagementbe.dto.EmployeeDto;
 
 import java.util.Date;
+
+import java.util.List;
 import java.util.Optional;
 
 public interface IEmployeeService {
@@ -33,5 +36,5 @@ public interface IEmployeeService {
 
     Integer findByPhoneNot(Long id, String phone);
 
-
+    Integer findByCodeNot(Long id, String phocodene);
 }
