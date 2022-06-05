@@ -80,6 +80,31 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "on car.id_customer = customer.id " +
             "where customer.id = ?;",nativeQuery = true)
     List<Car> findByIdCustomer(Long id);
+
+    @Query(value = "select car.id," +
+            "car.car_company," +
+            "car.car_plate," +
+            "car.`code`," +
+            "car.`name`," +
+            "car.id_car_type," +
+            "car.id_customer," +
+            "car.id_employee," +
+            "customer.address," +
+            "customer.account_id," +
+            "customer.birthday," +
+            "customer.email," +
+            "customer.gender," +
+            "customer.id_card," +
+            "customer.`name`," +
+            "customer.phone," +
+            "customer.del_flag," +
+            "customer.id_ward " +
+            "from car " +
+            "join customer " +
+            "on car.id_customer = customer.id " +
+            "where customer.email = ?;",nativeQuery = true)
+    List<Car> getListCarByEmail(String email);
+
     // SonDCM tim xe modal
     @Query(value = "SELECT c.car_plate carPlate,cs.name customerName,cs.id_card idCard " +
             "FROM car AS c " +
