@@ -1,10 +1,20 @@
 package com.example.carparkingmanagementbe.service.Impl;
 
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
+import com.example.carparkingmanagementbe.dto.LocationList;
+
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.repository.LocationRepository;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+
 import org.springframework.stereotype.Service;
 import com.example.carparkingmanagementbe.dto.LocationList;
 import org.springframework.data.domain.*;
@@ -12,12 +22,26 @@ import org.springframework.data.domain.*;
 import java.util.List;
 
 
+
 @Service
 public class LocationService implements ILocationService {
 
 
+
     @Autowired
     private LocationRepository locationRepository;
+
+
+
+   @Override
+    public List<Location> getListLocation(Long idFloor) {
+        return locationRepository.getListLocation(idFloor);
+    }
+
+    @Override
+    public List<Location> findAll() {
+        return locationRepository.findAll();
+    }
 
 
     //Trong tim id detail
@@ -71,9 +95,17 @@ public class LocationService implements ILocationService {
     }
 
     //dat code
+
+
+
+    //Datnvn
     @Override
     public void updateColorLocation(Long id) {
         locationRepository.updateIsEmpty(id);
+    }
+
+    public Location findByIdLocation(Long id) {
+        return locationRepository.findByIdLocation(id);
     }
 
     //Datnvn
@@ -87,6 +119,10 @@ public class LocationService implements ILocationService {
         return locationRepository.findAll(pageable);
     }
 
+    @Override
+    public Location findByTicket(Long id) {
+        return locationRepository.findByTicket(id);
+    }
 
 }
 

@@ -1,6 +1,5 @@
 package com.example.carparkingmanagementbe.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,6 +29,7 @@ public class Ticket {
     @Column(columnDefinition = "DATETIME")
     private String timeOut;
     private Boolean delFlag;
+    private String userEmail;
     private Boolean isDoing;
 
     private Double sumPrice;
