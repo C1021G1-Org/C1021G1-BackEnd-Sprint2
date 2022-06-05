@@ -58,6 +58,6 @@ public interface ILocationService {
 
     Page<Location> findAllLocation(Pageable pageable);
 
-
     Location findByTicket(Long idLocation);
+
 }

@@ -140,6 +140,7 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
             nativeQuery = true, countQuery = "SELECT COUNT(*) FROM location WHERE location.del_flag = 1")
     Page<Location> getAllLocation(Pageable pageable);
 
+
     //datNVN code update
     @Modifying
     @Query(value = "UPDATE location " +
