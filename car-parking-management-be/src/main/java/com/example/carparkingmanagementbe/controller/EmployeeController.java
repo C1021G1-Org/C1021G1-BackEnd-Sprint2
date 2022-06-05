@@ -17,6 +17,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Optional;
 @RequestMapping("/api/employee")
 public class EmployeeController {
 
-
+    //thuanpd
     @Autowired
     private IEmployeeService iEmployeeService;
 
@@ -53,6 +54,20 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeList, HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<Employee>> findEmployeeByElemetContaining(@RequestParam(defaultValue = "") String fromBirthday,
+                                                                         @RequestParam(defaultValue = "") String toBirthday,
+                                                                         @RequestParam(defaultValue = "") String name,
+                                                                         @RequestParam(defaultValue = "") String code,
+                                                                         @RequestParam(defaultValue = "") String address,
+                                                       @RequestParam(defaultValue = "0") int page) {
+        Page<Employee> employee = iEmployeeService.findEmployeeByElemetContaining(fromBirthday, toBirthday, name, code, address, PageRequest.of(page, 5));
+        if (employee.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(employee, HttpStatus.OK);
+    }
+
 
     @GetMapping("/not-pagination")
     public ResponseEntity<Page<Employee>> getAllEmployeeNotPagination() {
@@ -63,6 +78,7 @@ public class EmployeeController {
         return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 
+
 //    @GetMapping("/{id}")
 //    public ResponseEntity<Optional<Employee>> getById(@PathVariable Long id) {
 //        Optional<Employee> employeeOptional = iEmployeeService.findByEmployeeId(id);
@@ -72,6 +88,7 @@ public class EmployeeController {
 //        return new ResponseEntity<>(employeeOptional, HttpStatus.OK);
 //    }
 
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Employee> deleteEmployee(@PathVariable Long id) {
         Optional<Employee> employeeOptional = iEmployeeService.findByEmployeeId(id);
@@ -80,8 +97,8 @@ public class EmployeeController {
         }
         iEmployeeService.deleteEmployee(id);
         return new ResponseEntity<>(employeeOptional.get(), HttpStatus.OK);
-
     }
+
 
     //PhuHDQ
     @PostMapping("/create")
@@ -136,11 +153,15 @@ public class EmployeeController {
         return errors;
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Employee> findById(@PathVariable Long id) {
         Optional<Employee> employee = iEmployeeService.findEmployeeById(id);
         return employee.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+
+
 
     @PatchMapping("/update/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeDtoCheck employeeDtoCheck, BindingResult bindingResult) {

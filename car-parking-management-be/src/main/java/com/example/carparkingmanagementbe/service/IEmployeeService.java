@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.example.carparkingmanagementbe.dto.EmployeeDto;
 
+import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,9 @@ public interface IEmployeeService {
     Optional<Employee> findByEmployeeId(Long id);
   
     void deleteEmployee(Long id);
+
+    Page<Employee> findEmployeeByElemetContaining(String fromDate,String toDate, String name, String code, String address, Pageable pageable);
+
 
     //PhuHDQ
 
