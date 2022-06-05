@@ -1,8 +1,6 @@
 package com.example.carparkingmanagementbe.controller;
 
-import com.example.carparkingmanagementbe.model.Price;
-import com.example.carparkingmanagementbe.model.Statistic;
-import com.example.carparkingmanagementbe.model.SumStatistic;
+import com.example.carparkingmanagementbe.model.*;
 import com.example.carparkingmanagementbe.service.IStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -52,8 +52,20 @@ public class StatisticController {
         }
         return new ResponseEntity<>(sumStatistics,HttpStatus.OK);
     }
-    @GetMapping("/home")
+    @GetMapping("/api/minMaxYear")
     public ResponseEntity<?> home(){
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        MinMax minmaxYear;
+        MinmaxYear minmaxYear1 = new MinmaxYear();
+        try{
+            minmaxYear = statisticService.getMinMaxYear();
+            minmaxYear1.setMin(minmaxYear.getMin());
+            minmaxYear1.setMax(minmaxYear.getMax());
+        }catch (Exception e){
+            minmaxYear1.setMin(2020);
+            minmaxYear1.setMax(2022);
+        }
+        System.out.println(minmaxYear1.getMax());
+        System.out.println(minmaxYear1.getMin());
+        return new ResponseEntity<>(minmaxYear1,HttpStatus.OK);
     }
 }

@@ -1,8 +1,6 @@
 package com.example.carparkingmanagementbe.repository;
 
-import com.example.carparkingmanagementbe.model.Price;
-import com.example.carparkingmanagementbe.model.Statistic;
-import com.example.carparkingmanagementbe.model.Ticket;
+import com.example.carparkingmanagementbe.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,4 +12,6 @@ public interface IStatisticRepository extends JpaRepository<Ticket,Long> {
     List<Price> statisticList(int year);
     @Query(value = "SELECT month(start_date) as `time`, sum(sum_price) as sumPrice  from ticket WHERE year(start_date)= :year and month(start_date) between :startMonth and :endMonth GROUP BY month(start_date) order by `time` ASC;",nativeQuery = true)
     List<Price> statisticListByQuarter(@Param("year") int year,@Param("startMonth") int startMonth,@Param("endMonth") int endMonth);
+    @Query(value = "select max(year(start_date)) as max, min(year(start_date)) as min from ticket;",nativeQuery = true)
+    MinMax getMinMaxYear();
 }

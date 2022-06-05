@@ -1,7 +1,7 @@
 package com.example.carparkingmanagementbe.service.Impl;
 
+import com.example.carparkingmanagementbe.model.MinMax;
 import com.example.carparkingmanagementbe.model.Price;
-import com.example.carparkingmanagementbe.model.Ticket;
 import com.example.carparkingmanagementbe.repository.IStatisticRepository;
 import com.example.carparkingmanagementbe.service.IStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +21,10 @@ public class StatisticService implements IStatisticService {
     @Override
     public List<Price> getListStatisticByQuarter(int year,int start,int end) {
         return statisticRepository.statisticListByQuarter(year, start, end);
+    }
+
+    @Override
+    public MinMax getMinMaxYear() {
+        return statisticRepository.getMinMaxYear();
     }
 }
