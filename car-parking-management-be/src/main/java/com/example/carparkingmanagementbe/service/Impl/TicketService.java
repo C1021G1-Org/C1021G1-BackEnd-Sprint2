@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketService implements ITicketService {
 
-    // tam begin
     @Autowired
     private TicketRepository ticketRepository;
 
@@ -35,13 +34,20 @@ public class TicketService implements ITicketService {
         return ticketRepository.getTicketById(idTicket);
     }
 
+    @Override
+    public void updateUserEmail(String userEmail, Long idTicket) {
+        ticketRepository.updateUserEmail(userEmail,idTicket);
+    }
 
-    // tam end
+    @Override
+    public Ticket getTicketAction(Long idTicket, String userEmail) {
+        return ticketRepository.getTicketAction(idTicket,userEmail);
+    }
 
-
-
-    //    LongLT
-
+    @Override
+    public void updateNullUser(Long idTicket) {
+        ticketRepository.updateNullUser(idTicket);
+    }
 
     @Override
     public Ticket findTicketById(Long id) {
@@ -52,5 +58,5 @@ public class TicketService implements ITicketService {
     public void updateTicket(Long idLocation, Double sumPrice, Long idTicketType, String endDate, Long idTicket) {
         ticketRepository.updateTicket(idLocation, sumPrice, idTicketType, endDate, idTicket);
     }
-//    LongLT
+
 }

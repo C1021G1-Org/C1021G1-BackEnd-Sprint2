@@ -49,9 +49,13 @@ public interface ICustomerService {
     Optional<Customer> findCustomerById(Long id);
 
 
+
+    void signUpCustomer(CustomerDto customer);
+
     //BaoND tạo mới khách hàng
     void createCustomer(CustomerDto customerDto);
     void updateCustomer(CustomerDtoCheck customerDtoCheck);
 
     Customer save(Customer customer);
+
 }

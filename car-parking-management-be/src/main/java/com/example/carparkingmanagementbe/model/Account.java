@@ -2,7 +2,6 @@ package com.example.carparkingmanagementbe.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,7 +16,8 @@ public class Account {
     private String email;
     private String password;
     private boolean isEnabled;
-    @ManyToMany(fetch = FetchType.LAZY)
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "account_role",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
@@ -29,7 +29,9 @@ public class Account {
     @JsonBackReference
     private Customer customer;
 
+
     public Account() {
+        // default constructor
     }
 
     public Long getId() {
