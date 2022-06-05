@@ -24,7 +24,7 @@ public class WardController {
         }
         return new ResponseEntity<>(wardList,HttpStatus.OK);
     }
-  
+
     //PhuHDQ
     @GetMapping("/ward/{id}")
     public ResponseEntity<Optional<Ward>> findWardById(@PathVariable Long id) {

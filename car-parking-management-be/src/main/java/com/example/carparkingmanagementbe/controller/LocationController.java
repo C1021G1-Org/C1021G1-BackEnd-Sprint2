@@ -1,4 +1,5 @@
 package com.example.carparkingmanagementbe.controller;
+
 import com.example.carparkingmanagementbe.dto.LocationDto;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Floor;
@@ -38,6 +39,7 @@ public class LocationController {
 
     @Autowired
     private IFloorsService floorsService;
+
     /*TuanPDCoding*/
     @GetMapping("/{id}")
     public ResponseEntity<?> findLocationById(@PathVariable Long id) {
@@ -104,7 +106,7 @@ public class LocationController {
                                                              @RequestParam(defaultValue = "0") int page) {
         Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
         if(locationPage.getTotalPages()<=page){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         if (locationPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -112,8 +114,6 @@ public class LocationController {
         return new ResponseEntity<>(locationPage, HttpStatus.OK);
     }
 
-
-    /*DatNVNCoding*/
 
     // dat code
     @GetMapping("/map-parking")
@@ -126,7 +126,6 @@ public class LocationController {
     }
 
 
-
     /*DatNVNCoding*/
     @GetMapping("/listMapParking")
     public ResponseEntity<Page<Location>> listAllLocation(Pageable pageable) {
@@ -136,6 +135,7 @@ public class LocationController {
         }
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
+
 
     // dat code update
     @DeleteMapping("/update-map-parking/{id}")
@@ -180,15 +180,12 @@ public class LocationController {
                                                            @RequestParam(defaultValue = "0") int page) {
         Page<Location> locationPage = null;
         locationPage = iLocationService.searchLocationCode(code, PageRequest.of(page, 84));
-        if (locationPage == null) {
+        if (locationPage.getTotalPages() <= page) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        if (locationPage.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(locationPage, HttpStatus.OK);
     }
-
-
 }
-
-
-
-
