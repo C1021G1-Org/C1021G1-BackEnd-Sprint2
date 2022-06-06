@@ -88,4 +88,9 @@ public interface CarRepository extends JpaRepository<Car,Long> {
 
     @Query(value = "SELECT id,car_company,car_plate,`code`,del_flag,`name`,id_car_type,id_customer,id_employee FROM car where id_customer is null;",nativeQuery = true)
     List<Car> findCarByIdCustomerNull();
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE car AS c SET c.id_customer = ? WHERE c.id_customer IS null;",nativeQuery = true)
+    void updateCarByIdCustomerNull(Long idCustomer);
 }

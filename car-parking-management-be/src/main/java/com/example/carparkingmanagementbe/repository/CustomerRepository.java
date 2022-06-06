@@ -118,6 +118,4 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     void updateCustomer(String name, String birthday, String idCard,
                       String email, String phone, String address, Boolean gender, Boolean delFlag,Long ward, Long id);
 
-
-
 }

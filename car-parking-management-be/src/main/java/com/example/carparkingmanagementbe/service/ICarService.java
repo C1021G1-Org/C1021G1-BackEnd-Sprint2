@@ -27,4 +27,5 @@ public interface ICarService {
 
     List<Car> findCarByIdCustomerNull();
 
+    void updateCarByIdCustomerNull(Long idCustomer);
 }

@@ -30,6 +30,11 @@ public class CarService implements ICarService {
     }
 
     @Override
+    public void updateCarByIdCustomerNull(Long idCustomer) {
+        carRepository.updateCarByIdCustomerNull(idCustomer);
+    }
+
+    @Override
     public void createCar(CarDto carDto) {
         carRepository.createCar(carDto.getCode(), carDto.getName(), carDto.getCarPlate(), carDto.getCarCompany(),
                 carDto.getCustomer(), carDto.getCarType(), true);
