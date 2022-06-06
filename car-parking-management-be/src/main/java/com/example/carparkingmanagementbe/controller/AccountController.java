@@ -69,7 +69,7 @@ public class AccountController {
             return new ResponseEntity<>("duplicate email", HttpStatus.BAD_REQUEST);
         }
         Ward ward = new Ward();
-        ward.setId(signForm.getIdWard());
+        ward.setId(signForm.getWard());
 
         System.out.println("sign up");
         CustomerDto customer = new CustomerDto();
@@ -93,8 +93,8 @@ public class AccountController {
         customer.setCode("KH-" + codeRandom);
         customer.setIdCard(signForm.getIdCard());
         customer.setIdAccount(account.getId());
-        customer.setWard(signForm.getIdWard());
-        System.out.println(signForm.getIdWard());
+        customer.setWard(signForm.getWard());
+        System.out.println(signForm.getWard());
         customerService.signUpCustomer(customer);
 
         return new ResponseEntity<>(account, HttpStatus.CREATED);
