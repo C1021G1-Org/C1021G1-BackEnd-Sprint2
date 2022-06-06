@@ -11,9 +11,6 @@ public class CarDto {
     private Long id;
 
     @ValidationCodeCar(message = "Mã xe đã tồn tại.")
-    @NotNull(message = "Mã xe phải bắt buộc nhập.")
-    @NotBlank(message = "Mã xe không được để trống.")
-    @Pattern(regexp = "^([XE])+([-])+([0-9]{3})$", message = "Vui lòng nhập đúng định dạng. ([XE]-XXX) trong đó X là số từ (0-9).")
     private String code;
 
     @NotNull(message = "Tên xe phải bắt buộc nhập.")
@@ -24,7 +21,7 @@ public class CarDto {
     @ValidationCarPlate(message = "Biển số xe đã tồn tại.")
     @NotNull(message = "Biển số xe phải bắt buộc nhập.")
     @NotBlank(message = "Biển số xe không được để trống.")
-    @Pattern(regexp = "^([0-9]{2})+([A-Z])+([-])+([0-9]{3})+([.])+([0-9]{2})$", message = "Vui lòng nhập đúng định dạng. VD: 43A-432.09")
+    @Pattern(regexp = "^([0-9]{2})+([A-Z])+([-])+([0-9]{3})+([0-9]{2})$", message = "Vui lòng nhập đúng định dạng. VD: 43A-43209")
     private String carPlate;
 
     @NotNull(message = "Hãng xe phải bắt buộc nhập.")
@@ -34,7 +31,6 @@ public class CarDto {
 
     private Boolean delFlag;
 
-    @NotNull(message = "Khách hàng phải bắt buộc nhập.")
     private Long customer;
 
     @NotNull(message = "Loại xe phải bắt buộc nhập.")

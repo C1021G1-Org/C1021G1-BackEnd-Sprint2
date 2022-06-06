@@ -25,6 +25,6 @@ public class District {
     @JoinColumn(name = "id_province", referencedColumnName = "id")
     private Province province;
     @JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "district")
+    @OneToMany(mappedBy = "district")
     private Set<Ward> wardSet;
 }

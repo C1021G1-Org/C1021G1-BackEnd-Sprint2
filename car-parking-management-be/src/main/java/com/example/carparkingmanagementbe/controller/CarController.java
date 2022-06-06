@@ -35,6 +35,9 @@ public class CarController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createCar(@Valid @RequestBody CarDto carDto) {
+        int code = (int) Math.floor((Math.random()*899) + 100);
+        String codeRandom = String.valueOf(code);
+        carDto.setCode("XE-" + codeRandom);
         carService.createCar(carDto);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
@@ -45,12 +48,21 @@ public class CarController {
     public Map<String, String> handleValidationExceptions(
             MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
+        ex.getBindingResult().getAllErrors().forEach(error -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
         return errors;
+    }
+
+    @PostMapping("/create-customer-null")
+    public ResponseEntity<?> createCarCustomerNull(@Valid @RequestBody CarDto carDto) {
+        int code = (int) Math.floor((Math.random()*899) + 100);
+        String codeRandom = String.valueOf(code);
+        carDto.setCode("XE-" + codeRandom);
+        carService.createCarCustomerNull(carDto);
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
     @GetMapping("/list")
@@ -96,19 +108,37 @@ public class CarController {
         }
         return new ResponseEntity<>(carList, HttpStatus.OK);
     }
-    //dat code ké
-//    @GetMapping("/getCarByEmail")
-//    public ResponseEntity<?> getCarEmail(@RequestParam(defaultValue = "", required = false) String email) {
-//        List<Car> carList = carService.findAll();
-//        for (Car car: carList) {
-//           Optional<Customer> customer = iCustomerService.findCustomerById(car.getId());
-//            if(customer.get().getEmail().equals(email)){
-//                carList.add(car);
-//            }
-//        }
-//        if (carList == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(carList, HttpStatus.OK);
-//    }
+
+//    Bảo lấy xe nếu null id_customer
+    @GetMapping("/list-car")
+    public ResponseEntity<List<Car>> findCarByIdCustomerNull(){
+        List<Car> carLists = carService.findCarByIdCustomerNull();
+        if (carLists == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(carLists,HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Car> getCarById(@PathVariable Long id){
+        Car car = carService.findCarById(id);
+        if (car == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(car,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Car> deleteCar(@PathVariable Long id) {
+        Car car = carService.findCarById(id);
+        if (car == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            carService.deleteCarById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
+    }
+
+
 }

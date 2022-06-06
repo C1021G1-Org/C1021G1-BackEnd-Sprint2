@@ -1,8 +1,10 @@
 package com.example.carparkingmanagementbe.controller;
+
 import com.example.carparkingmanagementbe.dto.LocationDto;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.model.Floor;
+
 import com.example.carparkingmanagementbe.dto.LocationDetailDto;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.service.ICarService;
@@ -19,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.util.*;
 
@@ -141,65 +144,64 @@ public class LocationController {
     }
 
 
-        // dat code update
-        @DeleteMapping("/update-map-parking/{id}")
-        public ResponseEntity<Location> updateColorLocation (@PathVariable Long id){
-            Location location = iLocationService.findLocationById(id);
-            if (location == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            iLocationService.updateColorLocation(id);
+    // dat code update
+    @DeleteMapping("/update-map-parking/{id}")
+    public ResponseEntity<Location> updateColorLocation (@PathVariable Long id){
+        Location location = iLocationService.findLocationById(id);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        iLocationService.updateColorLocation(id);
+        return new ResponseEntity<>(location, HttpStatus.OK);
+    }
+
+    // detail location parking TrongTa
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<LocationDetailDto> getId (@PathVariable Long id){
+        LocationDetailDto location = iLocationService.findById(id);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
             return new ResponseEntity<>(location, HttpStatus.OK);
         }
+    }
 
-        // detail location parking TrongTa
-        @GetMapping("/detail/{id}")
-        public ResponseEntity<LocationDetailDto> getId (@PathVariable Long id){
-            LocationDetailDto location = iLocationService.findById(id);
-            if (location == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            } else {
-                return new ResponseEntity<>(location, HttpStatus.OK);
-            }
+    //xóa location trongTa
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteNews (@PathVariable Long id){
+        Location location = iLocationService.findLocationById(id);
+        if (location == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        if (location.getIsEmpty()) {
+            Map<String, String> error = new HashMap<>();
+            error.put("isEmpty", "vi tri nay dang co nguoi dau xe khong the xoa");
+            return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        }
+        iLocationService.deleteLocationById(id);
+        return new ResponseEntity<>(location, HttpStatus.OK);
+    }
 
-        //xóa location trongTa
-        @DeleteMapping("/delete/{id}")
-        public ResponseEntity<?> deleteNews (@PathVariable Long id){
-            Location location = iLocationService.findLocationById(id);
-            if (location == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            if (location.getIsEmpty()) {
-                Map<String, String> error = new HashMap<>();
-                error.put("isEmpty", "vi tri nay dang co nguoi dau xe khong the xoa");
-                return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
-            }
-            iLocationService.deleteLocationById(id);
-            return new ResponseEntity<>(location, HttpStatus.OK);
+    @GetMapping("/searchMap")
+    public ResponseEntity<Page<Location>> searchMapParking (@RequestParam(defaultValue = "", required = false) String code,
+                                                            @RequestParam(defaultValue = "0") int page){
+        Page<Location> locationPage = null;
+        locationPage = iLocationService.searchLocationCode(code, PageRequest.of(page, 84));
+        if (locationPage.getTotalPages() <= page) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
-        @GetMapping("/searchMap")
-        public ResponseEntity<Page<Location>> searchMapParking (@RequestParam(defaultValue = "", required = false) String code,
-                                                                @RequestParam(defaultValue = "0") int page){
-            Page<Location> locationPage = null;
-            locationPage = iLocationService.searchLocationCode(code, PageRequest.of(page, 84));
-            if (locationPage.getTotalPages() <= page) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
-            if (locationPage.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(locationPage, HttpStatus.OK);
+        if (locationPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(locationPage, HttpStatus.OK);
+    }
     //dat code task tim car
-        @GetMapping("/carEmailCustomer")
-        public ResponseEntity<List<Car>> getListCarByEmail(@RequestParam(defaultValue = "", required = false) String email) {
-            List<Car> carList = iCarService.getListCarByEmail(email);
-            if (carList.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(carList, HttpStatus.OK);
+    @GetMapping("/carEmailCustomer")
+    public ResponseEntity<List<Car>> getListCarByEmail(@RequestParam(defaultValue = "", required = false) String email) {
+        List<Car> carList = iCarService.getListCarByEmail(email);
+        if (carList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        return new ResponseEntity<>(carList, HttpStatus.OK);
+    }
 }
-

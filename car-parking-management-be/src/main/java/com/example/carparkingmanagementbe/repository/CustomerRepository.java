@@ -26,7 +26,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Query(value = "select id, address, birthday, `code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
             "from customer " +
             "where id = ? " +
-            "and del_flag = 1", nativeQuery = true)
+            "and del_flag = 1;",countQuery ="select * from customer;" ,nativeQuery = true)
     Optional<Customer> findCustomerById(Long id);
 
 //    @Query(value = "select id ,address, birthday,`code`, del_flag, email, gender, id_card, `name`, phone, account_id, id_ward\n" +
@@ -121,10 +121,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Transactional
     @Modifying
     @Query(value = "UPDATE customer AS c SET c.name = ?1, c.birthday = ?2, c.id_card = ?3," +
-            "c.email = ?4, c.phone = ?5, c.address = ?6, c.gender = ?7, c.del_flag = ?8, c.id_ward = ?9 WHERE id = ?10", nativeQuery = true)
+            "c.email = ?4, c.phone = ?5, c.address = ?6, c.gender = ?7, c.del_flag = ?8, c.id_ward = ?9 WHERE c.id = ?10", nativeQuery = true)
     void updateCustomer(String name, String birthday, String idCard,
                       String email, String phone, String address, Boolean gender, Boolean delFlag,Long ward, Long id);
-
-
 
 }

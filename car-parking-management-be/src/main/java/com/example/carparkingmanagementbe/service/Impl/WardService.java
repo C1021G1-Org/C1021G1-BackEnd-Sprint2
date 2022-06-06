@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WardService implements IWardService {
@@ -25,7 +24,7 @@ public class WardService implements IWardService {
 
 
     @Override
-    public Optional<Ward> findWardById(Long id) {
-        return wardRepository.findById(id);
+    public Ward findWardById(Long id) {
+        return wardRepository.findById(id).orElse(null);
     }
 }

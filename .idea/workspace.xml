@@ -137,6 +137,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/carparkingmanagementbe/service/Impl/TicketTypeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/carparkingmanagementbe/service/Impl/TicketTypeService.java" afterDir="false" />
 
     </list>
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -147,6 +148,27 @@
       <ProjectState />
     </projectState>
   </component>
+
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/car-parking-management-be">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="car-parking-management-be" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -154,6 +176,7 @@
         <option value="Interface" />
       </list>
     </option>
+
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -195,11 +218,14 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
 
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/car-parking-management-be" />
   </component>
+  
+
   <component name="RunManager">
     <configuration name="CarParkingManagementBeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="car-parking-management-be.main" />
@@ -209,7 +235,11 @@
       </method>
     </configuration>
   </component>
+
+
+
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+
   <component name="SvnConfiguration">
     <configuration />
 
@@ -240,17 +270,37 @@
 
       <updated>1653528922265</updated>
       <workItem from="1653528964276" duration="253000" />
+
+      <workItem from="1653632916757" duration="364000" />
+      <workItem from="1653654420474" duration="67000" />
+
       <workItem from="1653875395766" duration="102000" />
 
       <updated>1654342247936</updated>
       <workItem from="1654342250713" duration="5381000" />
       <workItem from="1654391811109" duration="4036000" />
 
+
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+
+
 
   </component>
   <component name="Vcs.Log.Tabs.Properties">

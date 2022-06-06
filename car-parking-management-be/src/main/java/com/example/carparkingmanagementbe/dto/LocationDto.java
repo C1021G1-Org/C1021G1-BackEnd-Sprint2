@@ -53,4 +53,99 @@ public class LocationDto {
     @NotNull(message = "không được để trống")
     private Long id_floor;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public void setNumber(Long number) {
+        this.number = number;
+    }
+
+    public Double getLength() {
+        return length;
+    }
+
+    public void setLength(Double length) {
+        this.length = length;
+    }
+
+    public Double getWidth() {
+        return width;
+    }
+
+    public void setWidth(Double width) {
+        this.width = width;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public Boolean getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(Boolean delFlag) {
+        this.delFlag = delFlag;
+    }
+
+    public Boolean getEmpty() {
+        return isEmpty;
+    }
+
+    public void setEmpty(Boolean empty) {
+        isEmpty = empty;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Long getId_ticket() {
+        return id_ticket;
+    }
+
+    public void setId_ticket(Long id_ticket) {
+        this.id_ticket = id_ticket;
+    }
+
+    public String getId_allowedCarParkingSet() {
+        return id_allowedCarParkingSet;
+    }
+
+    public void setId_allowedCarParkingSet(String id_allowedCarParkingSet) {
+        this.id_allowedCarParkingSet = id_allowedCarParkingSet;
+    }
+
+    public Long getId_floor() {
+        return id_floor;
+    }
+
+    public void setId_floor(Long id_floor) {
+        this.id_floor = id_floor;
+    }
 }

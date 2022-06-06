@@ -1,7 +1,9 @@
 package com.example.carparkingmanagementbe.repository;
+
 import com.example.carparkingmanagementbe.dto.CarPlateDto;
 import com.example.carparkingmanagementbe.dto.CarTicketDto;
 import com.example.carparkingmanagementbe.model.Customer;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.carparkingmanagementbe.model.Car;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,10 +19,18 @@ public interface CarRepository extends JpaRepository<Car,Long> {
     //TrongHD thêm mới xe
     @Transactional
     @Modifying
+    @Query(value = "INSERT INTO Car(code,name,car_plate,car_company,id_car_type,del_flag)" +
+            " VALUES(?1,?2,?3,?4,?5,?6) ", nativeQuery = true)
+    void createCarCustomerNull(String code, String name, String carPlate, String carCompany,
+                      Long idCarType, Boolean delFlag);
+
+    //TrongHD thêm mới xe
+    @Transactional
+    @Modifying
     @Query(value = "INSERT INTO Car(code,name,car_plate,car_company,id_customer,id_car_type,del_flag)" +
             " VALUES(?1,?2,?3,?4,?5,?6, ?7) ", nativeQuery = true)
     void createCar(String code, String name, String carPlate, String carCompany,
-                      Long idCustomer, Long idCarType, Boolean delFlag);
+                   Long idCustomer, Long idCarType, Boolean delFlag);
 
     //    tronghd lấy giá trị validate trùng nhau
     @Query(value = "select count(code) from car where code = ?", nativeQuery = true)
@@ -81,6 +91,24 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "where customer.id = ?;",nativeQuery = true)
     List<Car> findByIdCustomer(Long id);
 
+    @Query(value = "SELECT id,car_company,car_plate,`code`,del_flag,`name`,id_car_type,id_customer,id_employee FROM car where id_customer is null and del_flag = 1;",nativeQuery = true)
+    List<Car> findCarByIdCustomerNull();
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE car AS c SET c.id_customer = ? WHERE c.id_customer IS null;",nativeQuery = true)
+    void updateCarByIdCustomerNull(Long idCustomer);
+
+    @Modifying
+    @Query(value = "update car set del_flag = 0 where id = ? ;", nativeQuery = true)
+    void deleteCarById(Long id);
+
+    @Query(value = "SELECT id,car_company,car_plate,`code`,del_flag,`name`,id_car_type,id_customer,id_employee " +
+            "FROM car " +
+            "where id = ? " +
+            "and del_flag = 1;",nativeQuery = true)
+    Car findCarById(Long id);
+
     @Query(value = "select car.id," +
             "car.car_company," +
             "car.car_plate," +
@@ -131,4 +159,5 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             " join customer as cs on cs.id = c.id_customer " +
             " where car_plate = ?1", nativeQuery = true)
     List<CarTicketDto> chooseCar( String plate);
+
 }

@@ -1,33 +1,45 @@
 package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
+
 import com.example.carparkingmanagementbe.dto.ticket.UpdateUserEmailDto;
 import com.example.carparkingmanagementbe.model.*;
+
 import com.example.carparkingmanagementbe.service.*;
+
 import com.example.carparkingmanagementbe.model.Floor;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.model.Ticket;
+
 import com.example.carparkingmanagementbe.model.TicketType;
 import com.example.carparkingmanagementbe.service.IFloorsService;
 import com.example.carparkingmanagementbe.service.ILocationService;
 import com.example.carparkingmanagementbe.service.ITicketService;
 import com.example.carparkingmanagementbe.service.ITicketTypeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.time.LocalDate;
 
+
 import com.example.carparkingmanagementbe.dto.TicketDto;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
+
 import javax.validation.Valid;
+
+
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -76,29 +88,22 @@ public class TicketController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<Object> getSearchTicketPage(@Valid @RequestBody TicketDtoSearch ticketDtoSearch, BindingResult bindingResult, @RequestParam(defaultValue = "0") int page) {
-        new TicketDtoSearch().validate(ticketDtoSearch, bindingResult);
-
+    public ResponseEntity<Object> getSearchTicketPage(@RequestBody TicketDtoSearch ticketDtoSearch, @RequestParam(defaultValue = "0") int page) {
         PageRequest pageRequest = PageRequest.of(page, 5);
         Page<Ticket> ticketPage = ticketService.searchTicketPage(ticketDtoSearch.getFloor(),
                 ticketDtoSearch.getTicketTypeName(), ticketDtoSearch.getEndDate(), ticketDtoSearch.getNameCustomer(),
                 ticketDtoSearch.getPhoneCustomer(), pageRequest);
-        if (bindingResult.hasFieldErrors()) {
-            mapError.clear();
-            bindingResult.getFieldErrors().forEach(error -> {
-                mapError.put(error.getField(), error.getDefaultMessage());
-            });
-
-            return new ResponseEntity<>(mapError, HttpStatus.BAD_REQUEST);
+        if (ticketPage.isEmpty()) {
+            mapError.put(MESSAGE, "không tìm thấy");
+            return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(ticketPage, HttpStatus.OK);
-
 
     }
 
     @PatchMapping("/delete/{id}")
     public ResponseEntity<Object> deleteTicket(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
-        mapError.clear();
+
         Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
         if (ticket == null) {
             mapError.put(MESSAGE, "email không phù hợp để xóa vé");
@@ -121,8 +126,7 @@ public class TicketController {
                 int check = changeTimeIn.compareTo(changeTimeOut);
                 if (check < 0) {
                     ticketService.deleteTicketByDel(ticket.getId());
-                    mapSuccess.put(MESSAGE, "Đã xóa thành công");
-                    return new ResponseEntity<>(mapSuccess, HttpStatus.OK);
+                    return new ResponseEntity<>(check, HttpStatus.OK);
                 } else {
                     mapError.put(MESSAGE, "xe vẫn còn bên trong nên không thể xóa");
                     return new ResponseEntity<>(mapError, HttpStatus.BAD_REQUEST);
@@ -137,11 +141,8 @@ public class TicketController {
         }
 
     }
-
     @PatchMapping("/updateUserEmail/{id}")
     public ResponseEntity<Object> updateUserEmail(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
-        mapError.clear();
-        mapSuccess.clear();
         Ticket ticket = ticketService.getTicketById(id);
 
         if (ticket == null) {
@@ -167,6 +168,7 @@ public class TicketController {
                 }
 
             } else {
+
                 mapError.put(MESSAGE, NOT_AUTHORIZE);
                 return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
             }
@@ -178,17 +180,16 @@ public class TicketController {
 
     @PostMapping("/getTicketAction/{id}")
     public ResponseEntity<Object> getTicketAction(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
-        mapError.clear();
-        mapSuccess.clear();
-
         if (updateUserEmailDto.getRole().contains(EMPLOYEE) || updateUserEmailDto.getRole().contains(ADMIN)) {
             Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
             if (ticket == null) {
+
                 mapError.put(MESSAGE, "vé đang được người khác thao tác không thể truy cập");
                 return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
             }
             return new ResponseEntity<>(ticket, HttpStatus.OK);
         } else {
+
             mapError.put(MESSAGE, NOT_AUTHORIZE);
             return new ResponseEntity<>(mapError, HttpStatus.NOT_FOUND);
         }
@@ -198,9 +199,6 @@ public class TicketController {
 
     @PatchMapping("/updateUserNull/{id}")
     public ResponseEntity<Object> updateUserNull(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
-        mapError.clear();
-        mapSuccess.clear();
-
         if (updateUserEmailDto.getRole().contains(EMPLOYEE) || updateUserEmailDto.getRole().contains(ADMIN)) {
             Ticket ticket = ticketService.getTicketAction(id, updateUserEmailDto.getEmail());
             if (ticket == null) {
@@ -221,6 +219,7 @@ public class TicketController {
         }
     }
 
+
     @GetMapping("/ticketType")
     public ResponseEntity<List<TicketType>> getAllTicketType() {
         List<TicketType> ticketTypeList = iTicketTypeService.findAllTicket();
@@ -228,7 +227,7 @@ public class TicketController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(ticketTypeList, HttpStatus.OK);
-    }
+        }
 
     @GetMapping("/location")
     public ResponseEntity<List<Location>> getAllLocation() {
@@ -258,7 +257,7 @@ public class TicketController {
     }
 
     @GetMapping("/edit/{id}")
-    public ResponseEntity<Object> getTicketById(@PathVariable Long id) {
+    public ResponseEntity<Ticket> getTicketById(@PathVariable Long id) {
         Ticket ticket = ticketService.findTicketById(id);
         if (ticket == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -268,9 +267,6 @@ public class TicketController {
 
     @PatchMapping("/update")
     public ResponseEntity<Object> updateTicket(@Valid @RequestBody TicketDto ticketDto, BindingResult bindingResult) {
-        mapError.clear();
-        mapSuccess.clear();
-
         new TicketDto().validate(ticketDto, bindingResult);
         Map<String, String> errorList = new HashMap<>();
         if (bindingResult.hasErrors()) {
@@ -304,19 +300,14 @@ public class TicketController {
     }
 
 
-    @GetMapping("/getByFloor/{id}/{idLocation}")
-    public ResponseEntity<List<Location>> getAllLocationByFloor(@PathVariable Long id, @PathVariable Long idLocation) {
-        Location location = iLocationService.findByTicket(idLocation);
+    @GetMapping("/getByFloor/{id}")
+    public ResponseEntity<List<Location>> getAllLocationByFloor(@PathVariable Long id) {
         List<Location> locationList = iLocationService.getListLocation(id);
         if (locationList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        if (location != null) {
-            locationList.add(location);
         }
         return new ResponseEntity<>(locationList, HttpStatus.OK);
     }
 
 
 }
-
