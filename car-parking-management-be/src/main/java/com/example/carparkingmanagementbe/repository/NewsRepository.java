@@ -30,9 +30,9 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
     //    SonNH
     @Query(value = "select news.id, news.author, news.date, news.code, news.title, news.del_flag, news.img, news.description, news.id_news_type " +
-            " from news ", nativeQuery = true)
+            " from news order by news.id DESC LIMIT 8", nativeQuery = true)
     List<News> getAllNews();
 
-//    SonNH
+    //    SonNH
 
 }
