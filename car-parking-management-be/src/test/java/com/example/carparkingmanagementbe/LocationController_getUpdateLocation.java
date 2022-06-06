@@ -65,26 +65,6 @@ public class LocationController_getUpdateLocation {
     }
 
     @Test
-    public void updateLocation_codeLocation_21_1() throws Exception {
-        LocationDto locationDto = new LocationDto();
-        locationDto.setCode("AC-B1");
-        locationDto.setNumber(1L);
-        locationDto.setDescription(null);
-        locationDto.setHeight(3.0);
-        locationDto.setLength(5.5);
-        locationDto.setWidth(2.4);
-        locationDto.setId_floor(1L);
-        locationDto.setId_allowedCarParkingSet("1,2");
-
-        this.mockMvc.perform(MockMvcRequestBuilders
-                        .patch("/api/location/update/2")
-                        .content(this.objectMapper.writeValueAsString(locationDto))
-                        .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(print())
-                .andExpect(status().is4xxClientError());
-    }
-
-    @Test
     public void updateLocation_numberLocation_21_2() throws Exception {
         LocationDto locationDto = new LocationDto();
         locationDto.setCode("A-1");

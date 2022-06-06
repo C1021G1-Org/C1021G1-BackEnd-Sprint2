@@ -1,6 +1,5 @@
 package com.example.carparkingmanagementbe.controller;
 
-
 import com.example.carparkingmanagementbe.dto.LocationDto;
 import com.example.carparkingmanagementbe.model.AllowedCarParking;
 import com.example.carparkingmanagementbe.model.Floor;
@@ -25,7 +24,6 @@ import java.util.Set;
 import java.util.HashMap;
 import java.util.Map;
 
-
 @RestController
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/location")
@@ -39,9 +37,26 @@ public class LocationController {
 
     @Autowired
     private IFloorsService floorsService;
-    /*TuanPDCoding*/
+
+    /*TinhHD_Coding*/
+    @GetMapping("/list")
+    public ResponseEntity<Page<LocationList>> getAllLocation(@RequestParam(defaultValue = "") String code,
+                                                             @RequestParam(defaultValue = "") String id,
+                                                             @RequestParam(defaultValue = "0") int page) {
+        Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
+        System.out.println(locationPage.getTotalPages());
+        if(locationPage.getTotalPages()<=page){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        if (locationPage.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(locationPage, HttpStatus.OK);
+    }
+
+    /*Find_By_Id_For_Team*/
     @GetMapping("/{id}")
-    public ResponseEntity<?> findLocationByIdDto(@PathVariable Long id) {
+    public ResponseEntity<?> findLocationById(@PathVariable Long id) {
         Location location = iLocationService.findLocationById(id);
         if (location == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -49,7 +64,7 @@ public class LocationController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
-    /*TuanPDCoding*/
+    /*TuanPD_Coding*/
     @PostMapping(value = "/create")
     public ResponseEntity<?> createLocation(@Valid @RequestBody LocationDto locationDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -66,6 +81,7 @@ public class LocationController {
                 allowedCarParkingSet.add(allowedCarParking);
             }
             location.setAllowedCarParkingSet(allowedCarParkingSet);
+
             Floor floor = floorsService.findById(locationDto.getId_floor());
             location.setFloor(floor);
         }
@@ -73,9 +89,10 @@ public class LocationController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    /*TuanPDCoding*/
+    /*TuanPD_Coding*/
     @PatchMapping(value = "/update/{id}")
-    public ResponseEntity<?> updateLocation(@Valid @RequestBody LocationDto locationDto, BindingResult bindingResult, @PathVariable(name = "id") Long idLocation) {
+    public ResponseEntity<?> updateLocation(@Valid @RequestBody LocationDto locationDto, BindingResult bindingResult,
+                                            @PathVariable(name = "id") Long idLocation) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors().get(0).getDefaultMessage(), HttpStatus.NOT_FOUND);
         }
@@ -98,28 +115,7 @@ public class LocationController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    /*TinhHDCoding*/
-    @GetMapping("/list")
-    public ResponseEntity<Page<LocationList>> getAllLocation(@RequestParam(defaultValue = "") String code,
-                                                             @RequestParam(defaultValue = "") String id,
-                                                             @RequestParam(defaultValue = "0") int page) {
-        Page<LocationList> locationPage = iLocationService.findAll(code, id, page);
-
-        System.out.println(locationPage.getTotalPages());
-        if(locationPage.getTotalPages()<=page){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
-        if (locationPage.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(locationPage, HttpStatus.OK);
-    }
-
-
-    /*DatNVNCoding*/
-
-    // dat code
+    /*DatNVN_Coding*/
     @GetMapping("/map-parking")
     public ResponseEntity<Page<Location>> getAllLocation(@RequestParam(defaultValue = "0") int page) {
         Page<Location> getAllLocation = iLocationService.getAllLocation(PageRequest.of(page, 86));
@@ -130,19 +126,7 @@ public class LocationController {
     }
 
 
-    /*DatNVNCoding*/
-
-    // dat code
-    @GetMapping("/map-parking/{id}")
-    public ResponseEntity<Location> findLocationById(@PathVariable Long id) {
-        Location location = iLocationService.findLocationById(id);
-        if (location == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(location, HttpStatus.OK);
-
-    }
-
+    /*DatNVN_Coding*/
     @GetMapping("/listMapParking")
     public ResponseEntity<Page<Location>> listAllLocation(Pageable pageable) {
         Page<Location> location = iLocationService.findAllLocation(pageable);
@@ -152,7 +136,7 @@ public class LocationController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
-    // dat code update
+    /*DatNVN_Coding*/
     @DeleteMapping("/update-map-parking/{id}")
     public ResponseEntity<Location> updateColorLocation(@PathVariable Long id) {
         Location location = iLocationService.findLocationById(id);
@@ -164,7 +148,7 @@ public class LocationController {
         return new ResponseEntity<>(location, HttpStatus.OK);
     }
 
-    // detail location parking TrongTa
+    /*TrongTA_Coding*/
     @GetMapping("/detail/{id}")
     public ResponseEntity<LocationDetailDto> getId(@PathVariable Long id) {
         LocationDetailDto location = iLocationService.findById(id);
@@ -176,7 +160,7 @@ public class LocationController {
         }
     }
 
-    //xóa location trongTa
+    /*TrongTA_Coding*/
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteNews(@PathVariable Long id) {
         Location location = iLocationService.findLocationById(id);
