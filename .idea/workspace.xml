@@ -1,8 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="c35411ad-9bea-4ef1-947f-706e3d5f7141" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/C1021G1-BackEnd-Sprint2.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/CarDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/CarPlateValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/CodeCarValidator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/CustomerDtoCheck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/CustomerDtoDoCheck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/LocationDetailDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/LocationDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/LocationList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/NewsDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/TicketDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/ValidationCarPlate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/ValidationCodeCar.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/ticket/TicketDtoSearch.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/CarTypeRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ICarTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/CarTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/LocationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/controller/EmployeeControllerCreate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/controller/EmployeeControllerUpdate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/controller/MapParkingController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/news/NewsController_createNews_tiennnl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/news/NewsController_editNews_tiennnl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/news/NewsController_findNewById_sonnh.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/news/NewsController_getAllNews_sonnh.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/car-parking-management-be/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/CarParkingManagementBeApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/CarParkingManagementBeApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/AccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/AccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/CarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/CarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/DistrictController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/DistrictController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/EmployeeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/EmployeeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/LocationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/LocationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/NewsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/NewsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/ProvinceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/ProvinceController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/TicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/TicketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/WardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/controller/WardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/CustomerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/CustomerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/EmployeeDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/EmployeeDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/EmployeeDtoCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/dto/EmployeeDtoCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Account.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Account.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/AllowedCarParking.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/AllowedCarParking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Car.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Car.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Customer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/District.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/District.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Floor.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Floor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/NewsType.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/model/NewsType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/AllowedCarParkingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/AllowedCarParkingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/CarRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/CarRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/CustomerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/CustomerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/DistrictRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/DistrictRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/FloorsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/FloorsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/LocationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/LocationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/NewsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/NewsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/ProvinceRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/ProvinceRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/RoleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/RoleRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/TicketRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/TicketRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/TicketTypeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/TicketTypeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/WardRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/repository/WardRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/security/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/security/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/security/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/security/config/WebSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/security/userprinciple/AccountDetailService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/security/userprinciple/AccountDetailService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IAccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IAllowedCarParkingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IAllowedCarParkingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ICarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ICarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ICustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ICustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IDistrictService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IDistrictService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IFloorsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IFloorsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ILocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ILocationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/INewsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/INewsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IProvinceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IProvinceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ITicketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/ITicketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IWardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/IWardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/AccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/AccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/AllowedCarParkingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/AllowedCarParkingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/CarService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/CarService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/CustomerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/CustomerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/DistrictService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/DistrictService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/FloorsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/FloorsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/LocationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/NewsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/NewsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/ProvinceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/ProvinceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/TicketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/TicketService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/WardService.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/java/com/example/carparkingmanagementbe/service/Impl/WardService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/CarParkingManagementBeApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-parking-management-be/src/test/java/com/example/carparkingmanagementbe/CarParkingManagementBeApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,12 +137,26 @@
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/car-parking-management-be" />
   </component>
+  <component name="RunManager">
+    <configuration name="CarParkingManagementBeApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="car-parking-management-be.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.carparkingmanagementbe.CarParkingManagementBeApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -56,10 +168,11 @@
       <option name="presentableId" value="Default" />
       <updated>1653528922265</updated>
       <workItem from="1653528964276" duration="253000" />
+      <workItem from="1653875395766" duration="102000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="3" />
   </component>
 </project>
