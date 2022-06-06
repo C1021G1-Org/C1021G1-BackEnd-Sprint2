@@ -141,7 +141,6 @@ public class TicketController {
         }
 
     }
-
     @PatchMapping("/updateUserEmail/{id}")
     public ResponseEntity<Object> updateUserEmail(@RequestBody UpdateUserEmailDto updateUserEmailDto, @PathVariable Long id) {
         Ticket ticket = ticketService.getTicketById(id);
@@ -228,7 +227,7 @@ public class TicketController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(ticketTypeList, HttpStatus.OK);
-    }
+        }
 
     @GetMapping("/location")
     public ResponseEntity<List<Location>> getAllLocation() {
@@ -312,4 +311,3 @@ public class TicketController {
 
 
 }
-
