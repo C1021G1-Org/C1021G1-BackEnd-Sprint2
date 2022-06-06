@@ -1,22 +1,19 @@
 package com.example.carparkingmanagementbe.controller;
 
-import com.asprise.ocr.Ocr;
 import com.example.carparkingmanagementbe.dto.CreateTicketDto;
+import com.example.carparkingmanagementbe.dto.EmptyLocation;
+import com.example.carparkingmanagementbe.dto.PathImage;
 import com.example.carparkingmanagementbe.dto.TicketDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.model.Ticket;
 import com.example.carparkingmanagementbe.model.TicketType;
 import com.example.carparkingmanagementbe.service.ICarService;
-import com.example.carparkingmanagementbe.service.Impl.TicketService;
-import lombok.RequiredArgsConstructor;
 import net.sourceforge.tess4j.Tesseract;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.carparkingmanagementbe.dto.ticket.TicketDtoSearch;
-import com.example.carparkingmanagementbe.model.Ticket;
 import com.example.carparkingmanagementbe.service.ITicketService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,21 +24,19 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageInputStream;
 import javax.validation.Valid;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -57,22 +52,60 @@ public class TicketController {
     @Autowired
     private ICarService carService;
 
+
+
+
+    @GetMapping("/emptyLocation")
+    public ResponseEntity<EmptyLocation> emptyLocation() {
+        EmptyLocation emptyLocation = ticketService.emptyLocation();
+        System.out.println(emptyLocation);
+        return new ResponseEntity<>(emptyLocation,HttpStatus.OK);
+    }
+
+
     @PostMapping("/create")
     public ResponseEntity<?> createTicket(@Valid @RequestBody CreateTicketDto createTicketDto) {
-        Car car = carService.findById(createTicketDto.getCar());
-        Location location = new Location();
-        location.setId(createTicketDto.getLocation());
-        TicketType ticketType = new TicketType();
-        ticketType.setId(createTicketDto.getTicketType());
-        Ticket ticket = new Ticket();
-        createTicketDto.setChecking(false);
-        createTicketDto.setDelFlag(true);
-        ticket.setCar(car);
-        ticket.setLocation(location);
-        ticket.setTicketType(ticketType);
-        BeanUtils.copyProperties(createTicketDto, ticket);
-        ticket.setIsDoing(false);
-        ticketService.createTicket(ticket);
+        String carPlate = createTicketDto.getCarPlate();
+        boolean checkPlate = true;
+        List<Ticket> ticketList =ticketService.listTicket();
+        for(Ticket ticket : ticketList){
+            if(ticket.getCar().getCarPlate().equals(carPlate)){
+                checkPlate =false;
+                break;
+            }
+        }
+        if(checkPlate){
+            List<Car> carList = carService.findAll();
+            Long idCar = -1L;
+            for (Car car1: carList){
+                if(car1.getCarPlate().equals(carPlate)){
+                    idCar = car1.getId();
+                    break;
+                }
+            }
+            Car car = carService.findById(idCar);
+
+            if(createTicketDto.getIdTicketType() == 1){
+                createTicketDto.setSumPrice(50000D);
+            }else {
+                createTicketDto.setSumPrice(1400000D);
+            }
+
+            Location location = new Location();
+            location.setId(createTicketDto.getIdLocation());
+            TicketType ticketType = new TicketType();
+            ticketType.setId(createTicketDto.getIdTicketType());
+            Ticket ticket = new Ticket();
+            createTicketDto.setChecking(false);
+            createTicketDto.setDelFlag(true);
+            ticket.setCar(car);
+            ticket.setLocation(location);
+            ticket.setTicketType(ticketType);
+            BeanUtils.copyProperties(createTicketDto, ticket);
+            ticket.setIsDoing(false);
+            ticketService.createTicket(ticket);
+        }
+
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
@@ -89,22 +122,32 @@ public class TicketController {
         return errors;
     }
 
-    @PatchMapping("/updateTime")
+    @PostMapping("/updateTime")
     public ResponseEntity<?> update(@Valid @RequestBody CreateTicketDto createTicketDto) {
-        Car car = carService.findById(createTicketDto.getCar());
-        Location location = new Location();
-        location.setId(createTicketDto.getLocation());
-        TicketType ticketType = new TicketType();
-        ticketType.setId(createTicketDto.getTicketType());
-        Ticket ticket = new Ticket();
-        createTicketDto.setChecking(false);
-        createTicketDto.setDelFlag(true);
-        ticket.setCar(car);
-        ticket.setLocation(location);
-        ticket.setTicketType(ticketType);
-        BeanUtils.copyProperties(createTicketDto, ticket);
-        ticket.setIsDoing(false);
-        ticketService.updateTicket(ticket);
+        List<Ticket> ticketList = ticketService.listTicket();
+        for(Ticket ticket:ticketList){
+            if(ticket.getCar().getCarPlate().equals(createTicketDto.getCarPlate())){
+                Ticket ticket1 = new Ticket();
+                BeanUtils.copyProperties(ticket,ticket1);
+                ticket1.setTimeOut(createTicketDto.getTimeOut());
+                ticket1.setImgCarOut(ticket.getImgCarOut());
+                ticketService.save(ticket1);
+            }
+        }
+//        Car car = carService.findById(createTicketDto.getCar());
+//        Location location = new Location();
+//        location.setId(createTicketDto.getIdLocation());
+//        TicketType ticketType = new TicketType();
+//        ticketType.setId(createTicketDto.getIdTicketType());
+//        Ticket ticket = new Ticket();
+//        createTicketDto.setChecking(false);
+//        createTicketDto.setDelFlag(true);
+//        ticket.setCar(car);
+//        ticket.setLocation(location);
+//        ticket.setTicketType(ticketType);
+//        BeanUtils.copyProperties(createTicketDto, ticket);
+//        ticket.setIsDoing(false);
+//        ticketService.updateTicket(ticket);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -114,20 +157,18 @@ public class TicketController {
 //        return new ResponseEntity<>(HttpStatus.CREATED);
 //    }
 
-    @PostMapping("/check")
-    public ResponseEntity<?> readImage(@RequestParam("file") MultipartFile file) throws Exception {
-//        Path source = Paths.get(path);
-        String fullTess = changeFile(file);
-
-
-
-        return new ResponseEntity<>(fullTess, HttpStatus.OK);
-
+    @PostMapping("/checkImage")
+    public ResponseEntity<?> readImage(@RequestBody PathImage file) throws Exception {
+        String fullTess = changeFile("C:\\Users\\ACER\\Desktop\\xe\\"+file.getPath());
+        return new ResponseEntity<>(new PathImage(fullTess), HttpStatus.OK);
     }
 
-    public String changeFile(MultipartFile file) throws Exception {
+    public String changeFile(String file) throws Exception {
+
         Path target = Paths.get("E:\\Project-Flight\\sprint 2\\C1021G1-BackEnd-Sprint2\\car-parking-management-be\\src\\main\\resources\\static\\test2.jpg");
-        BufferedImage original = ImageIO.read(file.getInputStream());
+
+        File file1 = new File(file);
+        BufferedImage original = ImageIO.read(file1);
         BufferedImage newBufferedImage = new BufferedImage(
                 600,
                 600,

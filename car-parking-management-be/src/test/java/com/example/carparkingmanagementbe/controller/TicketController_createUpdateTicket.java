@@ -1,13 +1,8 @@
 package com.example.carparkingmanagementbe.controller;
 
 import com.example.carparkingmanagementbe.dto.CreateTicketDto;
-import com.example.carparkingmanagementbe.model.Car;
-import com.example.carparkingmanagementbe.model.Location;
-import com.example.carparkingmanagementbe.model.Ticket;
-import com.example.carparkingmanagementbe.model.TicketType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,8 +36,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(1L);
-        createTicketDto.setLocation(5L);
+        createTicketDto.setIdTicketType(1L);
+        createTicketDto.setIdLocation(5L);
         createTicketDto.setCar(5L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -63,8 +58,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -85,8 +80,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -107,8 +102,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -129,8 +124,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -151,8 +146,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -173,8 +168,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn(null);
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -195,8 +190,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut(null);
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -218,8 +213,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(null);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -241,8 +236,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(null);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(null);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -263,8 +258,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(1L);
-        createTicketDto.setLocation(null);
+        createTicketDto.setIdTicketType(1L);
+        createTicketDto.setIdLocation(null);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -286,8 +281,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(1L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(1L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(null);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -308,8 +303,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -330,8 +325,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -352,8 +347,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -374,8 +369,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -396,8 +391,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -418,8 +413,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -440,8 +435,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -462,8 +457,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -487,8 +482,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(1L);
-        createTicketDto.setLocation(4L);
+        createTicketDto.setIdTicketType(1L);
+        createTicketDto.setIdLocation(4L);
         createTicketDto.setCar(4L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -508,8 +503,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -530,8 +525,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -552,8 +547,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -574,8 +569,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -596,8 +591,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -618,8 +613,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn(null);
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -640,8 +635,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut(null);
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -663,8 +658,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(null);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -686,8 +681,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(null);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(null);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -708,8 +703,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(1L);
-        createTicketDto.setLocation(null);
+        createTicketDto.setIdTicketType(1L);
+        createTicketDto.setIdLocation(null);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -731,8 +726,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(1L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(1L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(null);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -753,8 +748,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -775,8 +770,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -797,8 +792,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -819,8 +814,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -841,8 +836,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -863,8 +858,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -885,8 +880,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders
@@ -906,8 +901,8 @@ public class TicketController_createUpdateTicket {
         createTicketDto.setTimeIn("2022-05-13 17:30:00");
         createTicketDto.setTimeOut("2022-05-13 17:30:00");
         createTicketDto.setSumPrice(70000D);
-        createTicketDto.setTicketType(2L);
-        createTicketDto.setLocation(3L);
+        createTicketDto.setIdTicketType(2L);
+        createTicketDto.setIdLocation(3L);
         createTicketDto.setCar(3L);
 
         this.mockMvc.perform(MockMvcRequestBuilders

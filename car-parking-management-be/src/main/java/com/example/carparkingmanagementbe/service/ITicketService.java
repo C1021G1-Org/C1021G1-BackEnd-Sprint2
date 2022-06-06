@@ -1,13 +1,20 @@
 package com.example.carparkingmanagementbe.service;
+import com.example.carparkingmanagementbe.dto.EmptyLocation;
 import com.example.carparkingmanagementbe.model.Ticket;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
+import java.util.List;
 
-    public interface ITicketService {
+public interface ITicketService {
         //hieu begin
+
+        List<Ticket> listTicket();
+
+        EmptyLocation emptyLocation();
+
         void createTicket(Ticket ticket);
 
         void updateTicket(Ticket ticket);
@@ -41,6 +48,8 @@ import java.util.Date;
 
                           String endDate,
                           Long idTicket);
+
+    void save(Ticket ticket1);
 //    LongLT End
 
     }

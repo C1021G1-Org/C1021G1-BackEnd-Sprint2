@@ -1,57 +1,45 @@
 package com.example.carparkingmanagementbe.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
 public class CreateTicketDto {
     private Long id;
-    @NotNull(message = "phải bắt buộc nhập!")
-    @NotBlank(message = "không được để trống!")
-    @Pattern(regexp = "^([TK-])+([0-9]{4})$", message = "Vui lòng nhập đúng định dạng. ([TK-]XXXX) trong đó X là số từ (0-9)!")
 
     private String code;
-    @NotNull(message = "phải bắt buộc nhập!")
-    @NotBlank(message = "không được để trống!")
+
     private String imgCarIn;
 
-    @NotNull(message = "phải bắt buộc nhập!")
-    @NotBlank(message = "không được để trống!")
+
     private String imgCarOut;
 
-    @NotNull(message = "phải bắt buộc nhập!")
-    @NotBlank(message = "không được để trống!")
+
     private String timeIn;
 
-    @NotNull(message = "phải bắt buộc nhập!")
-    @NotBlank(message = "không được để trống!")
+
     private String timeOut;
 
-    @NotNull(message = "phải bắt buộc nhập!")
-    @NotBlank(message = "không được để trống!")
+
     private String startDate;
 
-    @NotNull(message = "phải bắt buộc nhập!")
-    @NotBlank(message = "không được để trống!")
+
     private String endDate;
 
     private Boolean delFlag;
-    private Boolean isDoing;
+    private Boolean isChecking;
     private Double sumPrice;
 
-    @NotNull(message = "phải bắt buộc nhập!")
-    private Long ticketType;
+    private Long idTicketType;
 
-    @NotNull(message = "phải bắt buộc nhập!")
-    private Long location;
 
-    @NotNull(message = "phải bắt buộc nhập!")
+    private Long idLocation;
+
+
     private Long car;
+
+    private String carPlate;
 
     public CreateTicketDto() {
     }
 
-    public CreateTicketDto(Long id, String code, String imgCarIn, String imgCarOut, String timeIn, String timeOut, String startDate, String endDate, Boolean delFlag, Boolean isDoing, Double sumPrice, Long ticketType, Long location, Long car) {
+    public CreateTicketDto(Long id, String code, String imgCarIn, String imgCarOut, String timeIn, String timeOut, String startDate, String endDate, Boolean delFlag, Boolean isChecking, Double sumPrice, Long ticketType, Long location, Long car, String carPlate) {
         this.id = id;
         this.code = code;
         this.imgCarIn = imgCarIn;
@@ -61,11 +49,12 @@ public class CreateTicketDto {
         this.startDate = startDate;
         this.endDate = endDate;
         this.delFlag = delFlag;
-        this.isDoing = isDoing;
+        this.isChecking = isChecking;
         this.sumPrice = sumPrice;
-        this.ticketType = ticketType;
-        this.location = location;
+        this.idTicketType = ticketType;
+        this.idLocation = location;
         this.car = car;
+        this.carPlate = carPlate;
     }
 
     public Long getId() {
@@ -141,13 +130,12 @@ public class CreateTicketDto {
     }
 
     public Boolean getChecking() {
-        return isDoing;
+        return isChecking;
     }
 
     public void setChecking(Boolean checking) {
-        isDoing = checking;
+        isChecking = checking;
     }
-
 
     public Double getSumPrice() {
         return sumPrice;
@@ -157,20 +145,20 @@ public class CreateTicketDto {
         this.sumPrice = sumPrice;
     }
 
-    public Long getTicketType() {
-        return ticketType;
+    public Long getIdTicketType() {
+        return idTicketType;
     }
 
-    public void setTicketType(Long ticketType) {
-        this.ticketType = ticketType;
+    public void setIdTicketType(Long idTicketType) {
+        this.idTicketType = idTicketType;
     }
 
-    public Long getLocation() {
-        return location;
+    public Long getIdLocation() {
+        return idLocation;
     }
 
-    public void setLocation(Long location) {
-        this.location = location;
+    public void setIdLocation(Long idLocation) {
+        this.idLocation = idLocation;
     }
 
     public Long getCar() {
@@ -179,6 +167,14 @@ public class CreateTicketDto {
 
     public void setCar(Long car) {
         this.car = car;
+    }
+
+    public String getCarPlate() {
+        return carPlate;
+    }
+
+    public void setCarPlate(String carPlate) {
+        this.carPlate = carPlate;
     }
 }
 

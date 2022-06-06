@@ -1,4 +1,6 @@
 package com.example.carparkingmanagementbe.repository;
+import com.example.carparkingmanagementbe.dto.CarPlateDto;
+import com.example.carparkingmanagementbe.dto.CarTicketDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.carparkingmanagementbe.model.Car;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -85,4 +88,38 @@ public interface CarRepository extends JpaRepository<Car,Long> {
             "where customer.id = ?;",nativeQuery = true)
     List<Car> findByIdCustomer(Long id);
 
+    //son begin
+
+    @Query(value = "SELECT c.car_plate carPlate,cs.name customerName,cs.id_card idCard ,cs.phone phoneNumber" +
+            " FROM car AS c " +
+            "   JOIN customer AS cs " +
+            "       ON c.id_customer = cs.id " +
+            "WHERE cs.name like %:name% AND  cs.phone like %:phone% AND c.car_plate like %:plate%", nativeQuery = true)
+    List<CarPlateDto> findCarModal(@Param("name") String name, @Param("phone") String phone, @Param("plate") String plate);
+
+
+    @Query(value = "select c.car_plate carPlate," +
+            "c.name carName," +
+            "cs.name customerName," +
+            "t.id_ticket_type idTicketType," +
+            "c.car_company carCompany," +
+            "cs.phone customerPhone," +
+            "t.start_date startDate," +
+            "t.end_date endDate," +
+            "f.name idFloor," +
+            "l.code nameLocation," +
+            "t.id_location idLocation," +
+            "l.code code," +
+            "t.img_car_in imgCarIn," +
+            "t.img_car_out imgCarOut," +
+            "t.time_in timeIn," +
+            "t.time_out timeOut" +
+            " from car as c" +
+            " join ticket as t on c.id = t.id_car " +
+            " join location as l on t.id_location = l.id " +
+            " join customer as cs on cs.id = c.id_customer " +
+            " join floor as f on f.id = l.id_floor " +
+            " where car_plate = ?1", nativeQuery = true)
+    List<CarTicketDto> chooseCar(String plate);
+    // son end
 }

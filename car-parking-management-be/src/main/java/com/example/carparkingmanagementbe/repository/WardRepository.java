@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface WardRepository extends JpaRepository<Ward,Long> {
-    @Query(value = "SELECT ward.id,ward.name,ward.prefix,ward.id_district,ward.id_province " +
+    @Query(value = "SELECT ward.id,ward.name,ward.prefix,ward.id_district" +
             "FROM ward " +
             "where ward.id_district = ?;", nativeQuery = true)
     List<Ward> getAllWard(Long id);

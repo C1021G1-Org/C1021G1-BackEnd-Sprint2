@@ -1,5 +1,6 @@
 package com.example.carparkingmanagementbe.repository;
 
+import com.example.carparkingmanagementbe.dto.EmptyLocation;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.model.Location;
 import com.example.carparkingmanagementbe.model.Ticket;
@@ -25,12 +26,27 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-
+import java.util.List;
 
 
 @Repository
 @Transactional
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
+    //Hieu
+
+
+    @Query(value = "SELECT location.id as idLocation, location.code as nameLocation, floor.name as nameFloor \n" +
+            "FROM location JOIN floor ON location.id_floor = floor.id where location.is_empty\n" +
+            "LIMIT 1", nativeQuery = true)
+    EmptyLocation emptyLocation();
+
+
+    @Query(value = "SELECT * " +
+            "FROM ticket ", nativeQuery = true)
+    List<Ticket> findAllTicket();
+
+
+
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO Ticket(code, " +
