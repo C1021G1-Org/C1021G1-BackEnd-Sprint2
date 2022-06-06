@@ -3,6 +3,8 @@ package com.example.carparkingmanagementbe.service.Impl;
 
 
 import com.example.carparkingmanagementbe.dto.CarDto;
+import com.example.carparkingmanagementbe.dto.CarPlateDto;
+import com.example.carparkingmanagementbe.dto.CarTicketDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.repository.CarRepository;
 import com.example.carparkingmanagementbe.service.ICarService;
@@ -25,6 +27,12 @@ public class CarService implements ICarService {
     public List<Car> findCarByIdCustomer(Long id) {
         return carRepository.selectCustomerAndCar(id);
     }
+
+    @Override
+    public List<Car> getListCarByEmail(String email) {
+        return carRepository.getListCarByEmail(email);
+    }
+
     @Override
     public void createCar(CarDto carDto) {
         carRepository.createCar(carDto.getCode(), carDto.getName(), carDto.getCarPlate(), carDto.getCarCompany(),
@@ -45,6 +53,19 @@ public class CarService implements ICarService {
     public Integer findByCarPlate(String carPlate) {
         return carRepository.finByCarPlate(carPlate);
     }
+  
+    @Override
+    public List<Car> findByIdCustomer(Long id) {
+        return carRepository.findByIdCustomer(id);
+    }
+  
+    @Override
+    public List<CarPlateDto> findCarModal(String name, String phone, String plate) {
+        return carRepository.findCarModal(name, phone, plate);
+    }
 
-
+    @Override
+    public List<CarTicketDto> chooseCar(String plate) {
+        return carRepository.chooseCar(plate);
+    }
 }

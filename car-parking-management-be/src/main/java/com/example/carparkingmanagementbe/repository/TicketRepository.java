@@ -21,24 +21,20 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 
-
 @Repository
 @Transactional
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-
-
-    // tam query begin
     @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date " +
             "            ,ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type " +
             "            from ticket " +
             "            where ticket.del_flag = 1 " +
-            "            order by ticket.id desc", nativeQuery = true,
-            countQuery = "select count(*) from ticket where ticket.id = 1")
+            "            order by ticket.id asc ", nativeQuery = true,
+            countQuery = "select count(*) from ticket where ticket.del_flag = 1")
     Page<Ticket> getAllTicketPage(Pageable pageable);
 
 
-    @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date " +
+    @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date,ticket.user_email " +
             ",ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type " +
             "from ticket " +
             "join ticket_type on ticket.id_ticket_type = ticket_type.id " +
@@ -49,9 +45,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "where ticket.del_flag = 1 " +
             "and floor.name like %:floor% " +
             "and ticket_type.name like %:ticketTypeName% " +
-            "and ticket.end_date like %:endDate% " +
+            "and ticket.end_date between :endDate and ticket.end_date " +
             "and customer.name like %:nameCustomer% " +
-            "and customer.phone like %:phoneCustomer% ", nativeQuery = true
+            "and customer.phone like %:phoneCustomer% " +
+            "order by ticket.id asc ", nativeQuery = true
             , countQuery = "select count(*) from (select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date " +
             "                                ,ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type  " +
             "                       from ticket  " +
@@ -63,9 +60,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "                    where  ticket.del_flag = 1  " +
             "                    and floor.name like %:floor% " +
             "                   and ticket_type.name like %:ticketTypeName% " +
-            "                      and ticket.end_date like %:endDate% " +
+            "                      and ticket.end_date between :endDate and ticket.end_date " +
             "                     and customer.name like %:nameCustomer% " +
-            "                      and customer.phone like %:phoneCustomer% ) as saeuawqik"
+            "                      and customer.phone like %:phoneCustomer% " +
+            "                      order by ticket.id asc ) as saeuawqik"
     )
     Page<Ticket> searchTicketPage(@Param("floor") String floor,
                                   @Param("ticketTypeName") String ticketTypeName,
@@ -83,22 +81,40 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     void deleteTicketByDel(@Param("idTicket") Long idTicket);
 
 
-
-    @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date " +
+    @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date,ticket.user_email " +
             ",ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type " +
             "from ticket " +
             "where ticket.id = :idTicket " +
-            "and ticket.del_flag = 1 ",nativeQuery = true)
-    Ticket getTicketById(@Param("idTicket")Long idTicket);
-    // tam end
+            "and ticket.del_flag = 1 ", nativeQuery = true)
+    Ticket getTicketById(@Param("idTicket") Long idTicket);
 
+    @Modifying
+    @Query(value = "update ticket " +
+            "set ticket.user_email = :userEmail " +
+            "where ticket.id = :idTicket " +
+            "and ticket.del_flag = 1 " +
+            "and ticket.user_email is null ", nativeQuery = true)
+    void updateUserEmail(@Param("userEmail") String userEmail, @Param("idTicket") Long idTicket);
 
+    @Modifying
+    @Query(value = "update ticket " +
+            "set ticket.user_email = null " +
+            "where ticket.id = :idTicket " +
+            " and ticket.del_flag = 1 ", nativeQuery = true)
+    void updateNullUser(@Param("idTicket") Long idTicket);
 
-//    LongLT
+    @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date,ticket.user_email " +
+            ",ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type " +
+            " from ticket " +
+            "where ticket.id = :idTicket " +
+            "and ticket.del_flag = 1 " +
+            "and ticket.user_email = :userEmail ", nativeQuery = true)
+    Ticket getTicketAction(@Param("idTicket") Long idTicket, @Param("userEmail") String userEmail);
 
-    @Query(value = "select ticket.id, ticket.code, ticket.start_date,ticket.end_date, ticket.img_car_in, ticket.img_car_out,\n" +
-            "            ticket.sum_price, ticket.time_in, ticket.time_out, ticket.is_doing, ticket.id_car, ticket.id_location, ticket.id_ticket_type, ticket.del_flag\n" +
-            "            from ticket where ticket.id = ? " +
+    @Query(value = "select ticket.id,ticket.code,ticket.del_flag,ticket.end_date,ticket.img_car_in,ticket.img_car_out,ticket.is_doing,ticket.start_date,ticket.user_email " +
+            ",ticket.sum_price,ticket.time_in,ticket.time_out,ticket.id_car,ticket.id_location,ticket.id_ticket_type " +
+            "from ticket " +
+            "where ticket.id = ? " +
             "and ticket.del_flag = 1 ", nativeQuery = true)
     Ticket findByIdTicket(Long id);
 
@@ -113,12 +129,12 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
             "ticket.id_ticket_type = :idTicketType, " +
             "ticket.end_date = :endDate " +
             "where ticket.id = :idTicket " +
-            "and ticket.del_flag = 1 ",nativeQuery = true)
-    void updateTicket(@Param("idLocation")Long idLocation,
-                      @Param("sumPrice")Double sumPrice,
-                      @Param("idTicketType")Long idTicketType,
-                      @Param("endDate")String endDate,
-                      @Param("idTicket")Long idTicket );
-//    LongLT
+            "and ticket.del_flag = 1 ", nativeQuery = true)
+    void updateTicket(@Param("idLocation") Long idLocation,
+                      @Param("sumPrice") Double sumPrice,
+                      @Param("idTicketType") Long idTicketType,
+                      @Param("endDate") String endDate,
+                      @Param("idTicket") Long idTicket);
+
 
 }
