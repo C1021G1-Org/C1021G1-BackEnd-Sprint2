@@ -181,7 +181,7 @@ public class CustomerController {
 
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<?> updateFlight(@PathVariable Long id, @Valid @RequestBody CustomerDtoCheck customerDtoCheck,
+    public ResponseEntity<?> updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerDtoCheck customerDtoCheck,
                                           BindingResult bindingResult) {
         customerDtoCheck.setId(id);
         new CustomerDtoCheck().validate(customerDtoCheck, bindingResult);
