@@ -30,6 +30,16 @@ public class CarService implements ICarService {
     }
 
     @Override
+    public void updateCarByIdCustomerNull(Long idCustomer) {
+        carRepository.updateCarByIdCustomerNull(idCustomer);
+    }
+
+    @Override
+    public void deleteCarById(Long id) {
+        carRepository.deleteCarById(id);
+    }
+
+    @Override
     public void createCar(CarDto carDto) {
         carRepository.createCar(carDto.getCode(), carDto.getName(), carDto.getCarPlate(), carDto.getCarCompany(),
                 carDto.getCustomer(), carDto.getCarType(), true);
@@ -39,6 +49,11 @@ public class CarService implements ICarService {
     public void createCarCustomerNull(CarDto carDto) {
         carRepository.createCarCustomerNull(carDto.getCode(), carDto.getName(), carDto.getCarPlate(), carDto.getCarCompany(),
                  carDto.getCarType(), true);
+    }
+
+    @Override
+    public Car findCarById(Long id) {
+        return carRepository.findCarById(id);
     }
 
     @Override

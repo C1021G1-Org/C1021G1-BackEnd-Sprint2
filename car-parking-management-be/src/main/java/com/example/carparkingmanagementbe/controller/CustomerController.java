@@ -39,6 +39,7 @@ public class CustomerController {
     @Autowired
     private ICarService carService;
 
+    private  CustomerDto customerDto1;
     //ThangDBX lay danh sach khach hang
     @GetMapping("/list")
     public ResponseEntity<Page<Customer>> getAllCustomer(@RequestParam(defaultValue = "0") int page) {
@@ -129,6 +130,7 @@ public class CustomerController {
         char[] charArray = customerDto.getName().toCharArray();
         boolean foundSpace = true;
 
+
     for (int i = 0; i < charArray.length; i++) {
             if (Character.isLetter(charArray[i])) {
                 if (foundSpace) {
@@ -154,6 +156,8 @@ public class CustomerController {
         String codeRandom = String.valueOf(code);
         customerDto.setCode("KH-" + codeRandom);
         customerService.createCustomer(customerDto);
+
+        carService.updateCarByIdCustomerNull(customerDto.getId());
 //        Customer customer = new Customer();
 //        BeanUtils.copyProperties(customerDto,customer);
 //        customer.getWard().setId(customerDto.getWard());
