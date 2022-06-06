@@ -48,5 +48,6 @@ public class SignForm {
     @Size(min = 9,max = 12, message = "Nhập tối đa 9 đến 12 số.")
     @NotBlank(message = "Vui lòng nhập CMND/CCCD")
     private String idCard;
-    private Long idWard;
+    private Long Ward;
+
 }
