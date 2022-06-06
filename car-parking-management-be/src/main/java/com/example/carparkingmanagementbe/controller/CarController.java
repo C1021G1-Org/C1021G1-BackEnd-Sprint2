@@ -2,6 +2,7 @@ package com.example.carparkingmanagementbe.controller;
 import com.example.carparkingmanagementbe.dto.CarDto;
 import com.example.carparkingmanagementbe.model.Car;
 import com.example.carparkingmanagementbe.model.CarType;
+import com.example.carparkingmanagementbe.model.Customer;
 import com.example.carparkingmanagementbe.service.ICarService;
 import com.example.carparkingmanagementbe.service.ICarTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @CrossOrigin("*")
 @RestController
@@ -93,6 +95,27 @@ public class CarController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(carLists,HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Car> getCarById(@PathVariable Long id){
+        Car car = carService.findCarById(id);
+        if (car == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(car,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Car> deleteCar(@PathVariable Long id) {
+        Car car = carService.findCarById(id);
+        if (car == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            carService.deleteCarById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+
     }
 
 }
